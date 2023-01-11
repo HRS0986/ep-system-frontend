@@ -8,21 +8,36 @@ import { CustomersModule } from './customers/customers.module';
 import { ReportsModule } from './reports/reports.module';
 import { AuthModule } from './auth/auth.module';
 import { StoreModule } from '@ngrx/store';
+import { MaterialModule } from "./app.material.module";
+import { ProjectsModule } from "./projects/projects.module";
+import { NotificationsModule } from './notifications/notifications.module';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    CustomersModule,
-    ReportsModule,
-    AuthModule,
-    StoreModule.forRoot({}, {})
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        CustomersModule,
+        ReportsModule,
+        AuthModule,
+        MaterialModule,
+        ProjectsModule,
+        NotificationsModule,
+        StoreModule.forRoot({}, {}),
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideAuth(() => getAuth()),
+        provideFirestore(() => getFirestore())
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
