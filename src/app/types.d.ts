@@ -197,5 +197,3 @@ export interface DeleteConfig {
   body: string;
   entityName: string
 }
-
-export type ModuleRoute = 'CUSTOMERS' | 'AUTH' | 'REPORTS';
