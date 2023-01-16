@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { LoginStatus } from "../constants";
 import { AuthenticationService } from "../services/authentication.service";
-import { AuthRoutes } from "../route-data";
+import { CustomerRoutes } from "../route-data";
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginRequiredGuard implements CanActivate {
+export class IsAdminGuard implements CanActivate {
 
   constructor(private auth: AuthenticationService, private router: Router) { }
 
   canActivate(): boolean {
-    if (this.auth.isLoggedIn == LoginStatus.LOGGED_OUT) {
-      this.router.navigate([AuthRoutes.Login]).then();
+    if (!this.auth.isAdmin) {
+      this.router.navigate([CustomerRoutes.Ep.url]).then();
     }
-    return this.auth.isLoggedIn == LoginStatus.LOGGED_IN;
+    return true;
   }
-
+  
 }

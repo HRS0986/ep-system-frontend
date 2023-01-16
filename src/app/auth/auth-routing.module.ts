@@ -7,6 +7,7 @@ import { UserProfileComponent } from "./components/popups/user-profile/user-prof
 import { ManageUsersComponent } from "./components/manage-users/manage-users.component";
 import { LoginRequiredGuard } from "../guards/login-required.guard";
 import { PreventLoginGuard } from "../guards/prevent-login.guard";
+import { IsAdminGuard } from "../guards/is-admin.guard";
 
 const routes: Routes = [
     {
@@ -27,7 +28,7 @@ const routes: Routes = [
     {
         path: AuthRoutes.ManageUsers.url,
         component: ManageUsersComponent,
-        canActivate: [LoginRequiredGuard],
+        canActivate: [LoginRequiredGuard, IsAdminGuard],
         data: { title: AuthRoutes.ManageUsers.title }
     },
 ];
