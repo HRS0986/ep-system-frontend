@@ -373,23 +373,3 @@ export const NotificationColors: { SUCCESS: string; WARNING: string; ERROR: stri
     INFO: '#90a9c5',
     ARREARS: '#daa78e',
 };
-
-export const RouterData: { [key: string]: { url: string, title: string } } = {
-    HOME: { url: '', title: 'Customers' },
-    CUSTOMERS: { url: 'customers', title: 'EP Customers' },
-    OLD_CUSTOMERS: { url: 'old-customers', title: 'Old Customers' },
-    MANAGE_USERS: { url: 'manage-users', title: 'Manage Users' },
-    REPORTS: { url: 'reports', title: 'Reports' },
-    NOTIFICATIONS: { url: 'notifications', title: 'Notifications' },
-    VIEW_CUSTOMER: { url: 'view-customer', title: 'View Customer Details' },
-    VIEW_OLD_CUSTOMER: { url: 'view-old-customer', title: 'View Old Customer Details' },
-    LEDGER: { url: 'ledger', title: 'View Customer Ledger' },
-    LOGIN: { url: 'login', title: 'Login' },
-    SIGNUP: { url: 'signup', title: 'Signup' },
-    CUSTOMER_REPORT: { url: 'customer-report', title: 'Customer Report' },
-    CASH_REPORT: { url: 'cash-report', title: 'Cash Collection Report' },
-    ARREARS_REPORT: { url: 'arrears-report', title: 'Arrears Report' },
-    EP_REPORT: { url: 'ep-report', title: 'EP Report' },
-    PROJECTS: { url: 'projects', title: 'Projects' },
-    ADVANCED_CUSTOMERS: { url: 'advanced-customers', title: 'Advanced Customers' },
-};

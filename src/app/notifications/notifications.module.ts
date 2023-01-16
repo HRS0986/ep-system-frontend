@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { NotificationsRoutingModule } from './notifications-routing.module';
 import { AllNotificationsComponent } from './components/all-notifications/all-notifications.component';
+import { LetterComponent } from './components/popups/letter/letter.component';
 
 
 @NgModule({
   declarations: [
-    AllNotificationsComponent
+    AllNotificationsComponent,
+    LetterComponent
   ],
   imports: [
     CommonModule,

@@ -16,12 +16,14 @@ import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { DeleteConfirmPopupComponent } from './delete-confirm-popup/delete-confirm-popup.component';
 
 
 @NgModule({
     declarations: [
         AppComponent,
-        NotFoundComponent
+        NotFoundComponent,
+        DeleteConfirmPopupComponent
     ],
     imports: [
         BrowserModule,

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { LoginStatus, RouterData } from "../constants";
+import { LoginStatus } from "../constants";
 import { AuthenticationService } from "../services/authentication.service";
 import { UserService } from "../services/user.service";
+import { AuthRoutes } from "../route-data";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class PreventLoginGuard implements CanActivate {
 
   canActivate(): boolean {
     if (this.authService.isLoggedIn == LoginStatus.LOGGED_IN) {
-      this.router.navigate([RouterData["SIGNUP"].url]).then();
+      this.router.navigate([AuthRoutes.SignUp]).then();
     }
     return this.authService.isLoggedIn != LoginStatus.LOGGED_IN;
   }

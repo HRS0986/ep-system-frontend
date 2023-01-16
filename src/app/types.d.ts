@@ -197,3 +197,9 @@ export interface DeleteConfig {
   body: string;
   entityName: string
 }
+
+export interface ActionMenuItem {
+  actionText: string;
+  iconName: string;
+  action: string;
+}
