@@ -26,7 +26,8 @@ export interface Client {
   Name: string;
   Address: string;
   NIC: string;
-  ContactNo: string;
+  PrimaryContactNo: string;
+  SecondaryContactNumbers: string;
   WhatsAppNo?: string;
   ViberNo?: string;
   ImoNo?: string;

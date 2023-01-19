@@ -8,6 +8,7 @@ import { ManageUsersComponent } from "./components/manage-users/manage-users.com
 import { LoginRequiredGuard } from "../guards/login-required.guard";
 import { PreventLoginGuard } from "../guards/prevent-login.guard";
 import { IsAdminGuard } from "../guards/is-admin.guard";
+import { SignupGuard } from "../guards/signup.guard";
 
 const routes: Routes = [
     {
@@ -18,7 +19,7 @@ const routes: Routes = [
     {
         path: AuthRoutes.SignUp,
         component: SignupComponent,
-        canActivate: [PreventLoginGuard]
+        canActivate: [SignupGuard]
     },
     {
         path: AuthRoutes.Profile,

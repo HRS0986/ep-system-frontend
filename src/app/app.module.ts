@@ -11,10 +11,10 @@ import { StoreModule } from '@ngrx/store';
 import { MaterialModule } from "./app.material.module";
 import { ProjectsModule } from "./projects/projects.module";
 import { NotificationsModule } from './notifications/notifications.module';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { DeleteConfirmPopupComponent } from './delete-confirm-popup/delete-confirm-popup.component';
 
@@ -38,7 +38,7 @@ import { DeleteConfirmPopupComponent } from './delete-confirm-popup/delete-confi
         StoreModule.forRoot({}, {}),
         provideFirebaseApp(() => initializeApp(environment.firebase)),
         provideAuth(() => getAuth()),
-        provideFirestore(() => getFirestore())
+        provideFirestore(() => getFirestore()),
     ],
     providers: [],
     bootstrap: [AppComponent]

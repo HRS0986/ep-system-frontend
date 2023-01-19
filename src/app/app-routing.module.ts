@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { LoginRequiredGuard } from "./guards/login-required.guard";
 import { AuthRoutes, CustomerRoutes, NotificationRoutes, ProjectRoutes, ReportRoutes } from "./route-data";
@@ -42,7 +42,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
     exports: [RouterModule]
 })
 export class AppRoutingModule {
