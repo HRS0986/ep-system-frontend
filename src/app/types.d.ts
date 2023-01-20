@@ -19,7 +19,7 @@ export interface User {
   Role?: Roles;
 }
 
-export interface Client {
+export interface Customer {
   ID: string;
   Project: string;
   Email?: string;
@@ -93,7 +93,7 @@ export interface FnResponse<T = any> {
   data: T;
 }
 
-export interface Alert {
+export interface Notification {
   ID: string;
   Date: Timestamp;
   IsActive: boolean,
@@ -131,7 +131,7 @@ export interface CustomerReport {
   Note: string
 }
 
-export interface CashReport {
+export interface CashCollectionReport {
   Date: Date | Timestamp;
   BillNo: string;
   LotNo: string;
