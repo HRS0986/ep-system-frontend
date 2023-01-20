@@ -11,7 +11,7 @@ export class ProjectService {
 
     constructor(
         private firestore: Firestore,
-        private functions: Functions,
+        private functions: Functions
     ) {
     }
 

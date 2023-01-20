@@ -11,3 +11,4 @@ export interface AppState {
     ReportsState: ReportsState;
     AuthState: AuthState;
 }
+

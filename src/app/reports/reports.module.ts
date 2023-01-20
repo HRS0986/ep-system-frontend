@@ -7,19 +7,24 @@ import { ArrearsReportComponent } from './components/arrears-report/arrears-repo
 import { CustomerReportComponent } from './components/customer-report/customer-report.component';
 import { ReportListComponent } from './components/report-list/report-list.component';
 import { EpReportComponent } from './components/ep-report/ep-report.component';
+import { MaterialModule } from "../app.material.module";
+import { FormsModule } from "@angular/forms";
 
 
 @NgModule({
-  declarations: [
-    CashCollectionReportComponent,
-    ArrearsReportComponent,
-    CustomerReportComponent,
-    ReportListComponent,
-    EpReportComponent
-  ],
-  imports: [
-    CommonModule,
-    ReportsRoutingModule
-  ]
+    declarations: [
+        CashCollectionReportComponent,
+        ArrearsReportComponent,
+        CustomerReportComponent,
+        ReportListComponent,
+        EpReportComponent
+    ],
+    imports: [
+        CommonModule,
+        ReportsRoutingModule,
+        MaterialModule,
+        FormsModule
+    ]
 })
-export class ReportsModule { }
+export class ReportsModule {
+}

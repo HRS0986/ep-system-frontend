@@ -142,6 +142,11 @@ export class AuthService {
     return user !== null ? LoginStatus.LOGGED_IN : LoginStatus.LOGGED_OUT;
   }
 
+  // Return Is Admin User
+  public isAdmin(): boolean{
+    return true;
+  }
+
   // Auth logic to run auth providers
   public AuthLogin(provider: any) {
     return this.angularFireAuth

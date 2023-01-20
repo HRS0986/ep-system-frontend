@@ -11,6 +11,8 @@ import { MakePaymentComponent } from './components/popups/make-payment/make-paym
 import { ChangeInstallmentComponent } from './components/popups/change-installment/change-installment.component';
 import { SettlementComponent } from './components/popups/settlement/settlement.component';
 import { LedgerComponent } from './components/ledger/ledger.component';
+import { MaterialModule } from "../app.material.module";
+import { FormsModule } from "@angular/forms";
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { LedgerComponent } from './components/ledger/ledger.component';
   ],
   imports: [
     CommonModule,
-    CustomersRoutingModule
+    CustomersRoutingModule,
+    MaterialModule,
+      FormsModule
   ]
 })
 export class CustomersModule { }

@@ -1,13 +1,14 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialState } from "./projects.state";
-import { getAll } from "./projects.actions";
+import { ProjectActions } from "./projects.actions";
 
 
 export const projectsReducer = createReducer(
     initialState,
-    on(getAll, (state) => {
+    on(ProjectActions.get_all_success, (state, data) => {
         return {
-            ...state
+            ...state,
+            projects: data.projects
         };
     })
 );
