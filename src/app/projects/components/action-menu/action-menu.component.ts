@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
 import { ProjectService } from "../../../services/projects.service";
 import { HelperService } from "../../../services/helper.service";
-import { Project } from "../../../types";
+import { ActionMenuItem, Project } from "../../../types";
 import { Common, Projects, SnackBarStatus } from "../../../constants";
 import { AddEditProjectComponent } from "../popups/add-edit-project/add-edit-project.component";
 import { DeleteConfirmPopupComponent } from "../../../delete-confirm-popup/delete-confirm-popup.component";
@@ -25,23 +25,33 @@ export class ActionMenuComponent implements OnInit {
 
     @Input() data!: Project;
 
-    EDIT = Common.EDIT;
-    DELETE = Common.DELETE;
+    ACTION_MENU_ITEMS: ActionMenuItem<ActionMenuComponent>[] = [
+        {
+            actionText: Common.DELETE,
+            iconName: 'delete',
+            action: "onClickDelete"
+        },
+        {
+            actionText: Common.EDIT,
+            iconName: 'edit',
+            action: "onClickEdit"
+        }
+    ];
 
-    ngOnInit(): void {
-    }
+    ngOnInit(): void { }
 
-    onClickEdit(project: Project): void {
+    onClickEdit(): void {
         const dialogRef = this.matDialog.open(AddEditProjectComponent, {
             width: '800px',
-            data: { project: project, edit: 1 }
+            data: { project: this.data, edit: 1 }
         });
         dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
         });
     }
 
-    onClickDelete(project: Project) {
+    onClickDelete(): void {
+        debugger;
         const dialogRef = this.matDialog.open(DeleteConfirmPopupComponent, {
             width: '350px',
             data: {
@@ -53,7 +63,7 @@ export class ActionMenuComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.projectsService.DeleteProject(project.ID).then(() => {
+                this.projectsService.DeleteProject(this.data.ID).then(() => {
                     this.helperService.openSnackBar({
                         text: Projects.PROJECT_DELETED_SUCCESS,
                         status: SnackBarStatus.SUCCESS
@@ -61,6 +71,10 @@ export class ActionMenuComponent implements OnInit {
                 });
             }
         });
+    }
+
+    invokeAction(action: keyof ActionMenuComponent) {
+        (this[action] as (() => void))();
     }
 
 }
