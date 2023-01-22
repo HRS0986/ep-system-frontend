@@ -39,12 +39,11 @@ export class AppComponent {
       })
 
       if (event instanceof NavigationStart) {
-        this.isFirstLogin = event.url === `/${AuthRoutes.SignUp}`;
+        this.isFirstLogin = event.url === `/${AuthRoutes.Root}/${AuthRoutes.SignUp}`;
       }
       else if (event instanceof NavigationEnd) {
         // Current URL
         const route = event.url.split('/')[1].split('?')[0];
-        debugger;
 
         // for (const rData in RouterData) {
         //   if (RouterData[rData].url === route) {
@@ -74,13 +73,13 @@ export class AppComponent {
   MANAGE_USERS = NavigationMenu.MANAGE_USERS;
   REPORTS = NavigationMenu.REPORTS;
   PROJECTS = NavigationMenu.PROJECTS;
-  REPORT_URL = `/${ReportRoutes.All.url}`;
-  PROJECTS_URL = `/${ProjectRoutes.All.url}`;
+  REPORT_URL = `/${ReportRoutes.Root}`;
+  PROJECTS_URL = `/${ProjectRoutes.Root}`;
   EP_CUSTOMERS_URL = `/${CustomerRoutes.Ep.url}`;
   OLD_CUSTOMERS_URL = `/${CustomerRoutes.Old.url}`;
   ADVANCED_CUSTOMERS_URL = `/${CustomerRoutes.Advanced.url}`;
   MANAGE_USERS_URL = `/${AuthRoutes.ManageUsers.url}`;
-  NOTIFICATIONS_URL = `/${NotificationRoutes.All.url}`;
+  NOTIFICATIONS_URL = `/${NotificationRoutes.Root}`;
 
   isLoggedIn = false;
   isFirstLogin = false;
@@ -97,7 +96,7 @@ export class AppComponent {
   logout() {
     this.auth.SignOut().then(() => {
       this.isLoggedIn = false;
-      this.router.navigate([AuthRoutes.Login]).then(() => {});
+      this.router.navigate([`${AuthRoutes.Root}/${AuthRoutes.Login}`]).then(() => {});
     });
   }
 

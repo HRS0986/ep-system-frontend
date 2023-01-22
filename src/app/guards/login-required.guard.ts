@@ -13,7 +13,7 @@ export class LoginRequiredGuard implements CanActivate {
 
   canActivate(): boolean {
     if (this.auth.isLoggedIn == LoginStatus.LOGGED_OUT) {
-      this.router.navigate([AuthRoutes.Login]).then();
+      this.router.navigate([`${AuthRoutes.Root}/${AuthRoutes.Login}`]).then();
     }
     return this.auth.isLoggedIn == LoginStatus.LOGGED_IN;
   }

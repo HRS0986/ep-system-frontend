@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from "@angular/router";
 import { UserService } from "../../../services/user.service";
 import { AuthService } from "../../../services/auth.service";
@@ -12,116 +12,128 @@ import { environment } from "../../../../environments/environment";
 import { CustomerRoutes } from "../../../route-data";
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+    selector: 'app-sign-up',
+    templateUrl: './signup.component.html',
+    styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
 
-  constructor(
-      private formBuilder: FormBuilder,
-      private userService: UserService,
-      private authService: AuthService,
-      private router: Router,
-      private helperService: HelperService
-  ) { }
+    constructor(
+        private formBuilder: FormBuilder,
+        private userService: UserService,
+        private authService: AuthService,
+        private router: Router,
+        private helperService: HelperService
+    ) {
+    }
 
-  @ViewChild('npTooltip') npTooltip!: MatTooltip;
+    @ViewChild('npTooltip') npTooltip!: MatTooltip;
 
-  signupForm = this.formBuilder.group({
-    firstName: new FormControl('', [Validators.required]),
-    lastName: new FormControl('', [Validators.required]),
-    contactNo: new FormControl('', [Validators.required, Validators.pattern(UserMessages.PHONE_NUMBER_REGEX)]),
-  });
+    signupForm = this.formBuilder.group({
+        firstName: this.formBuilder.control('', [Validators.required]),
+        lastName: this.formBuilder.control('', [Validators.required]),
+        contactNo: this.formBuilder.control('', [Validators.required, Validators.pattern(UserMessages.PHONE_NUMBER_REGEX)]),
+    });
 
-  passwordForm = this.formBuilder.group({
-    currentPassword: new FormControl('', [Validators.required]),
-    newPassword: new FormControl('', [Validators.required, Validators.pattern(SignUp.STRONG_PASSWORD_REGEX)]),
-    confirmPassword: new FormControl('', [Validators.required]),
-  }, { validators: matchPasswords });
+    passwordForm = this.formBuilder.group({
+        currentPassword: this.formBuilder.control('', [Validators.required]),
+        newPassword: this.formBuilder.control('', [Validators.required, Validators.pattern(SignUp.STRONG_PASSWORD_REGEX)]),
+        confirmPassword: this.formBuilder.control('', [Validators.required]),
+    }, { validators: matchPasswords });
 
-  isSubmitted: boolean = false;
-  hideCurrentPassword: boolean = true;
-  hideNewPassword: boolean = true;
-  hideConfirmPassword: boolean = true;
-  isSecondStep: boolean = false;
-  isLoading: boolean = false;
-  user!: User;
-  logo: string = `${window.location.protocol}//${window.location.host}/${environment.config.loginLogo}`;
+    isSubmitted: boolean = false;
+    hideCurrentPassword: boolean = true;
+    hideNewPassword: boolean = true;
+    hideConfirmPassword: boolean = true;
+    isSecondStep: boolean = false;
+    isLoading: boolean = false;
+    user!: User;
+    logo: string = `${window.location.protocol}//${window.location.host}/${environment.config.loginLogo}`;
+    LOGO_PATH = "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.jpg";
 
-  TITLE: string = SignUp.SIGN_UP_TITLE;
-  FIRST_NAME: string = SignUp.FIRST_NAME_LABEL;
-  LAST_NAME: string = SignUp.LAST_NAME_LABEL;
-  CURRENT_PASSWORD: string = SignUp.CURRENT_PASSWORD_LABEL;
-  NEW_PASSWORD: string = SignUp.NEW_PASSWORD_LABEL;
-  CONFIRM_PASSWORD: string = SignUp.CONFIRM_PASSWORD_LABEL;
-  SIGN_UP_BUTTON_TEXT: string = SignUp.SIGN_UP_BUTTON_TEXT;
-  PASSWORD_MISMATCH_ERROR: string = SignUp.PASSWORD_MISMATCH_MESSAGE_TEXT;
-  STRONG_PASSWORD_ERROR: string = SignUp.STRONG_PASSWORD_MESSAGE_TEXT;
-  CONTACT_NUMBER: string = UserManagement.CONTACT_NUMBER_LABEL;
-  INVALID_CONTACT_NUMBER_ERROR: string = UserMessages.INVALID_CONTACT_NUMBER_MESSAGE_TEXT;
-  NEXT = NewCustomer.NEXT_BUTTON_TEXT;
-  PREVIOUS = NewCustomer.PREVIOUS_BUTTON_TEXT;
+    TITLE: string = SignUp.SIGN_UP_TITLE;
+    FIRST_NAME: string = SignUp.FIRST_NAME_LABEL;
+    LAST_NAME: string = SignUp.LAST_NAME_LABEL;
+    CURRENT_PASSWORD: string = SignUp.CURRENT_PASSWORD_LABEL;
+    NEW_PASSWORD: string = SignUp.NEW_PASSWORD_LABEL;
+    CONFIRM_PASSWORD: string = SignUp.CONFIRM_PASSWORD_LABEL;
+    SIGN_UP_BUTTON_TEXT: string = SignUp.SIGN_UP_BUTTON_TEXT;
+    PASSWORD_MISMATCH_ERROR: string = SignUp.PASSWORD_MISMATCH_MESSAGE_TEXT;
+    STRONG_PASSWORD_ERROR: string = SignUp.STRONG_PASSWORD_MESSAGE_TEXT;
+    CONTACT_NUMBER: string = UserManagement.CONTACT_NUMBER_LABEL;
+    INVALID_CONTACT_NUMBER_ERROR: string = UserMessages.INVALID_CONTACT_NUMBER_MESSAGE_TEXT;
+    NEXT = NewCustomer.NEXT_BUTTON_TEXT;
+    PREVIOUS = NewCustomer.PREVIOUS_BUTTON_TEXT;
 
-  ngOnInit(): void {
-  }
+    FIRST_STEP = SignUp.SIGNUP_FIRST_STEP_TITLE;
+    SECOND_STEP = SignUp.SIGNUP_SECOND_STEP_TITLE;
 
-  onSubmit() {
-    this.isLoading = true;
-    this.isSubmitted = true;
-    if (this.passwordForm.valid) {
-      this.authService.ChangePassword(this.passwordForm.controls['currentPassword'].value, this.passwordForm.controls['newPassword'].value).then(result => {
-        if (result.status) {
-          this.userService.UpdateUserData(this.user).then(result => {
-            if (result.status) {
-              this.router.navigate([CustomerRoutes.Ep.url]).then(() => {
-                this.isLoading = false;
-                window.location.reload();
-                this.helperService.openSnackBar({text:result.message, status: SnackBarStatus.SUCCESS});
-              });
-            } else {
-              this.isLoading = false;
-              this.helperService.openSnackBar({text:result.message, status: SnackBarStatus.FAILED});
-            }
-          });
+
+    ngOnInit(): void {
+    }
+
+    onSubmit() {
+        this.isLoading = true;
+        this.isSubmitted = true;
+        if (this.passwordForm.valid) {
+            this.authService.ChangePassword(this.passwordForm.controls['currentPassword'].value, this.passwordForm.controls['newPassword'].value).then(result => {
+                if (result.status) {
+                    this.userService.UpdateUserData(this.user).then(result => {
+                        if (result.status) {
+                            this.router.navigate([CustomerRoutes.Ep.url]).then(() => {
+                                this.isLoading = false;
+                                window.location.reload();
+                                this.helperService.openSnackBar({
+                                    text: result.message,
+                                    status: SnackBarStatus.SUCCESS
+                                });
+                            });
+                        } else {
+                            this.isLoading = false;
+                            this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.FAILED });
+                        }
+                    });
+                } else {
+                    if (result.data.code === "auth/wrong-password") {
+                        this.helperService.openSnackBar({
+                            text: Login.WRONG_PASSWORD_MESSAGE_TEXT,
+                            status: SnackBarStatus.FAILED
+                        });
+                    } else {
+                        this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.FAILED });
+                    }
+                }
+            });
         } else {
-          if (result.data.code === "auth/wrong-password") {
-            this.helperService.openSnackBar({text:Login.WRONG_PASSWORD_MESSAGE_TEXT, status: SnackBarStatus.FAILED});
-          } else {
-            this.helperService.openSnackBar({text:result.message, status: SnackBarStatus.FAILED});
-          }
+            this.passwordForm.markAllAsTouched();
+            if (this.passwordForm.controls['newPassword'].errors!['pattern'] != null) {
+                this.npTooltip.show();
+            } else {
+                this.passwordForm.get('confirmPassword')!.setErrors({ valid: false });
+            }
         }
-      });
-    } else {
-      this.passwordForm.markAllAsTouched();
-      if (this.passwordForm.controls['newPassword'].errors!['pattern'] != null) {
-        this.npTooltip.show();
-      }else{
-        this.passwordForm.get('confirmPassword')!.setErrors({valid:false});
-      }
     }
-  }
 
-  onClickNext() {
-    if (this.signupForm.valid) {
-      this.isSecondStep = true;
-      this.user = {
-        UID: JSON.parse(localStorage.getItem('user')!)['uid'],
-        FirstName : this.signupForm.controls['firstName'].value,
-        LastName : this.signupForm.controls['lastName'].value,
-        PhoneNumber : this.signupForm.controls['contactNo'].value,
-        IsFirstLogin : false,
-        IsActive : true,
-      }
-      this.TITLE = SignUp.CHANGE_PASSWORD_TITLE;
+    onClickNext() {
+        if (this.signupForm.valid) {
+            this.isSecondStep = true;
+            this.user = {
+                UID: JSON.parse(localStorage.getItem('user')!)['uid'],
+                FirstName: this.signupForm.controls['firstName'].value,
+                LastName: this.signupForm.controls['lastName'].value,
+                PhoneNumber: this.signupForm.controls['contactNo'].value,
+                IsFirstLogin: false,
+                IsActive: true,
+            }
+            this.TITLE = SignUp.CHANGE_PASSWORD_TITLE;
+        }
     }
-  }
 
-  get contactNoError() {
-    if (this.signupForm.controls['contactNo'].errors){
-      return this.signupForm.controls['contactNo'].errors!['pattern'];
+    get contactNoError() {
+        if (this.signupForm.controls['contactNo'].errors) {
+            return this.signupForm.controls['contactNo'].errors!['pattern'];
+        }
+        return false
     }
-    return false
-  }
 
 }

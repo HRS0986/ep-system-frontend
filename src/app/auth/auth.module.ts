@@ -9,6 +9,7 @@ import { AddEditUserComponent } from './components/popups/add-edit-user/add-edit
 import { UserProfileComponent } from './components/popups/user-profile/user-profile.component';
 import { MaterialModule } from "../app.material.module";
 import { ReactiveFormsModule } from "@angular/forms";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ReactiveFormsModule } from "@angular/forms";
         CommonModule,
         AuthRoutingModule,
         MaterialModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgxSpinnerModule
     ]
 })
 export class AuthModule {

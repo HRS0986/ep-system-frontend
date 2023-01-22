@@ -21,15 +21,14 @@ export class ProjectService {
     }
 
     public GetAllProjects(): Observable<Project[]> {
-        const projectRef = collection(this.firestore, 'Projects');
         debugger;
+        const projectRef = collection(this.firestore, 'Projects');
         const q1 = query(projectRef, where('IsActive', '==', true));
         return collectionData(q1, { idField: 'ID' }) as Observable<Project[]>;
     }
 
     public async CreateProject(data: Project) {
         // Check duplicate project ID
-        debugger;
         const allProjectRef = collection(this.firestore, 'Projects');
         const q1 = query(allProjectRef, where('IsActive', '==', true), where('ID', '==', data.ID));
         const allProjects = await firstValueFrom(collectionData(q1, { idField: 'ID' }) as Observable<Project[]>);

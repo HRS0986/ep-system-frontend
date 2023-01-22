@@ -166,7 +166,7 @@ export class AuthService {
   public SignOut(): Promise<FnResponse>  {
     return this.angularFireAuth.signOut().then(() => {
       localStorage.removeItem('user');
-      this.router.navigate([AuthRoutes.Login]).then();
+      this.router.navigate([`${AuthRoutes.Root}/${AuthRoutes.Login}`]).then();
       return {
         status: true,
         message: "Successfully logged out",

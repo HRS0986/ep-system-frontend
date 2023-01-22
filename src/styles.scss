@@ -2,3 +2,60 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.btn-p {
+  color: black !important;
+  background-color: #28B5B5 !important;
+}
+
+.btn-s {
+  background-color: #536464 !important;
+}
+
+.btn-disabled {
+  background-color: #A7C4BC !important;
+}
+
+.error-snack-bar {
+  color: white;
+  background-color: #B04644 !important;
+}
+
+.success-snack-bar {
+  color: white;
+  background-color: #188050 !important;
+}
+
+.info-snack-bar {
+  color: white;
+  background-color: #1C658C !important;
+}
+
+.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #188050 !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.mat-tab-body-wrapper {
+  height: 90%;
+}

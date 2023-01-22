@@ -16,7 +16,8 @@ export enum Roles {
 
 export enum CustomerTypes {
     ADVANCED_CUSTOMER,
-    EP_CUSTOMER
+    EP_CUSTOMER,
+    RESALE_CUSTOMER
 }
 
 export enum AlertTypes {
@@ -75,6 +76,8 @@ export class SignUp {
     public static readonly INCORRECT_OLD_PASSWORD = 'Incorrect old password.';
     public static readonly STRONG_PASSWORD_MESSAGE_TEXT = 'Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number and one special character.';
     public static readonly CHANGE_PASSWORD_TITLE = 'Change Password';
+    public static readonly SIGNUP_FIRST_STEP_TITLE = 'Name & Contact';
+    public static readonly SIGNUP_SECOND_STEP_TITLE = 'Set Password';
 }
 
 export class Customer {

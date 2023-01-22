@@ -14,7 +14,7 @@ export class PreventLoginGuard implements CanActivate {
 
   canActivate(): boolean {
     if (this.authService.isLoggedIn == LoginStatus.LOGGED_IN) {
-      this.router.navigate([AuthRoutes.SignUp]).then();
+      this.router.navigate([`${AuthRoutes.Root}/${AuthRoutes.SignUp}`]).then();
     }
     return this.authService.isLoggedIn != LoginStatus.LOGGED_IN;
   }

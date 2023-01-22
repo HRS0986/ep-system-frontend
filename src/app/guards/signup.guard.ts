@@ -13,7 +13,7 @@ export class SignupGuard implements CanActivate {
     const isFirstLogin = !!JSON.parse(localStorage.getItem('isFirstLogin')!);
 
     if (!isFirstLogin) {
-      this.router.navigate([CustomerRoutes.Ep.url]).then(() => { });
+      this.router.navigate([`${CustomerRoutes.Root}/${CustomerRoutes.Ep.url}`]).then(() => { });
     }
     return isFirstLogin;
   }

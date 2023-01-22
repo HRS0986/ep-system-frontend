@@ -137,7 +137,6 @@ export class CustomerService {
   }
 
   public async MakePayment(client: Customer, date: string, amount: number, refNo: number = 0, particulars: string = "Paid by Cash", remarks: string = ""): Promise<FnResponse> {
-    debugger;
     const _makePayment = httpsCallable<{ date: string, amount: number, referenceNo: number, particulars: string, remarks: string, clientID: string }, FnResponse>(this.functions, 'makePayment');
     const res = await _makePayment({
       date,

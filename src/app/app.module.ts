@@ -22,8 +22,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from "@angular/common/http";
 import { AngularFireFunctionsModule, REGION } from "@angular/fire/compat/functions";
 import { getFunctions, provideFunctions } from "@angular/fire/functions";
-import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { AngularFireModule } from "@angular/fire/compat";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 @NgModule({
@@ -44,7 +44,7 @@ import { AngularFireModule } from "@angular/fire/compat";
         NotificationsModule,
         HttpClientModule,
         StoreModule.forRoot({}, {}),
-        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+        // StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
         EffectsModule.forRoot([]),
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireFunctionsModule,

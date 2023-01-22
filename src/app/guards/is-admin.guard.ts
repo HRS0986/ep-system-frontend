@@ -13,7 +13,7 @@ export class IsAdminGuard implements CanActivate {
 
   canActivate(): boolean {
     if (!this.auth.isAdmin()) {
-      this.router.navigate([CustomerRoutes.Ep.url]).then();
+      this.router.navigate([`${CustomerRoutes.Root}/${CustomerRoutes.Ep.url}`]).then();
     }
     return true;
   }
