@@ -19,14 +19,15 @@ export interface User {
   Role?: Roles;
 }
 
-export interface Client {
+export interface Customer {
   ID: string;
   Project: string;
   Email?: string;
   Name: string;
   Address: string;
   NIC: string;
-  ContactNo: string;
+  PrimaryContactNo: string;
+  SecondaryContactNumbers: string;
   WhatsAppNo?: string;
   ViberNo?: string;
   ImoNo?: string;
@@ -92,7 +93,7 @@ export interface FnResponse<T = any> {
   data: T;
 }
 
-export interface Alert {
+export interface Notification {
   ID: string;
   Date: Timestamp;
   IsActive: boolean,
@@ -130,7 +131,7 @@ export interface CustomerReport {
   Note: string
 }
 
-export interface CashReport {
+export interface CashCollectionReport {
   Date: Date | Timestamp;
   BillNo: string;
   LotNo: string;
@@ -198,4 +199,8 @@ export interface DeleteConfig {
   entityName: string
 }
 
-export type ModuleRoute = 'CUSTOMERS' | 'AUTH' | 'REPORTS';
+export interface ActionMenuItem {
+  actionText: string;
+  iconName: string;
+  action: string;
+}

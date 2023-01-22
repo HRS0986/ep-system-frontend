@@ -11,17 +11,27 @@ import { StoreModule } from '@ngrx/store';
 import { MaterialModule } from "./app.material.module";
 import { ProjectsModule } from "./projects/projects.module";
 import { NotificationsModule } from './notifications/notifications.module';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { DeleteConfirmPopupComponent } from './delete-confirm-popup/delete-confirm-popup.component';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { HttpClientModule } from "@angular/common/http";
+import { AngularFireFunctionsModule, REGION } from "@angular/fire/compat/functions";
+import { getFunctions, provideFunctions } from "@angular/fire/functions";
+import { AngularFireModule } from "@angular/fire/compat";
+import { NgxSpinnerModule } from "ngx-spinner";
+import { MAT_DIALOG_DEFAULT_OPTIONS } from "@angular/material/dialog";
 
 
 @NgModule({
     declarations: [
         AppComponent,
-        NotFoundComponent
+        NotFoundComponent,
+        DeleteConfirmPopupComponent
     ],
     imports: [
         BrowserModule,
@@ -33,12 +43,21 @@ import { NotFoundComponent } from './not-found/not-found.component';
         MaterialModule,
         ProjectsModule,
         NotificationsModule,
+        HttpClientModule,
         StoreModule.forRoot({}, {}),
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+        EffectsModule.forRoot([]),
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireFunctionsModule,
         provideFirebaseApp(() => initializeApp(environment.firebase)),
         provideAuth(() => getAuth()),
-        provideFirestore(() => getFirestore())
+        provideFirestore(() => getFirestore()),
+        provideFunctions(() => getFunctions()),
     ],
-    providers: [],
+    providers: [
+        { provide: REGION, useValue: 'us-central1' },
+        { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true, disableClose: true} },
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

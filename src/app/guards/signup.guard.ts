@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { RouterData } from "../constants";
+import { CustomerRoutes } from "../route-data";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class SignupGuard implements CanActivate {
     const isFirstLogin = !!JSON.parse(localStorage.getItem('isFirstLogin')!);
 
     if (!isFirstLogin) {
-      this.router.navigate([RouterData["HOME"].url]).then(() => { });
+      this.router.navigate([`${CustomerRoutes.Root}/${CustomerRoutes.Ep.url}`]).then(() => { });
     }
     return isFirstLogin;
   }

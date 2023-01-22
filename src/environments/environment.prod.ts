@@ -9,5 +9,10 @@ export const environment = {
     messagingSenderId: '816456430292',
     measurementId: 'G-N242P9393V',
   },
-  production: true
+  production: true,
+  config: {
+    appName: "EP System",
+    loginLogo: "assets/img/logo-2.png",
+    toolbarLogo: "assets/img/logo.png",
+  },
 };

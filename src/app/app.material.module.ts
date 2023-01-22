@@ -25,42 +25,47 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSortModule } from "@angular/material/sort";
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatNativeDateModule } from "@angular/material/core";
 
 
 const materialModules = [
-  MatGridListModule,
-  MatButtonModule,
-  MatToolbarModule,
-  MatIconModule,
-  MatListModule,
-  MatCardModule,
-  MatFormFieldModule,
-  MatDialogModule,
-  MatBadgeModule,
-  MatProgressSpinnerModule,
-  MatTooltipModule,
-  MatInputModule,
-  MatSnackBarModule,
-  MatSidenavModule,
-  MatTabsModule,
-  MatDatepickerModule,
-  MatTableModule,
-  MatPaginatorModule,
-  MatMenuModule,
-  MatSlideToggleModule,
-  MatSelectModule,
-  MatExpansionModule,
-  MatCheckboxModule,
-  MatSortModule,
+    MatGridListModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatDialogModule,
+    MatBadgeModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatInputModule,
+    MatSnackBarModule,
+    MatSidenavModule,
+    MatTabsModule,
+    MatDatepickerModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatMenuModule,
+    MatSlideToggleModule,
+    MatSelectModule,
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatSortModule,
+    MatStepperModule,
+    MatNativeDateModule
 ];
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    ...materialModules
-  ],
-  exports: materialModules
+    declarations: [],
+    imports: [
+        CommonModule,
+        ...materialModules
+    ],
+    exports: materialModules
 })
 
-export class MaterialModule { }
+export class MaterialModule {
+}

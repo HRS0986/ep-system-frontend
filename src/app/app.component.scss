@@ -1,0 +1,73 @@
+.sidenav {
+  color: #eee;
+  background-color: #045762;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.menu-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.menu-btn:hover {
+  color: black !important;
+  background-color: #2F5D62;
+}
+
+.menu-icon{
+  margin-right: 10px;
+}
+
+.logo-card{
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+::ng-deep .header .mat-card-header-text {
+  margin: 5px !important;
+}
+
+.footer-card {
+  position: fixed;
+  width: calc(100vw - 200px);
+  bottom: 0;
+  margin-top: 20px;
+}
+
+.footer-card-flat {
+  position: fixed;
+  width: 100vw;
+  bottom: 0;
+  margin: 0;
+}
+
+:host ::ng-deep .mat-badge-content {
+  color: transparent !important;
+}
+
+:host ::ng-deep .mat-expansion-indicator:after {
+  color: #eeeeee !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-body {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-header:hover {
+  background-color: #2F5D62 !important;
+}
+
+:host ::ng-deep .mat-column-email{
+  width: 100px !important;
+}
