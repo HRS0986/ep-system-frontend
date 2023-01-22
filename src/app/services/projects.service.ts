@@ -21,7 +21,6 @@ export class ProjectService {
     }
 
     public GetAllProjects(): Observable<Project[]> {
-        debugger;
         const projectRef = collection(this.firestore, 'Projects');
         const q1 = query(projectRef, where('IsActive', '==', true));
         return collectionData(q1, { idField: 'ID' }) as Observable<Project[]>;

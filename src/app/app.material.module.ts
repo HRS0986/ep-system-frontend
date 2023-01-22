@@ -26,6 +26,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSortModule } from "@angular/material/sort";
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatNativeDateModule } from "@angular/material/core";
 
 
 const materialModules = [
@@ -54,6 +55,7 @@ const materialModules = [
     MatCheckboxModule,
     MatSortModule,
     MatStepperModule,
+    MatNativeDateModule
 ];
 
 @NgModule({

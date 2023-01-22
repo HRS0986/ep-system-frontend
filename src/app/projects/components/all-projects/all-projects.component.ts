@@ -8,12 +8,12 @@ import { filter, Subscription } from "rxjs";
 import { Common, Projects } from "../../../constants";
 import { Project } from "../../../types";
 import { AddEditProjectComponent } from "../popups/add-edit-project/add-edit-project.component";
-import { AppState } from "../../../store/app.state";
 import { Store } from "@ngrx/store";
 import { projectsSelector } from "../../store/projects.selectors";
 import { isTypeMatched } from "../../../helpers/utils";
 import { KEYS_OF_PROJECT } from "../../../types.keys";
 import { ProjectActions } from "../../store/projects.actions";
+import { ProjectsState } from "../../store/projects.state";
 
 @Component({
   selector: 'app-all-projects',
@@ -25,7 +25,7 @@ export class AllProjectsComponent implements OnInit {
   constructor(
       private router: Router,
       private matDialog: MatDialog,
-      private store: Store<AppState>,
+      private store: Store<ProjectsState>,
   ) { }
 
   @ViewChild(MatSort) sort!: MatSort;

@@ -24,6 +24,7 @@ import { AngularFireFunctionsModule, REGION } from "@angular/fire/compat/functio
 import { getFunctions, provideFunctions } from "@angular/fire/functions";
 import { AngularFireModule } from "@angular/fire/compat";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { MAT_DIALOG_DEFAULT_OPTIONS } from "@angular/material/dialog";
 
 
 @NgModule({
@@ -44,7 +45,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
         NotificationsModule,
         HttpClientModule,
         StoreModule.forRoot({}, {}),
-        // StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
         EffectsModule.forRoot([]),
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireFunctionsModule,
@@ -55,6 +56,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
     ],
     providers: [
         { provide: REGION, useValue: 'us-central1' },
+        { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true, disableClose: true} },
     ],
     bootstrap: [AppComponent]
 })
