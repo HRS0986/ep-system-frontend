@@ -43,6 +43,7 @@ export class Common {
     public static readonly PAGE_NOT_FOUND = 'Page Not Found';
     public static readonly EDIT = 'Edit';
     public static readonly DELETE = 'Delete';
+
 }
 
 export class Login {

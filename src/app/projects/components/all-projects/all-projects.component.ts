@@ -4,7 +4,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatSort } from "@angular/material/sort";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
-import { filter, Subscription } from "rxjs";
+import { filter } from "rxjs";
 import { Common, Projects } from "../../../constants";
 import { Project } from "../../../types";
 import { AddEditProjectComponent } from "../popups/add-edit-project/add-edit-project.component";
@@ -43,10 +43,9 @@ export class AllProjectsComponent implements OnInit {
     Projects.PRESENT_OWNER,
     Projects.DEED_NO,
     Projects.REMARKS,
-    'actions'
+    Common.ACTION_COLUMN_TEXT
   ];
   dataSource: MatTableDataSource<Project> = new MatTableDataSource<Project>();
-  subscriptions: Subscription[] = [];
   isLoading = true;
 
   REMARKS_COLUMN = Projects.REMARKS
@@ -60,7 +59,6 @@ export class AllProjectsComponent implements OnInit {
   ID_COLUMN = Projects.ID
   PURCHASING_PRICE_COLUMN = Projects.PURCHASING_PRICE
   PURCHASING_DATE_COLUMN = Projects.PURCHASING_DATE
-
   ADD_PROJECT = Projects.ADD_PROJECT_BUTTON_TEXT;
   ACTIONS_COLUMN = Common.ACTION_COLUMN_TEXT;
   SEARCH_PLACEHOLDER = Common.SEARCH_LABEL;
@@ -90,12 +88,9 @@ export class AllProjectsComponent implements OnInit {
 
   ngOnClickAdd() {
     const dialogRef = this.matDialog.open(AddEditProjectComponent, {width: '800px', data: {edit: 0}});
-
-    const subscription = dialogRef.afterClosed().subscribe(result => {
+   dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
-
-    this.subscriptions.push(subscription);
   }
 
 }

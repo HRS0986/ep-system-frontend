@@ -3,13 +3,8 @@
 </button>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="onClickEdit(data)">
-        <mat-icon>edit</mat-icon>
-        <span>{{EDIT}}</span>
-    </button>
-
-    <button mat-menu-item (click)="onClickDelete(data)">
-        <mat-icon>delete</mat-icon>
-        <span>{{DELETE}}</span>
+    <button mat-menu-item *ngFor="let menuItem of ACTION_MENU_ITEMS" (click)="invokeAction(menuItem.action)">
+        <mat-icon>{{menuItem.iconName}}</mat-icon>
+        <span>{{menuItem.actionText}}</span>
     </button>
 </mat-menu>
