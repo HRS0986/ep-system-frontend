@@ -1,10 +1,10 @@
 ---
 name: Task
-about: Task to do
-title: "[TASK]"
+about: Task to do by developer
+title: "[TASK NAME HERE]"
 labels: task
 assignees: HRS0986
 
 ---
 
-Describe task here
+Describe the task here
