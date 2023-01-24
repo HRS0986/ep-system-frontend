@@ -28,7 +28,7 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.28",
     "moment": "^2.29.4",
-    "ngx-mask": "^14.2.4",
+    "ngx-mask": "^13.1.15",
     "ngx-spinner": "^13.1.1",
     "pdf-lib": "^1.17.1",
     "rxjs": "~7.5.0",

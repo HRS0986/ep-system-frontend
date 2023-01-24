@@ -1,1 +1,103 @@
-<p>arrears-report works!</p>
+<mat-card class="mx-3" style="margin-bottom: 70px; min-width: fit-content">
+    <mat-card-content>
+        <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+            <a mat-raised-button color="primary" class="btn-p me-3" style="color: black" [routerLink]="REPORTS_URL">
+                <mat-icon style="font-size: 17px; margin-top: 3px">arrow_back_ios</mat-icon>
+                {{BACK}}
+            </a>
+            <div>
+                <button mat-raised-button color="primary" class="btn-p me-3" style="color: black" (click)="openPDF()" *ngIf="!isLoading && dataSource.data.length != 0">
+                    <mat-icon>picture_as_pdf</mat-icon>
+                    {{EXPORT_TO_PDF}}
+                </button>
+                <button mat-raised-button color="primary" class="btn-p me-3" style="color: black" (click)="exportToExcel()" *ngIf="!isLoading && dataSource.data.length != 0">
+                    <mat-icon>table_view</mat-icon>
+                    {{EXPORT_TO_EXCEL}}
+                </button>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center flex-column align-items-center" *ngIf="!isLoading && dataSource.data.length == 0">
+            <img src="assets/img/no_reports.svg" alt="no_reports" width="400">
+            <span class="mat-headline mt-5">{{NO_REPORTS}}</span>
+        </div>
+        <div class="d-flex justify-content-center flex-column align-items-center">
+            <mat-spinner *ngIf="isLoading"></mat-spinner>
+        </div>
+        <div class="mt-3">
+            <div [hidden]="isLoading && dataSource.data.length == 0" class="mat-elevation-z8 example-container" id="report-data">
+                <table mat-table [dataSource]="dataSource" matSort>
+
+                    <ng-container matColumnDef="{{PROJECT}}">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT}} </th>
+                        <td mat-cell *matCellDef="let row"> {{row.Project}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="{{BLOCK_NO}}">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{BLOCK_NO}} </th>
+                        <td mat-cell *matCellDef="let row">{{row.BlockNo}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="{{ARREARS}}">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ARREARS}} </th>
+                        <td mat-cell *matCellDef="let row"> {{row.Arrears_3_31 | mask: 'separator.2':','}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="{{MONTHLY}}">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{MONTHLY}} </th>
+                        <td mat-cell *matCellDef="let row"> {{row.MonthRental | mask: 'separator.2':','}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="{{TOTAL_ARREARS}}">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{TOTAL_ARREARS}} </th>
+                        <td mat-cell *matCellDef="let row">{{row.TotalArrears | mask: 'separator.2':','}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="{{ARREARS_RATE}}">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ARREARS_RATE}} </th>
+                        <td mat-cell *matCellDef="let row">{{row.ArrearsRate | mask: 'separator.2':','}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="{{ARREARS_30_DAYS}}">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ARREARS_30_DAYS}} </th>
+                        <td mat-cell *matCellDef="let row"> {{row.Days30 | mask: 'separator.2':','}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="{{ARREARS_60_DAYS}}">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ARREARS_60_DAYS}} </th>
+                        <td mat-cell *matCellDef="let row"> {{row.Days60 | mask: 'separator.2':','}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="{{ARREARS_90_DAYS}}">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ARREARS_90_DAYS}} </th>
+                        <td mat-cell *matCellDef="let row"> {{row.Days90 | mask: 'separator.2':','}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="{{ARREARS_MORE_THAN_90_DAYS}}">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ARREARS_MORE_THAN_90_DAYS}} </th>
+                        <td mat-cell *matCellDef="let row"> {{row.Days90More | mask: 'separator.2':','}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="{{NAME}}">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{NAME}} </th>
+                        <td mat-cell *matCellDef="let row"> {{row.Name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="{{CONTACT}}">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{CONTACT}} </th>
+                        <td mat-cell *matCellDef="let row"> {{row.ContactNo}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">{{NO_DATA}}</td>
+                    </tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[25, 5, 10, 100]"></mat-paginator>
+
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

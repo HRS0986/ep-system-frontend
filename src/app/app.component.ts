@@ -6,7 +6,7 @@ import { CustomerService } from "./services/customer.service";
 import { ReportService } from "./services/report.service";
 import { NotificationService } from "./services/notification.service";
 import { Title } from "@angular/platform-browser";
-import { Common, LoginStatus, NavigationMenu } from "./constants";
+import { Common, LoginStatus, NavigationMenu, Reports } from "./constants";
 import { UserProfileComponent } from "./auth/components/popups/user-profile/user-profile.component";
 import { environment } from "../environments/environment";
 import { Notification } from "./types";
@@ -72,6 +72,11 @@ export class AppComponent {
   OLD_CUSTOMERS = NavigationMenu.OLD_CUSTOMERS;
   MANAGE_USERS = NavigationMenu.MANAGE_USERS;
   REPORTS = NavigationMenu.REPORTS;
+
+  ARREARS_REPORT = Reports.ARREARS_REPORT_TITLE;
+  EP_REPORT = Reports.EP_REPORT_TITLE;
+  CUSTOMER_REPORT = Reports.CUSTOMER_REPORT_TITLE;
+  CASH_COLLECTION_REPORT = Reports.CASH_REPORT_TITLE;
   PROJECTS = NavigationMenu.PROJECTS;
   REPORT_URL = `/${ReportRoutes.Root}`;
   PROJECTS_URL = `/${ProjectRoutes.Root}`;

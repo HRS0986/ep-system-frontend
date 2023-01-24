@@ -310,10 +310,10 @@ export class Projects {
 
 export class Reports {
     public static readonly REPORT_TITLE = 'Reports';
-    public static readonly CASH_REPORT_TITLE = 'Cash Collection Reports';
-    public static readonly CUSTOMER_REPORT_TITLE = 'Customer Reports';
-    public static readonly ARREARS_REPORT_TITLE = 'Arrears Reports';
-    public static readonly EP_REPORT_TITLE = 'EP Reports';
+    public static readonly CASH_REPORT_TITLE = 'Cash Collection Report';
+    public static readonly CUSTOMER_REPORT_TITLE = 'Customer Report';
+    public static readonly ARREARS_REPORT_TITLE = 'Arrears Report';
+    public static readonly EP_REPORT_TITLE = 'EP Report';
     public static readonly VIEW = 'View';
     public static readonly BILL_NO = 'Bill No';
     public static readonly LOT_NO = 'Lot No';
@@ -357,7 +357,10 @@ export class Reports {
     public static readonly INVALID_DATE_RANGE = 'Invalid date range';
     public static readonly SELECT_DATE_RANGE_TEXT = 'Select Date Range To View Reports';
     public static readonly NO_REPORTS = "There are no reports"
-    public static readonly EXPORT = "Export To PDF";
+    public static readonly EXPORT_TO_PDF = "Export To PDF";
+    public static readonly REPORT_NUMBER = "Report Number";
+    public static readonly REPORT_NAME = "Report Name";
+    public static readonly EXPORT_TO_EXCEL = "Export To Excel";
 }
 
 export class Notifications {

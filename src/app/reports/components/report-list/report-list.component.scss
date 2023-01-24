@@ -1,0 +1,30 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-column-Report-Number {
+  width: 10%;
+  font-weight: bold;
+}
+
+.mat-column-Action {
+  width: 10%;
+  text-align: center;
+}
+
+.mat-column-Report-Name {
+  font-weight: bold;
+}
+
+td[class*='mat-column-Report-Number'] {
+  padding-left: 60px !important;
+}
+
+th[class*='mat-column-Action'] {
+  padding-left: 10px !important;
+}
