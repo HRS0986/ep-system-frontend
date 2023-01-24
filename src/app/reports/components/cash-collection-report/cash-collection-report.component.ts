@@ -53,7 +53,8 @@ export class CashCollectionReportComponent implements OnInit {
   VIEW_REPORTS = Reports.VIEW_REPORTS;
   SELECT_DATE_RANGE = Reports.SELECT_DATE_RANGE_TEXT;
   NO_REPORTS = Reports.NO_REPORTS;
-  EXPORT = Reports.EXPORT;
+  EXPORT_TO_PDF = Reports.EXPORT_TO_PDF;
+  EXPORT_TO_EXCEL = Reports.EXPORT_TO_EXCEL;
   BACK = Reports.BACK_TO_REPORTS;
   REPORTS_URL = `/${ReportRoutes.Root}`;
 
@@ -70,6 +71,10 @@ export class CashCollectionReportComponent implements OnInit {
     this.dateForm.controls['endDate'].setValue(endDate);
     this.isDateRangeNotSelected = false;
     this.onClickViewReports();
+  }
+
+  exportToExcel() {
+
   }
 
   onClickViewReports() {

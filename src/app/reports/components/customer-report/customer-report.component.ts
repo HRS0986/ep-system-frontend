@@ -52,7 +52,8 @@ export class CustomerReportComponent implements OnInit {
   NO_DATA = Reports.NO_DATA;
   TITLE = Reports.REPORT_TITLE;
   NO_REPORTS = Reports.NO_REPORTS;
-  EXPORT = Reports.EXPORT;
+  EXPORT_TO_PDF = Reports.EXPORT_TO_PDF;
+  EXPORT_TO_EXCEL = Reports.EXPORT_TO_EXCEL;
   BACK = Reports.BACK_TO_REPORTS;
   REPORTS_URL = `/${ReportRoutes.Root}`;
 
@@ -63,6 +64,10 @@ export class CustomerReportComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.isLoading = false;
     });
+  }
+
+  exportToExcel() {
+
   }
 
 

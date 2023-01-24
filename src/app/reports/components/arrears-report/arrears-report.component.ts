@@ -51,7 +51,8 @@ export class ArrearsReportComponent implements OnInit {
   ARREARS_MORE_THAN_90_DAYS = Reports.DAYS_MORE90;
   NO_DATA = Reports.NO_DATA;
   NO_REPORTS = Reports.NO_REPORTS;
-  EXPORT = Reports.EXPORT;
+  EXPORT_TO_PDF = Reports.EXPORT_TO_PDF;
+  EXPORT_TO_EXCEL = Reports.EXPORT_TO_EXCEL;
   BACK = Reports.BACK_TO_REPORTS;
   REPORTS_URL = `/${ReportRoutes.Root}/${ReportRoutes.Arrears}`;
 
@@ -62,6 +63,10 @@ export class ArrearsReportComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.isLoading =false;
     })
+  }
+
+  exportToExcel() {
+
   }
 
   public openPDF(): void {

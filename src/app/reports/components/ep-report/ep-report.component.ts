@@ -47,9 +47,10 @@ export class EpReportComponent implements OnInit {
     DOC_CHARGE = Reports.DOC_CHARGE;
     NO_DATA = Reports.NO_DATA;
     NO_REPORTS = Reports.NO_REPORTS;
-    EXPORT = Reports.EXPORT;
+    EXPORT_TO_PDF = Reports.EXPORT_TO_PDF;
     REPORTS_URL = `/${ReportRoutes.Root}`;
     BACK = Reports.BACK_TO_REPORTS;
+    EXPORT_TO_EXCEL = Reports.EXPORT_TO_EXCEL;
 
     ngOnInit(): void {
         this.reportService.GetEPReport().then(response => {
@@ -58,6 +59,10 @@ export class EpReportComponent implements OnInit {
             this.dataSource.paginator = this.paginator;
             this.isLoading = false;
         })
+    }
+
+    exportToExcel() {
+
     }
 
     public openPDF(): void {

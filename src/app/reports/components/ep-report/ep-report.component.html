@@ -6,10 +6,16 @@
                 <mat-icon style="font-size: 17px; margin-top: 3px">arrow_back_ios</mat-icon>
                 {{BACK}}
             </a>
-            <button mat-raised-button color="primary" class="btn-p me-3" style="color: black" (click)="openPDF()" *ngIf="!isLoading && dataSource.data.length != 0">
-                <mat-icon>picture_as_pdf</mat-icon>
-                {{EXPORT}}
-            </button>
+            <div>
+                <button mat-raised-button color="primary" class="btn-p me-3" style="color: black" (click)="openPDF()" *ngIf="!isLoading && dataSource.data.length != 0">
+                    <mat-icon>picture_as_pdf</mat-icon>
+                    {{EXPORT_TO_PDF}}
+                </button>
+                <button mat-raised-button color="primary" class="btn-p me-3" style="color: black" (click)="exportToExcel()" *ngIf="!isLoading && dataSource.data.length != 0">
+                    <mat-icon>table_view</mat-icon>
+                    {{EXPORT_TO_EXCEL}}
+                </button>
+            </div>
         </div>
         <div class="d-flex justify-content-center flex-column align-items-center" *ngIf="!isLoading && dataSource.data.length == 0">
             <img src="assets/img/no_reports.svg" alt="no_reports" width="400">
