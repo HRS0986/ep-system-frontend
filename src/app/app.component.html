@@ -15,23 +15,52 @@
                         </a>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;" [routerLink]="EP_CUSTOMERS_URL">
+                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;"
+                   [routerLink]="EP_CUSTOMERS_URL">
                     <mat-icon class="menu-icon">people</mat-icon>
                     {{PRESENT_CUSTOMERS}}
                 </a>
-                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;" [routerLink]="ADVANCED_CUSTOMERS_URL">
+                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;"
+                   [routerLink]="ADVANCED_CUSTOMERS_URL">
                     <mat-icon class="menu-icon">perm_contact_calendar</mat-icon>
                     {{ADVANCED_CUSTOMERS}}
                 </a>
-                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;" [routerLink]="OLD_CUSTOMERS_URL">
+                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;"
+                   [routerLink]="OLD_CUSTOMERS_URL">
                     <mat-icon class="menu-icon">perm_contact_calendar</mat-icon>
                     {{OLD_CUSTOMERS}}
                 </a>
             </mat-expansion-panel>
-            <a mat-button class="menu-btn" [routerLink]="REPORT_URL">
-                <mat-icon class="menu-icon">content_paste</mat-icon>
-                {{REPORTS}}
-            </a>
+            <mat-expansion-panel class="sidenav" style="box-shadow: none">
+                <mat-expansion-panel-header style="padding-left: 16px; color: #eeeeee">
+                    <mat-panel-title class="w-100 menu-btn m-0">
+                        <a mat-button class="menu-btn ps-0" style="color: #eeeeee">
+                            <mat-icon class="menu-icon">content_paste</mat-icon>
+                            {{REPORTS}}
+                        </a>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;"
+                   [routerLink]="EP_CUSTOMERS_URL">
+                    <mat-icon class="menu-icon">local_atm</mat-icon>
+                    {{CASH_COLLECTION_REPORT}}
+                </a>
+                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;"
+                   [routerLink]="ADVANCED_CUSTOMERS_URL">
+                    <mat-icon class="menu-icon">switch_account</mat-icon>
+                    {{CUSTOMER_REPORT}}
+                </a>
+                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;"
+                   [routerLink]="OLD_CUSTOMERS_URL">
+                    <mat-icon class="menu-icon">pending_actions</mat-icon>
+                    {{ARREARS_REPORT}}
+                </a>
+                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;"
+                   [routerLink]="OLD_CUSTOMERS_URL">
+                    <mat-icon class="menu-icon">location_city</mat-icon>
+                    {{EP_REPORT}}
+                </a>
+            </mat-expansion-panel>
             <a mat-button class="menu-btn" [routerLink]="PROJECTS_URL">
                 <mat-icon class="menu-icon">location_city</mat-icon>
                 {{PROJECTS}}
@@ -52,7 +81,9 @@
                     <span class="spacer"></span>
                     <a mat-button (click)="logout()">Logout</a>
                     <a mat-button [routerLink]="NOTIFICATIONS_URL">
-                        <mat-icon matBadgeColor="warn" matBadgeSize="small" [matBadge]="notificationCount" [matBadgeHidden]="!hideNotification">notifications</mat-icon>
+                        <mat-icon matBadgeColor="warn" matBadgeSize="small" [matBadge]="notificationCount"
+                                  [matBadgeHidden]="!hideNotification">notifications
+                        </mat-icon>
                     </a>
                     <a mat-button (click)="onClickUserData()">
                         <mat-icon>account_circle</mat-icon>
@@ -62,7 +93,8 @@
                 <!--  Toolbar-->
                 <router-outlet></router-outlet>
             </div>
-            <footer class="footer footer-card row justify-content-center bg-light align-items-center" style="height: 5%;">
+            <footer class="footer footer-card row justify-content-center bg-light align-items-center"
+                    style="height: 5%;">
                 {{COPYRIGHT}}
             </footer>
         </mat-drawer-content>
@@ -73,7 +105,8 @@
 
 <ng-template #elseBlock>
     <router-outlet></router-outlet>
-    <footer class="footer footer-card-flat row justify-content-center bg-light align-items-center" style="height: 50px;">
+    <footer class="footer footer-card-flat row justify-content-center bg-light align-items-center"
+            style="height: 50px;">
         {{COPYRIGHT}}
     </footer>
 </ng-template>

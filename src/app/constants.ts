@@ -310,10 +310,10 @@ export class Projects {
 
 export class Reports {
     public static readonly REPORT_TITLE = 'Reports';
-    public static readonly CASH_REPORT_TITLE = 'Cash Collection Reports';
-    public static readonly CUSTOMER_REPORT_TITLE = 'Customer Reports';
-    public static readonly ARREARS_REPORT_TITLE = 'Arrears Reports';
-    public static readonly EP_REPORT_TITLE = 'EP Reports';
+    public static readonly CASH_REPORT_TITLE = 'Cash Collection Report';
+    public static readonly CUSTOMER_REPORT_TITLE = 'Customer Report';
+    public static readonly ARREARS_REPORT_TITLE = 'Arrears Report';
+    public static readonly EP_REPORT_TITLE = 'EP Report';
     public static readonly VIEW = 'View';
     public static readonly BILL_NO = 'Bill No';
     public static readonly LOT_NO = 'Lot No';
