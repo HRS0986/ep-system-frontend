@@ -19,7 +19,7 @@ import { ReportRoutes } from "../../../route-data";
 })
 export class CashCollectionReportComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private reportService: ReportService, private helperService: HelperService) { }
+  constructor(private formBuilder: FormBuilder, private reportService: ReportService, private helperService: HelperService) { }
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -50,7 +50,6 @@ export class CashCollectionReportComponent implements OnInit {
   FULL_PAYMENT = Reports.FULL_PAYMENT;
   DEED_AND_PLAN = Reports.DEED_AND_PLAN;
   NO_DATA = Reports.NO_DATA;
-  TITLE = Reports.REPORT_TITLE;
   VIEW_REPORTS = Reports.VIEW_REPORTS;
   SELECT_DATE_RANGE = Reports.SELECT_DATE_RANGE_TEXT;
   NO_REPORTS = Reports.NO_REPORTS;
@@ -58,9 +57,9 @@ export class CashCollectionReportComponent implements OnInit {
   BACK = Reports.BACK_TO_REPORTS;
   REPORTS_URL = `/${ReportRoutes.Root}`;
 
-  dateForm = this.fb.group({
-    startDate: ['', Validators.required],
-    endDate: ['', Validators.required]
+  dateForm = this.formBuilder.group({
+    startDate: this.formBuilder.control('', [Validators.required]),
+    endDate: this.formBuilder.control('', [Validators.required])
   });
 
   ngOnInit(): void {
@@ -91,7 +90,7 @@ export class CashCollectionReportComponent implements OnInit {
 
   public openPDF(): void {
     // @ts-ignore
-    var pdf = new jsPDF();
+    let pdf = new jsPDF();
 
     pdf.setFontSize(25);
     pdf.text('Cash Collection Report', 60, 15);

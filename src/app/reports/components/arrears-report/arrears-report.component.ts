@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from "@angular/material/sort";
-import { FormBuilder } from "@angular/forms";
 import { ReportService } from "../../../services/report.service";
 import { MatPaginator } from "@angular/material/paginator";
 import { Reports } from "../../../constants";
@@ -15,7 +14,7 @@ import { ReportRoutes } from "../../../route-data";
 })
 export class ArrearsReportComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private reportService: ReportService) { }
+  constructor(private reportService: ReportService) { }
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
