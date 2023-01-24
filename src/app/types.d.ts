@@ -204,3 +204,9 @@ export interface ActionMenuItem<ComponentType> {
   iconName: string;
   action: keyof ComponentType;
 }
+
+export interface ReportItem {
+  reportNumber: number;
+  reportTitle: string;
+  reportUrl: string;
+}

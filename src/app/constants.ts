@@ -358,6 +358,8 @@ export class Reports {
     public static readonly SELECT_DATE_RANGE_TEXT = 'Select Date Range To View Reports';
     public static readonly NO_REPORTS = "There are no reports"
     public static readonly EXPORT = "Export To PDF";
+    public static readonly REPORT_NUMBER = "Report Number";
+    public static readonly REPORT_NAME = "Report Name";
 }
 
 export class Notifications {
