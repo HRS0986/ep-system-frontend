@@ -10,7 +10,6 @@ import { ActionMenuComponent } from './components/action-menu/action-menu.compon
 import { HttpClientModule } from "@angular/common/http";
 import { EffectsModule } from "@ngrx/effects";
 import { ProjectsEffects } from "./store/projects.effects";
-import { ProjectService } from "../services/projects.service";
 import { StoreModule } from "@ngrx/store";
 import { projectsReducer } from "./store/projects.reducer";
 import { PROJECT_FEATURE_NAME } from "./store/projects.selectors";
@@ -30,8 +29,7 @@ import { PROJECT_FEATURE_NAME } from "./store/projects.selectors";
         HttpClientModule,
         EffectsModule.forFeature([ProjectsEffects]),
         StoreModule.forFeature(PROJECT_FEATURE_NAME, projectsReducer)
-    ],
-    providers: [ProjectService]
+    ]
 })
 export class ProjectsModule {
 }

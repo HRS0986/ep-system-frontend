@@ -9,6 +9,8 @@ import { ReportListComponent } from './components/report-list/report-list.compon
 import { EpReportComponent } from './components/ep-report/ep-report.component';
 import { MaterialModule } from "../app.material.module";
 import { FormsModule } from "@angular/forms";
+import { NgxMaskModule } from "ngx-mask";
+import { HttpClientModule } from "@angular/common/http";
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { FormsModule } from "@angular/forms";
         CommonModule,
         ReportsRoutingModule,
         MaterialModule,
-        FormsModule
+        FormsModule,
+        NgxMaskModule.forChild(),
+        HttpClientModule
     ]
 })
 export class ReportsModule {

@@ -25,6 +25,7 @@ import { getFunctions, provideFunctions } from "@angular/fire/functions";
 import { AngularFireModule } from "@angular/fire/compat";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { MAT_DIALOG_DEFAULT_OPTIONS } from "@angular/material/dialog";
+import { NgxMaskModule } from "ngx-mask";
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from "@angular/material/dialog";
         provideAuth(() => getAuth()),
         provideFirestore(() => getFirestore()),
         provideFunctions(() => getFunctions()),
+        NgxMaskModule.forRoot()
     ],
     providers: [
         { provide: REGION, useValue: 'us-central1' },
