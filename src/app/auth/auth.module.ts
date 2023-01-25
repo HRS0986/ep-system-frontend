@@ -8,7 +8,7 @@ import { ManageUsersComponent } from './components/manage-users/manage-users.com
 import { AddEditUserComponent } from './components/popups/add-edit-user/add-edit-user.component';
 import { UserProfileComponent } from './components/popups/user-profile/user-profile.component';
 import { MaterialModule } from "../app.material.module";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgxSpinnerModule } from "ngx-spinner";
 
 
@@ -25,7 +25,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
         AuthRoutingModule,
         MaterialModule,
         ReactiveFormsModule,
-        NgxSpinnerModule
+        NgxSpinnerModule,
+        FormsModule
     ]
 })
 export class AuthModule {

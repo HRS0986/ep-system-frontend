@@ -88,7 +88,6 @@ export class AppComponent {
         dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
         });
-
     }
 
     ngOnInit() {

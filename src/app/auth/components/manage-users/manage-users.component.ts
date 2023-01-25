@@ -1,15 +1,104 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Common, SnackBarStatus, UserManagement } from "../../../constants";
+import { User } from "../../../types";
+import { UserService } from "../../../services/user.service";
+import { HelperService } from "../../../services/helper.service";
+import { Router } from "@angular/router";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatDialog } from "@angular/material/dialog";
+import { MatSort } from "@angular/material/sort";
+import { DeleteConfirmPopupComponent } from "../../../delete-confirm-popup/delete-confirm-popup.component";
+import { AddEditUserComponent } from "../popups/add-edit-user/add-edit-user.component";
 
 @Component({
-  selector: 'app-manage-users',
-  templateUrl: './manage-users.component.html',
-  styleUrls: ['./manage-users.component.scss']
+    selector: 'app-manage-users',
+    templateUrl: './manage-users.component.html',
+    styleUrls: ['./manage-users.component.scss']
 })
 export class ManageUsersComponent implements OnInit {
+    constructor(
+        private router: Router,
+        private matDialog: MatDialog,
+        private userService: UserService,
+        private helperService: HelperService
+    ) {
+    }
 
-  constructor() { }
+    @ViewChild(MatSort) sort!: MatSort;
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  ngOnInit(): void {
-  }
+    displayedColumns: string[] = [
+        UserManagement.FIRSTNAME_LABEL,
+        UserManagement.LASTNAME_LABEL,
+        UserManagement.EMAIL_LABEL,
+        UserManagement.CONTACT_NUMBER_LABEL,
+        UserManagement.DELETE,
+        UserManagement.IS_DISABLE_LABEL
+    ];
+
+    dataSource: MatTableDataSource<User> = new MatTableDataSource();
+    isLoading = true;
+
+    FIRSTNAME = UserManagement.FIRSTNAME_LABEL;
+    LASTNAME = UserManagement.LASTNAME_LABEL;
+    EMAIL = UserManagement.EMAIL_LABEL;
+    DISABLE = UserManagement.IS_DISABLE_LABEL;
+    DELETE = UserManagement.DELETE;
+    CONTACT_NUMBER = UserManagement.CONTACT_NUMBER_LABEL;
+    ADD_NEW_USER = UserManagement.ADD_NEW_USER;
+
+    ngOnInit() {
+        this.userService.GetAllUsers().then(users => {
+            this.dataSource = new MatTableDataSource<User>(users);
+            this.dataSource.sort = this.sort;
+            this.dataSource.paginator = this.paginator;
+            this.isLoading = false;
+        });
+    }
+
+    onUserActiveStatusChange(user: User) {
+        const snackBarRef = this.helperService.openAndGetSnackBar({
+            text: Common.SAVING,
+            status: SnackBarStatus.INFO
+        });
+
+        this.userService.UpdateUserStatus(user.UID!, !user.Disabled!).then(r => {
+            snackBarRef.dismiss();
+            if (!r.status) {
+                this.helperService.openSnackBar({ text: r.message, status: SnackBarStatus.FAILED });
+            }
+        });
+    }
+
+    onClickAddNewUser() {
+        const dialogRef = this.matDialog.open(AddEditUserComponent, { width: '400px' });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
+
+    onClickDelete(id: string) {
+        const userName = this.dataSource.data.find(u => u.UID == id);
+        const dialogRef = this.matDialog.open(DeleteConfirmPopupComponent, {
+            width: '400px',
+            data: {
+                title: UserManagement.DELETE_USER_TITLE,
+                body: UserManagement.DELETE_USER_MESSAGE,
+                entityName: userName
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.userService.DeleteUser(id).then((result) => {
+                    if (result.status) {
+                        this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.SUCCESS });
+                    } else {
+                        this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.FAILED });
+                    }
+                });
+            }
+        });
+    }
 
 }
