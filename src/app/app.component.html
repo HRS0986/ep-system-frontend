@@ -6,70 +6,31 @@
             <div class="logo-card w-100 mb-3">
                 <img src="{{logo}}" alt="logo">
             </div>
-            <mat-expansion-panel class="sidenav" style="box-shadow: none">
-                <mat-expansion-panel-header style="padding-left: 16px; color: #eeeeee">
-                    <mat-panel-title class="w-100 menu-btn m-0">
-                        <a mat-button class="menu-btn ps-0" style="color: #eeeeee">
-                            <mat-icon class="menu-icon">people</mat-icon>
-                            {{CUSTOMERS}}
-                        </a>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;"
-                   [routerLink]="EP_CUSTOMERS_URL">
-                    <mat-icon class="menu-icon">people</mat-icon>
-                    {{PRESENT_CUSTOMERS}}
+            <ng-container *ngFor="let menuItem of navigationMenuItems">
+                <a mat-button class="menu-btn" [routerLink]="menuItem.navigationLink"
+                   *ngIf="menuItem.subMenuItems.length == 0">
+                    <mat-icon class="menu-icon">{{menuItem.iconName}}</mat-icon>
+                    {{menuItem.menuText}}
                 </a>
-                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;"
-                   [routerLink]="ADVANCED_CUSTOMERS_URL">
-                    <mat-icon class="menu-icon">perm_contact_calendar</mat-icon>
-                    {{ADVANCED_CUSTOMERS}}
-                </a>
-                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;"
-                   [routerLink]="OLD_CUSTOMERS_URL">
-                    <mat-icon class="menu-icon">perm_contact_calendar</mat-icon>
-                    {{OLD_CUSTOMERS}}
-                </a>
-            </mat-expansion-panel>
-            <mat-expansion-panel class="sidenav" style="box-shadow: none">
-                <mat-expansion-panel-header style="padding-left: 16px; color: #eeeeee" [routerLink]="[REPORT_URL]">
-                    <mat-panel-title class="w-100 menu-btn m-0">
-                        <a mat-button class="menu-btn ps-0" style="color: #eeeeee">
-                            <mat-icon class="menu-icon">content_paste</mat-icon>
-                            {{REPORTS}}
-                        </a>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;"
-                   [routerLink]="EP_CUSTOMERS_URL">
-                    <mat-icon class="menu-icon">local_atm</mat-icon>
-                    {{CASH_COLLECTION_REPORT}}
-                </a>
-                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;"
-                   [routerLink]="ADVANCED_CUSTOMERS_URL">
-                    <mat-icon class="menu-icon">switch_account</mat-icon>
-                    {{CUSTOMER_REPORT}}
-                </a>
-                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;"
-                   [routerLink]="OLD_CUSTOMERS_URL">
-                    <mat-icon class="menu-icon">pending_actions</mat-icon>
-                    {{ARREARS_REPORT}}
-                </a>
-                <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;"
-                   [routerLink]="OLD_CUSTOMERS_URL">
-                    <mat-icon class="menu-icon">location_city</mat-icon>
-                    {{EP_REPORT}}
-                </a>
-            </mat-expansion-panel>
-            <a mat-button class="menu-btn" [routerLink]="PROJECTS_URL">
-                <mat-icon class="menu-icon">location_city</mat-icon>
-                {{PROJECTS}}
-            </a>
-            <a mat-button class="menu-btn" [routerLink]="MANAGE_USERS_URL">
-                <mat-icon class="menu-icon">manage_accounts</mat-icon>
-                {{MANAGE_USERS}}
-            </a>
+                <mat-expansion-panel class="sidenav" style="box-shadow: none" *ngIf="menuItem.subMenuItems.length != 0">
+                    <mat-expansion-panel-header style="padding-left: 16px; color: #eeeeee"
+                                                [routerLink]="menuItem.navigationLink">
+                        <mat-panel-title class="w-100 menu-btn m-0">
+                            <a mat-button class="menu-btn ps-0" style="color: #eeeeee">
+                                <mat-icon class="menu-icon">{{menuItem.iconName}}</mat-icon>
+                                {{menuItem.menuText}}
+                            </a>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;"
+                       [routerLink]="subMenu.navigationLink" *ngFor="let subMenu of menuItem.subMenuItems">
+                        <mat-icon class="menu-icon">{{subMenu.iconName}}</mat-icon>
+                        {{subMenu.menuText}}
+                    </a>
+                </mat-expansion-panel>
+            </ng-container>
         </mat-drawer>
+
         <mat-drawer-content style="background-color: #f0f0f0">
             <div class="justify-content-center d-flex flex-column">
                 <!--  Toolbar-->

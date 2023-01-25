@@ -210,3 +210,10 @@ export interface ReportItem {
   reportTitle: string;
   reportUrl: string;
 }
+
+export interface NavigationMenuItem {
+  menuText: string;
+  iconName: string;
+  navigationLink: string;
+  subMenuItems: NavigationMenuItem[];
+}
