@@ -27,13 +27,13 @@
     "bootstrap": "^5.2.3",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.28",
+    "mat-table-exporter": "^10.2.4",
     "moment": "^2.29.4",
     "ngx-mask": "^13.1.15",
     "ngx-spinner": "^13.1.1",
     "pdf-lib": "^1.17.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
-    "xlsx": "^0.18.5",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

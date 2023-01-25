@@ -11,6 +11,7 @@ import { MaterialModule } from "../app.material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgxMaskModule } from "ngx-mask";
 import { HttpClientModule } from "@angular/common/http";
+import { MatTableExporterModule } from "mat-table-exporter";
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { HttpClientModule } from "@angular/common/http";
         FormsModule,
         NgxMaskModule.forChild(),
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatTableExporterModule
     ]
 })
 export class ReportsModule {

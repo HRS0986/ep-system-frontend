@@ -73,10 +73,6 @@ export class CashCollectionReportComponent implements OnInit {
     this.onClickViewReports();
   }
 
-  exportToExcel() {
-
-  }
-
   onClickViewReports() {
     if (this.dateForm.valid) {
       this.isLoading = true;
@@ -90,8 +86,6 @@ export class CashCollectionReportComponent implements OnInit {
       this.helperService.openSnackBar({text:Reports.INVALID_DATE_RANGE, status: SnackBarStatus.FAILED});
     }
   }
-
-
 
   public openPDF(): void {
     // @ts-ignore
