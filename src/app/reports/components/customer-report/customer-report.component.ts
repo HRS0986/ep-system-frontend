@@ -66,11 +66,6 @@ export class CustomerReportComponent implements OnInit {
     });
   }
 
-  exportToExcel() {
-
-  }
-
-
   public openPDF(): void {
     // @ts-ignore
     let pdf = new jsPDF('l', 'pt', 'a4');

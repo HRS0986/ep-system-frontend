@@ -61,10 +61,6 @@ export class EpReportComponent implements OnInit {
         })
     }
 
-    exportToExcel() {
-
-    }
-
     public openPDF(): void {
         // @ts-ignore
         let pdf = new jsPDF();
@@ -112,6 +108,4 @@ export class EpReportComponent implements OnInit {
         // Open PDF document in browser's new tab
         pdf.output('dataurlnewwindow')
     }
-
-
 }

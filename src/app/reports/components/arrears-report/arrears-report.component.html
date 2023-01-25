@@ -10,7 +10,7 @@
                     <mat-icon>picture_as_pdf</mat-icon>
                     {{EXPORT_TO_PDF}}
                 </button>
-                <button mat-raised-button color="primary" class="btn-p me-3" style="color: black" (click)="exportToExcel()" *ngIf="!isLoading && dataSource.data.length != 0">
+                <button mat-raised-button color="primary" class="btn-p me-3" style="color: black" (click)="exporter.exportTable('xlsx')" *ngIf="!isLoading && dataSource.data.length != 0">
                     <mat-icon>table_view</mat-icon>
                     {{EXPORT_TO_EXCEL}}
                 </button>
@@ -24,8 +24,8 @@
             <mat-spinner *ngIf="isLoading"></mat-spinner>
         </div>
         <div class="mt-3">
-            <div [hidden]="isLoading && dataSource.data.length == 0" class="mat-elevation-z8 example-container" id="report-data">
-                <table mat-table [dataSource]="dataSource" matSort>
+            <div [hidden]="isLoading && dataSource.data.length == 0" class="mat-elevation-z8 example-container" id="report-data" #reportTable>
+                <table mat-table matTableExporter [dataSource]="dataSource" matSort #exporter="matTableExporter">
 
                     <ng-container matColumnDef="{{PROJECT}}">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT}} </th>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from "@angular/material/sort";
 import { ReportService } from "../../../services/report.service";
 import { MatPaginator } from "@angular/material/paginator";
@@ -18,6 +18,7 @@ export class ArrearsReportComponent implements OnInit {
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+@ViewChild("reportTable") reportTable!: ElementRef;
 
   isLoading = true;
   displayedColumns: string[] = [
@@ -63,10 +64,6 @@ export class ArrearsReportComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.isLoading =false;
     })
-  }
-
-  exportToExcel() {
-
   }
 
   public openPDF(): void {
