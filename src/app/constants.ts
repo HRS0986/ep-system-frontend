@@ -268,6 +268,10 @@ export class NavigationMenu {
     public static readonly ADVANCED_CUSTOMERS = 'Advanced Customers';
     public static readonly MANAGE_USERS = 'Manage Users';
     public static readonly REPORTS = 'Reports';
+    public static readonly ARREARS_REPORTS = 'Arrears Reports';
+    public static readonly CASH_COLLECTION_REPORTS = 'Cash Collection Reports';
+    public static readonly CUSTOMER_REPORTS = 'Customer Reports';
+    public static readonly EP_REPORTS = 'EP Reports';
     public static readonly PROJECTS = 'Projects';
 }
 
