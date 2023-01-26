@@ -14,26 +14,29 @@ import { LedgerComponent } from './components/ledger/ledger.component';
 import { MaterialModule } from "../app.material.module";
 import { FormsModule } from "@angular/forms";
 import { ViewCustomerComponent } from './components/view-customer/view-customer.component';
+import { NgxMaskModule } from "ngx-mask";
 
 
 @NgModule({
-  declarations: [
-    OldCustomersComponent,
-    EpCustomersComponent,
-    AdvancedCustomersComponent,
-    ViewOldCustomerComponent,
-    AddNewCustomerComponent,
-    MakePaymentComponent,
-    ChangeInstallmentComponent,
-    SettlementComponent,
-    LedgerComponent,
-    ViewCustomerComponent
-  ],
-  imports: [
-    CommonModule,
-    CustomersRoutingModule,
-    MaterialModule,
-      FormsModule
-  ]
+    declarations: [
+        OldCustomersComponent,
+        EpCustomersComponent,
+        AdvancedCustomersComponent,
+        ViewOldCustomerComponent,
+        AddNewCustomerComponent,
+        MakePaymentComponent,
+        ChangeInstallmentComponent,
+        SettlementComponent,
+        LedgerComponent,
+        ViewCustomerComponent
+    ],
+    imports: [
+        CommonModule,
+        CustomersRoutingModule,
+        MaterialModule,
+        FormsModule,
+        NgxMaskModule.forChild()
+    ]
 })
-export class CustomersModule { }
+export class CustomersModule {
+}
