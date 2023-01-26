@@ -60,7 +60,7 @@ export class ReportService {
         };
     }
 
-    public async GetCashReport(startDate: string, endDate: string): Promise<FnResponse<CashCollectionReport[]>> {
+    public async GetCashCollectionReport(startDate: string, endDate: string): Promise<FnResponse<CashCollectionReport[]>> {
         const data: CashCollectionReport[] = [];
         const clients: Customer[] = await firstValueFrom(this.clientService.GetAllClientData());
         for (const client of clients) {

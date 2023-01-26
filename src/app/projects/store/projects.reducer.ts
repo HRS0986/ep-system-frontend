@@ -5,7 +5,6 @@ import { ProjectActions } from "./projects.actions";
 
 export const projectsReducer = createReducer(
     initialState,
-
     on(ProjectActions.get_all_success, (state: ProjectsState, data) => {
         return {
             ...state,

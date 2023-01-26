@@ -76,7 +76,7 @@ export class CashCollectionReportComponent implements OnInit {
   onClickViewReports() {
     if (this.dateForm.valid) {
       this.isLoading = true;
-      this.reportService.GetCashReport(this.dateForm.value.startDate, this.dateForm.value.endDate).then(data => {
+      this.reportService.GetCashCollectionReport(this.dateForm.value.startDate, this.dateForm.value.endDate).then(data => {
         this.dataSource = new MatTableDataSource<CashCollectionReport>(data.data);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;

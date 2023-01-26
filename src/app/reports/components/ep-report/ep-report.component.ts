@@ -9,6 +9,13 @@ import firebase from "firebase/compat";
 import { MatTableDataSource } from "@angular/material/table";
 import { ReportRoutes } from "../../../route-data";
 import Timestamp = firebase.firestore.Timestamp;
+import { Store } from "@ngrx/store";
+import { ReportsState } from "../../store/reports.state";
+import { epReportSelector } from "../../store/reports.selectors";
+import { filter } from "rxjs";
+import { isTypeMatched } from "../../../helpers/utils";
+import { KEYS_OF_EP_REPORT } from "../../../types.keys";
+import { ReportActions } from "../../store/reports.actions";
 
 @Component({
     selector: 'app-ep-report',
@@ -17,7 +24,7 @@ import Timestamp = firebase.firestore.Timestamp;
 })
 export class EpReportComponent implements OnInit {
 
-    constructor(private reportService: ReportService) {
+    constructor(private reportService: ReportService, private store: Store<ReportsState>) {
     }
 
     @ViewChild(MatSort) sort!: MatSort;
@@ -53,12 +60,15 @@ export class EpReportComponent implements OnInit {
     EXPORT_TO_EXCEL = Reports.EXPORT_TO_EXCEL;
 
     ngOnInit(): void {
-        this.reportService.GetEPReport().then(response => {
-            this.dataSource = new MatTableDataSource<EPReport>(response.data);
-            this.dataSource.sort = this.sort;
-            this.dataSource.paginator = this.paginator;
-            this.isLoading = false;
-        })
+        this.store.select(epReportSelector)
+            .pipe(filter(reports => isTypeMatched(reports[0], KEYS_OF_EP_REPORT)))
+            .subscribe(data => {
+                this.dataSource = new MatTableDataSource<EPReport>(data);
+                this.dataSource.sort = this.sort;
+                this.dataSource.paginator = this.paginator;
+                this.isLoading = false;
+            });
+        this.store.dispatch(ReportActions.get_ep_report())
     }
 
     public openPDF(): void {

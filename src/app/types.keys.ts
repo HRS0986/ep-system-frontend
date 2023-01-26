@@ -28,6 +28,17 @@ export const KEYS_OF_USER = [
     'Role?;'
 ];
 
+export const KEYS_OF_EP_REPORT = [
+    "Project",
+    "BlockNo",
+    "RentalDate",
+    "NumberOfMonth",
+    "EPValue",
+    "Capital",
+    "Interest",
+    "DocumentCharge"
+];
+
 export const KEYS_OF_CLIENT = [
     'ID',
     'Project',
