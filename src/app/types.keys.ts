@@ -28,6 +28,57 @@ export const KEYS_OF_USER = [
     'Role?;'
 ];
 
+export const KEYS_OF_EP_REPORT = [
+    "Project",
+    "BlockNo",
+    "RentalDate",
+    "NumberOfMonth",
+    "EPValue",
+    "Capital",
+    "Interest",
+    "DocumentCharge"
+];
+
+export const KEYS_OF_CUSTOMER_REPORT = [
+    "No",
+    "DateOfSale",
+    "Project",
+    "BlockNo",
+    "CardNo",
+    "CustomerName",
+    "Address",
+    "IDNumber",
+    "ContactNo",
+    "Note"
+];
+
+export const KEYS_OF_ARREARS_REPORT = [
+    "Project",
+    "BlockNo",
+    "Arrears_3_31",
+    "MonthlyRental",
+    "TotalArrears",
+    "ArrearsRate",
+    "Days30",
+    "Days60",
+    "Days90",
+    "Days90More",
+    "Name",
+    "ContactNo"
+];
+
+export const KEYS_OF_CASH_COLLECTION_REPORT = [
+    "Date",
+    "BillNo",
+    "LotNo",
+    "Project",
+    "Sale",
+    "EP",
+    "Advance",
+    "FullPayment",
+    "DeedAndPlan"
+];
+
 export const KEYS_OF_CLIENT = [
     'ID',
     'Project',

@@ -37,7 +37,6 @@ export class UserProfileComponent implements OnInit {
   isIncorrectOldPassword: boolean = false;
   isInvalidPhoneNumber: boolean = false;
   user!: User
-
   TITLE: string = UserMessages.EDIT_USER_PROFILE_TITLE;
   CURRENT_PASSWORD: string = SignUp.CURRENT_PASSWORD_LABEL;
   NEW_PASSWORD: string = SignUp.NEW_PASSWORD_LABEL;
