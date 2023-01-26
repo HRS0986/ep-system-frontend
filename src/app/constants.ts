@@ -117,6 +117,7 @@ export class NewCustomer {
 
     public static readonly BasicDetails = class BasicDetails {
         public static readonly BASIC_CUSTOMER_TAB_TEXT = 'Customer Details';
+        public static readonly SECONDARY_CONTACT_LABEL = 'Secondary Contact Numbers';
         public static readonly NAME_LABEL = 'Customer Name';
         public static readonly ADDRESS_LABEL = 'Address';
         public static readonly PHONE_LABEL = 'Phone Number';

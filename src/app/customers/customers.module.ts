@@ -12,7 +12,7 @@ import { ChangeInstallmentComponent } from './components/popups/change-installme
 import { SettlementComponent } from './components/popups/settlement/settlement.component';
 import { LedgerComponent } from './components/ledger/ledger.component';
 import { MaterialModule } from "../app.material.module";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ViewCustomerComponent } from './components/view-customer/view-customer.component';
 import { NgxMaskModule } from "ngx-mask";
 
@@ -35,7 +35,8 @@ import { NgxMaskModule } from "ngx-mask";
         CustomersRoutingModule,
         MaterialModule,
         FormsModule,
-        NgxMaskModule.forChild()
+        NgxMaskModule.forChild(),
+        ReactiveFormsModule
     ]
 })
 export class CustomersModule {
