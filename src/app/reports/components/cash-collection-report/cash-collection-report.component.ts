@@ -11,6 +11,13 @@ import { MatSort } from "@angular/material/sort";
 import { ReportService } from "../../../services/report.service";
 import { CashCollectionReport } from "../../../types";
 import { ReportRoutes } from "../../../route-data";
+import { Store } from "@ngrx/store";
+import { ReportsState } from "../../store/reports.state";
+import { cashCollectionReportSelector } from "../../store/reports.selectors";
+import { filter } from "rxjs";
+import { KEYS_OF_CASH_COLLECTION_REPORT } from "../../../types.keys";
+import { isTypeMatched } from "../../../helpers/utils";
+import { ReportActions } from "../../store/reports.actions";
 
 @Component({
   selector: 'app-cash-collection-report',
@@ -19,7 +26,12 @@ import { ReportRoutes } from "../../../route-data";
 })
 export class CashCollectionReportComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private reportService: ReportService, private helperService: HelperService) { }
+  constructor(
+      private formBuilder: FormBuilder,
+      private reportService: ReportService,
+      private helperService: HelperService,
+      private store: Store<ReportsState>
+  ) { }
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -64,6 +76,14 @@ export class CashCollectionReportComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.store.select(cashCollectionReportSelector)
+        .pipe(filter(reports => isTypeMatched(reports[0], KEYS_OF_CASH_COLLECTION_REPORT)))
+        .subscribe(data => {
+          this.dataSource = new MatTableDataSource<CashCollectionReport>(data);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+          this.isLoading = false;
+        })
     const lastMonth = new Date().getMonth() - 1;
     const startDate = new Date(new Date().getFullYear(), lastMonth, 1);
     const endDate = new Date(new Date().getFullYear(), lastMonth, new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0).getDate());
@@ -76,12 +96,10 @@ export class CashCollectionReportComponent implements OnInit {
   onClickViewReports() {
     if (this.dateForm.valid) {
       this.isLoading = true;
-      this.reportService.GetCashCollectionReport(this.dateForm.value.startDate, this.dateForm.value.endDate).then(data => {
-        this.dataSource = new MatTableDataSource<CashCollectionReport>(data.data);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-        this.isLoading = false;
-      });
+      this.store.dispatch(ReportActions.get_cash_collection_report({
+        start: this.dateForm.value.startDate,
+        end: this.dateForm.value.endDate
+      }));
     } else {
       this.helperService.openSnackBar({text:Reports.INVALID_DATE_RANGE, status: SnackBarStatus.FAILED});
     }
