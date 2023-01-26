@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertTypes, NotificationColors, Notifications, SnackBarStatus, UserManagement } from "../../../constants";
+import { NotificationTypes, NotificationColors, Notifications, SnackBarStatus, UserManagement } from "../../../constants";
 import { MatDialog } from "@angular/material/dialog";
 import { HelperService } from "../../../services/helper.service";
 import { filter } from "rxjs";
@@ -37,18 +37,18 @@ export class AllNotificationsComponent implements OnInit {
     DELETE = UserManagement.DELETE;
     NO_NOTIFICATIONS = Notifications.NO_NOTIFICATIONS_MESSAGE_TEXT;
 
-    ERROR = AlertTypes.ERROR;
-    SUCCESS = AlertTypes.SUCCESS;
-    WARNING = AlertTypes.WARNING;
-    INFO = AlertTypes.INFO;
-    ARREARS = AlertTypes.ARREARS;
+    ERROR = NotificationTypes.ERROR;
+    SUCCESS = NotificationTypes.SUCCESS;
+    WARNING = NotificationTypes.WARNING;
+    INFO = NotificationTypes.INFO;
+    ARREARS = NotificationTypes.ARREARS;
     COLORS = NotificationColors;
     VIEW_CUSTOMER_URL = `/${CustomerRoutes.Root}/${CustomerRoutes.View.url}`;
 
     notifications: Notification[] = [];
     isLoading = true;
-    ALERT_TYPES = ["SUCCESS", "WARNING", "INFO", "ERROR", "ARREARS", "ALL"];
-    selectedNotificationType = "ALL";
+    NOTIFICATION_TYPES = NotificationTypes;
+    selectedNotificationType = NotificationTypes.ALL;
 
     ngOnInit(): void {
         this.store.select(notificationSelector)

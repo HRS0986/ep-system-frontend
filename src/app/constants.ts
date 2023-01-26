@@ -20,12 +20,13 @@ export enum CustomerTypes {
     RESALE_CUSTOMER
 }
 
-export enum AlertTypes {
+export enum NotificationTypes {
     SUCCESS,
     ERROR,
     WARNING,
     INFO,
     ARREARS,
+    ALL
 }
 
 export class Common {
@@ -377,7 +378,7 @@ export class Notifications {
     public static readonly MARK_AS_UNREAD_BUTTON_TEXT = 'Mark as unread';
 }
 
-export const NotificationColors: { SUCCESS: string; WARNING: string; ERROR: string; INFO: string; ARREARS: string; } = {
+export const NotificationColors: { [key :string]: string; } = {
     SUCCESS: '#84ad88',
     WARNING: '#af914e',
     ERROR: '#e8b3ad',

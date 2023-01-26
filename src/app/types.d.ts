@@ -1,4 +1,4 @@
-import { SnackBarStatus, AlertTypes, CustomerTypes, Roles } from "./constants";
+import { SnackBarStatus, NotificationTypes, CustomerTypes, Roles } from "./constants";
 import firebase from "firebase/compat";
 import Timestamp = firebase.firestore.Timestamp;
 import { MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from "@angular/material/snack-bar";
@@ -99,7 +99,7 @@ export interface Notification {
   IsActive: boolean,
   Seen: boolean,
   Note: string;
-  Type: AlertTypes;
+  Type: NotificationTypes;
   Data: any;
 }
 
@@ -116,6 +116,10 @@ export interface Report {
 
 export interface RouteObject {
   [key: string]: { url: string, title: string };
+}
+
+export interface NotificationColors {
+  [key: string]: string
 }
 
 export interface CustomerReport {
