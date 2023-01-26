@@ -13,6 +13,7 @@ import { SettlementComponent } from './components/popups/settlement/settlement.c
 import { LedgerComponent } from './components/ledger/ledger.component';
 import { MaterialModule } from "../app.material.module";
 import { FormsModule } from "@angular/forms";
+import { ViewCustomerComponent } from './components/view-customer/view-customer.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { FormsModule } from "@angular/forms";
     MakePaymentComponent,
     ChangeInstallmentComponent,
     SettlementComponent,
-    LedgerComponent
+    LedgerComponent,
+    ViewCustomerComponent
   ],
   imports: [
     CommonModule,

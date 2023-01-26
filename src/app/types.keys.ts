@@ -122,7 +122,7 @@ export const KEYS_OF_LEDGER = [
     'Remarks',
 ];
 
-export const KEYS_OF_ALERT = [
+export const KEYS_OF_NOTIFICATION = [
     'ID',
     'Date',
     'IsActive',

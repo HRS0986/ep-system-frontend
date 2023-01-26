@@ -4,6 +4,7 @@ import { CustomerRoutes } from "../route-data";
 import { EpCustomersComponent } from "./components/ep-customers/ep-customers.component";
 import { AdvancedCustomersComponent } from "./components/advanced-customers/advanced-customers.component";
 import { OldCustomersComponent } from "./components/old-customers/old-customers.component";
+import { ViewCustomerComponent } from "./components/view-customer/view-customer.component";
 
 const routes: Routes = [
     {
@@ -28,7 +29,7 @@ const routes: Routes = [
     },
     {
         path: CustomerRoutes.View.url,
-        component: EpCustomersComponent,
+        component: ViewCustomerComponent,
         data: { title: CustomerRoutes.View.title }
     }
 ];

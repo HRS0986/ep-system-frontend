@@ -18,7 +18,7 @@ export class NotificationService {
   ) {}
 
 
-  public GetAlerts(): Observable<Notification[]> {
+  public GetNotifications(): Observable<Notification[]> {
     const alertRef = collection(this.firestore, 'Alerts');
 
     const today = new Date();
