@@ -1,4 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from "@angular/material/table";
+import { MatDialog } from "@angular/material/dialog";
+import { MatSort } from "@angular/material/sort";
+import { AllCustomers, Common, OldCustomer } from "../../../constants";
+import { Router } from "@angular/router";
+import { MatPaginator } from "@angular/material/paginator";
+import { CustomerService } from "../../../services/customer.service";
+import { Customer } from "../../../types";
+import { ViewOldCustomerComponent } from "../popups/view-old-customer/view-old-customer.component";
 
 @Component({
   selector: 'app-old-customers',
@@ -7,9 +16,61 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OldCustomersComponent implements OnInit {
 
-  constructor() { }
 
-  ngOnInit(): void {
+  constructor(private router: Router, private matDialog: MatDialog, private customerService: CustomerService) {  }
+
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  displayedColumns: string[] = [
+    OldCustomer.ID_LABEL,
+    OldCustomer.NAME_LABEL,
+    OldCustomer.PROJECT_LABEL,
+    AllCustomers.PAYMENT_EP_BALANCE,
+    OldCustomer.LOAN_AMOUNT_LABEL,
+    OldCustomer.SETTLED_PAYMENT_LABEL,
+    Common.ACTION_COLUMN_TEXT
+  ];
+
+  dataSource: MatTableDataSource<Customer> = new MatTableDataSource();
+  isLoading = true;
+
+  NAME_LABEL = OldCustomer.NAME_LABEL;
+  PROJECT_LABEL = OldCustomer.PROJECT_LABEL;
+  ID_LABEL = OldCustomer.ID_LABEL;
+  PAYMENT_EP_BALANCE = AllCustomers.PAYMENT_EP_BALANCE;
+  LOAN_AMOUNT_LABEL = OldCustomer.LOAN_AMOUNT_LABEL;
+  VIEW_BUTTON_TEXT = OldCustomer.VIEW_BUTTON_TEXT;
+  SETTLED_PAYMENT_LABEL = OldCustomer.SETTLED_PAYMENT_LABEL;
+  ACTIONS = Common.ACTION_COLUMN_TEXT;
+  NO_SEARCH_RESULTS = Common.NO_SEARCH_RESULT_TEXT;
+  SEARCH_PLACEHOLDER = Common.SEARCH_LABEL;
+
+
+  ngOnInit() {
+    this.customerService.GetOldClientData().subscribe(data => {
+      this.dataSource = new MatTableDataSource<Customer>(data);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.isLoading = false;
+    });
+
+  }
+
+  ngOnClickViewCustomer(customer: Customer) {
+    const dialogRef = this.matDialog.open(ViewOldCustomerComponent, { width: '400px', data: customer.ID });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
 }
