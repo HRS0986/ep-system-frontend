@@ -54,11 +54,10 @@ export class OldCustomersComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.isLoading = false;
     });
-
   }
 
   ngOnClickViewCustomer(customer: Customer) {
-    const dialogRef = this.matDialog.open(ViewOldCustomerComponent, { width: '400px', data: customer.ID });
+    const dialogRef = this.matDialog.open(ViewOldCustomerComponent, { width: "650px", data: customer });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });

@@ -261,6 +261,7 @@ export class OldCustomer {
     public static readonly LOAN_AMOUNT_LABEL = 'Loan Amount';
     public static readonly VIEW_BUTTON_TEXT = 'View';
     public static readonly SETTLED_PAYMENT_LABEL = 'Settled';
+    public static readonly VIEW_POPUP_TITLE = 'View Old Customer';
 }
 
 export class NavigationMenu {
