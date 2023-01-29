@@ -26,7 +26,7 @@ export class ActionMenuComponent implements OnInit {
   ) {
   }
 
-  @Input() data!: CustomerType;
+  @Input() customer!: CustomerType;
 
   ACTION_MENU_ITEMS: ActionMenuItem<ActionMenuComponent>[] = [
     {
@@ -64,48 +64,48 @@ export class ActionMenuComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onClickViewCustomer(customer: CustomerType) {
-    this.router.navigate([CustomerRoutes.View.url], { queryParams: { id: customer.ID } }).then();
+  onClickViewCustomer() {
+    this.router.navigate([CustomerRoutes.Root, CustomerRoutes.View.url], { queryParams: { id: this.customer.ID } }).then();
   }
 
-  onClickViewLedger(customer: CustomerType) {
-    this.router.navigate([CustomerRoutes.Ledger.url], { queryParams: { id: customer.ID, name: customer.Name } }).then();
+  onClickViewLedger() {
+    this.router.navigate([CustomerRoutes.Root, CustomerRoutes.Ledger.url], { queryParams: { id: this.customer.ID, name: this.customer.Name } }).then();
   }
 
-  onClickChangeInstallment(customer: CustomerType): void {
-    const dialogRef = this.matDialog.open(ChangeInstallmentComponent, {width: '500px', data: {customer: customer}});
+  onClickChangeInstallment(): void {
+    const dialogRef = this.matDialog.open(ChangeInstallmentComponent, {width: '500px', data: {customer: this.customer}});
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
 
-  onClickSettle(customer: CustomerType) {
-    const dialogRef = this.matDialog.open(SettlementComponent, {width: '500px', data: {customer: customer}});
+  onClickSettle() {
+    const dialogRef = this.matDialog.open(SettlementComponent, {width: '500px', data: {customer: this.customer}});
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
 
-  onClickMakePayment(customer: CustomerType): void {
-    const dialogRef = this.matDialog.open(MakePaymentComponent, { width: '600px', data: { customer: customer } });
+  onClickMakePayment(): void {
+    const dialogRef = this.matDialog.open(MakePaymentComponent, { width: '600px', data: { customer: this.customer } });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
 
-  onClickDelete(customer: CustomerType) {
+  onClickDelete() {
     const dialogRef = this.matDialog.open(DeleteConfirmPopupComponent, {
       width: '350px',
       data: {
         title: Customer.DELETE_CUSTOMER_TITLE,
         body: Customer.DELETE_CUSTOMER_MESSAGE,
-        entityName: this.data.Name
+        entityName: this.customer.Name
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.customerService.DeleteClient(customer.ID).then(() => {
+        this.customerService.DeleteClient(this.customer.ID).then(() => {
           this.helperService.openSnackBar({
             text: Customer.DELETE_CUSTOMER_TEXT,
             status: SnackBarStatus.SUCCESS

@@ -64,7 +64,7 @@
           <ng-container matColumnDef="{{ACTIONS_COLUMN}}">
             <th mat-header-cell *matHeaderCellDef> {{ACTIONS_COLUMN}} </th>
             <td mat-cell *matCellDef="let row">
-              <app-action-menu [data]="row"></app-action-menu>
+              <app-action-menu [customer]="row"></app-action-menu>
             </td>
           </ng-container>
 
