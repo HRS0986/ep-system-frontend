@@ -13,19 +13,18 @@ export const KEYS_OF_PROJECT = [
 ];
 
 export const KEYS_OF_USER = [
-    'UID?',
-    'Email?',
-    'EmailVerified?',
-    'FirstName?',
-    'LastName?',
-    'PhotoURL?',
-    'IsActive?',
-    'Disabled?',
-    'IsFirstLogin?',
-    'PhoneNumber?',
-    'CreatedAt?',
-    'LastSignInAt?',
-    'Role?;'
+    'UID',
+    'Email',
+    'EmailVerified',
+    'FirstName',
+    'LastName',
+    'PhotoURL',
+    'IsActive',
+    'Disabled',
+    'IsFirstLogin',
+    'PhoneNumber',
+    'CreatedAt',
+    'LastSignInAt',
 ];
 
 export const KEYS_OF_EP_REPORT = [

@@ -10,24 +10,31 @@ import { UserProfileComponent } from './components/popups/user-profile/user-prof
 import { MaterialModule } from "../app.material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { EffectsModule } from "@ngrx/effects";
+import { AuthEffects } from "./store/auth.effects";
+import { StoreModule } from "@ngrx/store";
+import { AUTH_FEATURE_NAME } from "./store/auth.selectors";
+import { authReducer } from "./store/auth.reducer";
 
 
 @NgModule({
-    declarations: [
-        LoginComponent,
-        SignupComponent,
-        ManageUsersComponent,
-        AddEditUserComponent,
-        UserProfileComponent
-    ],
-    imports: [
-        CommonModule,
-        AuthRoutingModule,
-        MaterialModule,
-        ReactiveFormsModule,
-        NgxSpinnerModule,
-        FormsModule
-    ]
+  declarations: [
+    LoginComponent,
+    SignupComponent,
+    ManageUsersComponent,
+    AddEditUserComponent,
+    UserProfileComponent
+  ],
+  imports: [
+    CommonModule,
+    AuthRoutingModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    NgxSpinnerModule,
+    FormsModule,
+    EffectsModule.forFeature([AuthEffects]),
+    StoreModule.forFeature(AUTH_FEATURE_NAME, authReducer)
+  ]
 })
 export class AuthModule {
 }
