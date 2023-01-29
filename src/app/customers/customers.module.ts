@@ -15,6 +15,7 @@ import { MaterialModule } from "../app.material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ViewCustomerComponent } from './components/view-customer/view-customer.component';
 import { NgxMaskModule } from "ngx-mask";
+import { ActionMenuComponent } from './components/action-menu/action-menu.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { NgxMaskModule } from "ngx-mask";
         ChangeInstallmentComponent,
         SettlementComponent,
         LedgerComponent,
-        ViewCustomerComponent
+        ViewCustomerComponent,
+        ActionMenuComponent
     ],
     imports: [
         CommonModule,

@@ -1,87 +1,104 @@
 import { Injectable } from '@angular/core';
 import {
-  addDoc,
   collection,
   collectionData,
+  doc,
+  docData,
   Firestore,
+  limit,
   orderBy,
   query,
+  setDoc,
   updateDoc,
-  doc, docData, setDoc, where, limit
+  where
 } from "@angular/fire/firestore";
 import { concatMap, firstValueFrom, Observable } from "rxjs";
 import { Customer, FnResponse, Ledger } from "../types";
-import { CollectionReference, DocumentReference } from "@firebase/firestore";
+import { CollectionReference, DocumentReference, Query } from "@firebase/firestore";
 import { AuthService } from "./auth.service";
 import { Functions, httpsCallable } from '@angular/fire/functions';
+import { CustomerTypes } from "../constants";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
   constructor(
-      private firestore: Firestore,
-      private auth: AuthService,
-      private functions: Functions,
-  ) { }
+    private firestore: Firestore,
+    private auth: AuthService,
+    private functions: Functions,
+  ) {
+  }
 
   public GetAllClientData(): Observable<Customer[]> {
     const clientRef = collection(this.firestore, 'Clients');
     const q1 = query(clientRef, where('IsActive', '==', true));
-    return collectionData(q1, {idField: 'ID'}) as Observable<Customer[]>;
+    return collectionData(q1, { idField: 'ID' }) as Observable<Customer[]>;
   }
 
   public GetOldClientData(): Observable<Customer[]> {
     const clientRef = collection(this.firestore, 'Clients');
     const q1 = query(clientRef, where('IsActive', '==', true), where('IsSettled', '==', true));
+    return collectionData(q1, { idField: 'ID' }) as Observable<Customer[]>;
+  }
+
+  public GetAllAdvancedClientData(): Observable<Customer[]> {
+    const clientRef = collection(this.firestore, 'Clients');
+    const q1 = query(clientRef, where('IsActive', '==', true), where('Type', '==', CustomerTypes.ADVANCED_CUSTOMER));
     return collectionData(q1, {idField: 'ID'}) as Observable<Customer[]>;
   }
 
-  public GetCurrentClientData(): Observable<Customer[]> {
+  public GetCurrentClientData(clientType: undefined | CustomerTypes = undefined): Observable<Customer[]> {
     const clientRef = collection(this.firestore, 'Clients') as CollectionReference<Customer>;
-    const q1 = query<Customer>(clientRef, where('IsActive', '==', true), where('IsSettled', '==', false));
+    let q1: Query<Customer>;
+    if (clientType == undefined) {
+      q1 = query<Customer>(clientRef, where('IsActive', '==', true), where('IsSettled', '==', false));
+    } else {
+      q1 = query<Customer>(clientRef, where('IsActive', '==', true), where('IsSettled', '==', false), where('Type', '==', clientType));
+    }
+
     return collectionData<Customer>(q1, {idField: 'ID'}).pipe(
-        concatMap(async (clientList: Customer[]): Promise<Customer[]> => {
-          for (const client of clientList) {
-            const _ledger: Ledger[] = await firstValueFrom(this.GetLastLedgerRecord(client.ID as string));
-            if (!_ledger.length) {
-              throw new Error('No ledger found');
-            }
-            const _lastLedger = _ledger[0];
-            client.Arrears = _lastLedger.Arrears;
-            client.Balance = _lastLedger.Balance;
+      concatMap(async (clientList: Customer[]): Promise<Customer[]> => {
+        for (const client of clientList) {
+          const _ledger: Ledger[] = await firstValueFrom(this.GetLastLedgerRecord(client.ID as string));
+          if (!_ledger.length) {
+            throw new Error('No ledger found');
           }
-          return clientList;
-        })
+          const _lastLedger = _ledger[0];
+          client.Arrears = _lastLedger.Arrears;
+          client.Balance = _lastLedger.Balance;
+        }
+        return clientList;
+      })
     );
   }
 
   public GetAClient(id: string) {
     const clientRef = doc(this.firestore, `Clients/${id}`);
-    return docData(clientRef, {idField: 'ID'});
+    return docData(clientRef, { idField: 'ID' });
   }
 
   public GetLastLedgerRecord(id: string): Observable<Ledger[]> {
     const ledgerRef = collection(this.firestore, `Clients/${id}/Ledger`);
     const q1 = query(
-        ledgerRef,
-        where('Date', '<=', new Date()),
-        orderBy('Date', 'desc'),
-        limit(1),
+      ledgerRef,
+      where('Date', '<=', new Date()),
+      orderBy('Date', 'desc'),
+      limit(1),
     );
-    return collectionData(q1, {idField: 'ID'}) as Observable<Ledger[]>;
+    return collectionData(q1, { idField: 'ID' }) as Observable<Ledger[]>;
   }
 
   public GetLedger(id: string): Observable<Ledger[]> {
     const ledgerRef = collection(this.firestore, `Clients/${id}/Ledger`);
     const q1 = query(ledgerRef, where('Date', '<=', new Date()), orderBy('Date', 'desc'));
-    return collectionData(q1, {idField: 'ID'}) as Observable<Ledger[]>;
+    return collectionData(q1, { idField: 'ID' }) as Observable<Ledger[]>;
   }
 
   public GetLedgerDebug(id: string): Observable<Ledger[]> {
     const ledgerRef = collection(this.firestore, `Clients/${id}/Ledger`);
     const q1 = query(ledgerRef, orderBy('Date', 'desc'));
-    return collectionData(q1, {idField: 'ID'}) as Observable<Ledger[]>;
+    return collectionData(q1, { idField: 'ID' }) as Observable<Ledger[]>;
   }
 
   public async IsClientExists(id: string): Promise<boolean> {
@@ -167,7 +184,7 @@ export class CustomerService {
   //   return lastRecord;
   // }
 
-  public async GetSettlementBalance(clientId: string): Promise<{payableBalance: number, reducibleInterest: number}> {
+  public async GetSettlementBalance(clientId: string): Promise<{ payableBalance: number, reducibleInterest: number }> {
     let client = await firstValueFrom(this.GetAClient(clientId)) as Customer | undefined;
     if (client == undefined) {
       throw Error("User Not created successfully.");
@@ -179,8 +196,8 @@ export class CustomerService {
     }
     const lastLedgerRecord = ledger[0];
     let installmentNo = 0;
-    for(let ledgerRecord of ledger) {
-      if(ledgerRecord.InstallmentNo != null && ledgerRecord.InstallmentNo > installmentNo) {
+    for (let ledgerRecord of ledger) {
+      if (ledgerRecord.InstallmentNo != null && ledgerRecord.InstallmentNo > installmentNo) {
         installmentNo = ledgerRecord.InstallmentNo;
       }
     }
@@ -191,11 +208,11 @@ export class CustomerService {
       reducibleInterest = interestPerMonth * (client.MonthCount - installmentNo);
       payableBalance = lastLedgerRecord.Balance - reducibleInterest;
     }
-    return {payableBalance, reducibleInterest};
+    return { payableBalance, reducibleInterest };
   }
 
   public async Settlement(clientId: string, refNo: number, particulars: string = "Settle", remarks: string = "", date: Date): Promise<FnResponse> {
-    let {payableBalance, reducibleInterest} = await this.GetSettlementBalance(clientId);
+    let { payableBalance, reducibleInterest } = await this.GetSettlementBalance(clientId);
 
     let client = await firstValueFrom(this.GetAClient(clientId)) as Customer | undefined;
 
@@ -228,11 +245,11 @@ export class CustomerService {
   public async ChangeInstallmentData(client: Customer): Promise<object> {
     const ledgerRef = collection(this.firestore, `Clients/${client.ID}/Ledger`);
     const q1 = query(
-        ledgerRef,
-        where('Date', '<=', new Date()),
-        orderBy('Date', 'desc'),
+      ledgerRef,
+      where('Date', '<=', new Date()),
+      orderBy('Date', 'desc'),
     );
-    const ledger = await firstValueFrom(collectionData(q1, {idField: 'ID'}) as Observable<Ledger[]>);
+    const ledger = await firstValueFrom(collectionData(q1, { idField: 'ID' }) as Observable<Ledger[]>);
 
     if (ledger == undefined) {
       throw Error("User Not created successfully.");
@@ -249,18 +266,18 @@ export class CustomerService {
     const lastArrears = ledger[0].Arrears;
     const currentPaid = client.TotalReceivableBalance - lastBalance;
 
-    return {installmentNo, lastBalance, lastArrears, currentPaid};
+    return { installmentNo, lastBalance, lastArrears, currentPaid };
   }
 
   public async ChangeInstallment(
-      clientId: string,
-      monthCount: number,
-      monthRental: number,
-      date: Date,
-      intPlusEPSaleValue: number | null = null,
-      totalReceivableBalance: number | null = null,
-      particulars: string = "Installment Change",
-      remarks: string = "",
+    clientId: string,
+    monthCount: number,
+    monthRental: number,
+    date: Date,
+    intPlusEPSaleValue: number | null = null,
+    totalReceivableBalance: number | null = null,
+    particulars: string = "Installment Change",
+    remarks: string = "",
   ): Promise<FnResponse> {
     let client = await firstValueFrom(this.GetAClient(clientId)) as Customer | undefined;
 
@@ -294,13 +311,13 @@ export class CustomerService {
 
   public async CreateTestRental(clientID: string) {
     const createRental = httpsCallable<{ clientID: string }, FnResponse>(this.functions, 'testCreateRental');
-    const res = await createRental({clientID});
+    const res = await createRental({ clientID });
     return res.data;
   }
 
   public async DeleteClient(clientID: string) {
     const deleteClient = httpsCallable<{ clientID: string }, FnResponse>(this.functions, 'deleteClient');
-    const res = await deleteClient({clientID});
+    const res = await deleteClient({ clientID });
     return res.data;
   }
 }
