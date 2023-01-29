@@ -6,12 +6,18 @@ import { AdvancedCustomersComponent } from "./components/advanced-customers/adva
 import { OldCustomersComponent } from "./components/old-customers/old-customers.component";
 import { ViewCustomerComponent } from "./components/view-customer/view-customer.component";
 import { LedgerComponent } from "./components/ledger/ledger.component";
+import { CustomerTablesComponent } from "./components/customer-tables/customer-tables.component";
 
 const routes: Routes = [
     {
         path: '',
-        redirectTo: CustomerRoutes.Ep.url,
-        pathMatch: 'full'
+        redirectTo: CustomerRoutes.All.url,
+        pathMatch: "full"
+    },
+    {
+        path: CustomerRoutes.All.url,
+        component: CustomerTablesComponent,
+        data: { title: CustomerRoutes.All.title }
     },
     {
         path: CustomerRoutes.Ep.url,

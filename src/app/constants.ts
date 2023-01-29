@@ -93,6 +93,7 @@ export class Customer {
     public static readonly DELETE_CUSTOMER_TEXT = 'Customer Deleted Successfully';
     public static readonly DELETE_CUSTOMER_TITLE = 'Delete Customer';
     public static readonly DELETE_CUSTOMER_MESSAGE = 'Are you sure you want to delete this customer?';
+    public static readonly CUSTOMER_TYPE = 'Customer Type';
 }
 
 export class UserMessages {

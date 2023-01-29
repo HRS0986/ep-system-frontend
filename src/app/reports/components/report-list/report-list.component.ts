@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Common, Reports } from "../../../constants";
 import { ReportRoutes } from "../../../route-data";
 import { MatTableDataSource } from "@angular/material/table";
-import { ReportItem } from "../../../types";
+import { TypeLIstItem } from "../../../types";
 
 @Component({
     selector: 'app-report-list',
@@ -14,26 +14,26 @@ export class ReportListComponent implements OnInit {
     constructor() {
     }
 
-    REPORT_ITEMS: ReportItem[] = [
+    REPORT_ITEMS: TypeLIstItem[] = [
         {
-            reportTitle: Reports.CASH_REPORT_TITLE,
-            reportNumber: 1,
-            reportUrl: ReportRoutes.CashCollection.url
+            itemTitle: Reports.CASH_REPORT_TITLE,
+            itemNumber: 1,
+            itemUrl: ReportRoutes.CashCollection.url
         },
         {
-            reportTitle: Reports.CUSTOMER_REPORT_TITLE,
-            reportNumber: 2,
-            reportUrl: ReportRoutes.Customer.url
+            itemTitle: Reports.CUSTOMER_REPORT_TITLE,
+            itemNumber: 2,
+            itemUrl: ReportRoutes.Customer.url
         },
         {
-            reportTitle: Reports.ARREARS_REPORT_TITLE,
-            reportNumber: 3,
-            reportUrl: ReportRoutes.Arrears.url
+            itemTitle: Reports.ARREARS_REPORT_TITLE,
+            itemNumber: 3,
+            itemUrl: ReportRoutes.Arrears.url
         },
         {
-            reportTitle: Reports.EP_REPORT_TITLE,
-            reportNumber: 4,
-            reportUrl: ReportRoutes.Ep.url
+            itemTitle: Reports.EP_REPORT_TITLE,
+            itemNumber: 4,
+            itemUrl: ReportRoutes.Ep.url
         }
     ]
 
@@ -48,7 +48,7 @@ export class ReportListComponent implements OnInit {
     REPORT_NAME = Reports.REPORT_NAME;
     NO_DATA = Common.NO_SEARCH_RESULT_TEXT;
     ACTIONS = Common.ACTION_COLUMN_TEXT;
-    datasource: MatTableDataSource<ReportItem> = new MatTableDataSource<ReportItem>();
+    datasource: MatTableDataSource<TypeLIstItem> = new MatTableDataSource<TypeLIstItem>();
 
     ngOnInit(): void {
         this.datasource = new MatTableDataSource(this.REPORT_ITEMS);

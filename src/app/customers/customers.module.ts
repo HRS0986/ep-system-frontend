@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ViewCustomerComponent } from './components/view-customer/view-customer.component';
 import { NgxMaskModule } from "ngx-mask";
 import { ActionMenuComponent } from './components/action-menu/action-menu.component';
+import { CustomerTablesComponent } from './components/customer-tables/customer-tables.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { ActionMenuComponent } from './components/action-menu/action-menu.compon
         SettlementComponent,
         LedgerComponent,
         ViewCustomerComponent,
-        ActionMenuComponent
+        ActionMenuComponent,
+        CustomerTablesComponent
     ],
     imports: [
         CommonModule,

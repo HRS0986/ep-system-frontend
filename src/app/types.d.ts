@@ -209,10 +209,10 @@ export interface ActionMenuItem<ComponentType> {
   action: keyof ComponentType;
 }
 
-export interface ReportItem {
-  reportNumber: number;
-  reportTitle: string;
-  reportUrl: string;
+export interface TypeLIstItem {
+  itemNumber: number;
+  itemTitle: string;
+  itemUrl: string;
 }
 
 export interface NavigationMenuItem {

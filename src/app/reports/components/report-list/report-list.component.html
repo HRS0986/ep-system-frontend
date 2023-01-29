@@ -5,18 +5,18 @@
 
                 <ng-container matColumnDef="{{REPORT_NUMBER}}">
                     <th mat-header-cell *matHeaderCellDef> {{REPORT_NUMBER}} </th>
-                    <td mat-cell *matCellDef="let row"> {{row.reportNumber}} </td>
+                    <td mat-cell *matCellDef="let row"> {{row.itemNumber}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="{{REPORT_NAME}}">
                     <th mat-header-cell *matHeaderCellDef> {{REPORT_NAME}} </th>
-                    <td mat-cell *matCellDef="let row"> {{row.reportTitle}} </td>
+                    <td mat-cell *matCellDef="let row"> {{row.itemTitle}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="{{ACTIONS}}">
                     <th mat-header-cell *matHeaderCellDef> {{ACTIONS}} </th>
                     <td mat-cell *matCellDef="let row">
-                        <a mat-raised-button [routerLink]="['..', row.reportUrl]" class="btn-p">
+                        <a mat-raised-button [routerLink]="['..', row.itemUrl]" class="btn-p">
                             <mat-icon>visibility</mat-icon>
                             {{VIEW}}
                         </a>
