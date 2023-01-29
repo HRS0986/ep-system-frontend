@@ -1,16 +1,16 @@
-import { createAction, props } from "@ngrx/store";
-import { LOGIN, LOGOUT, SIGNUP, SUCCESS, FAILED } from "../../app.actions";
+import { createActionGroup, emptyProps, props } from "@ngrx/store";
+import { User } from "../../types";
 
-const COMPONENT = "[AUTH]";
+const COMPONENT = "AUTH";
 
-export const login = createAction(`${COMPONENT} ${LOGIN}`, props<{username: string, password: string}>());
-export const logout = createAction(`${COMPONENT} ${LOGOUT}`);
-export const signup = createAction(`${COMPONENT} ${SIGNUP}`);
-
-export const loginSuccess = createAction(`${COMPONENT} ${LOGIN} ${SUCCESS}`);
-export const logoutSuccess = createAction(`${COMPONENT} ${LOGOUT} ${SUCCESS}`);
-export const signupSuccess = createAction(`${COMPONENT} ${SIGNUP} ${SUCCESS}`);
-
-export const loginFailed = createAction(`${COMPONENT} ${LOGIN} ${FAILED}`);
-export const logoutFailed = createAction(`${COMPONENT} ${LOGOUT} ${FAILED}`);
-export const signupFailed = createAction(`${COMPONENT} ${SIGNUP} ${FAILED}`);
+export const AuthActions = createActionGroup({
+  source: COMPONENT,
+  events: {
+    GET_USERS: emptyProps(),
+    GET_USERS_SUCCESS: props<{ users: User[] }>(),
+    GET_USERS_FAILED: props<{ error: string }>(),
+    GET_CURRENT_USER: props<{ id: string }>(),
+    GET_CURRENT_USER_SUCCESS: props<User>(),
+    GET_CURRENT_USER_FAILED: props<{ error: string }>()
+  }
+});

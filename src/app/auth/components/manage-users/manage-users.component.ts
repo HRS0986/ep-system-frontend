@@ -10,6 +10,13 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatSort } from "@angular/material/sort";
 import { DeleteConfirmPopupComponent } from "../../../delete-confirm-popup/delete-confirm-popup.component";
 import { AddEditUserComponent } from "../popups/add-edit-user/add-edit-user.component";
+import { Store } from "@ngrx/store";
+import { AuthState } from "../../store/auth.state";
+import { AuthActions } from "../../store/auth.actions";
+import { authUsersSelector } from "../../store/auth.selectors";
+import { filter } from "rxjs";
+import { isTypeMatched } from "../../../helpers/utils";
+import { KEYS_OF_USER } from "../../../types.keys";
 
 @Component({
     selector: 'app-manage-users',
@@ -21,7 +28,8 @@ export class ManageUsersComponent implements OnInit {
         private router: Router,
         private matDialog: MatDialog,
         private userService: UserService,
-        private helperService: HelperService
+        private helperService: HelperService,
+        private store: Store<AuthState>
     ) {
     }
 
@@ -49,12 +57,15 @@ export class ManageUsersComponent implements OnInit {
     ADD_NEW_USER = UserManagement.ADD_NEW_USER;
 
     ngOnInit() {
-        this.userService.GetAllUsers().then(users => {
-            this.dataSource = new MatTableDataSource<User>(users);
-            this.dataSource.sort = this.sort;
-            this.dataSource.paginator = this.paginator;
-            this.isLoading = false;
+      this.store.select(authUsersSelector)
+        .pipe(filter(user => isTypeMatched(user[0], KEYS_OF_USER)))
+        .subscribe(data => {
+          this.dataSource = new MatTableDataSource<User>(data);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+          this.isLoading = false;
         });
+        this.store.dispatch(AuthActions.get_users());
     }
 
     onUserActiveStatusChange(user: User) {

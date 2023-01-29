@@ -25,7 +25,7 @@ export const KEYS_OF_USER = [
     'PhoneNumber?',
     'CreatedAt?',
     'LastSignInAt?',
-    'Role?;'
+    'Role?'
 ];
 
 export const KEYS_OF_EP_REPORT = [

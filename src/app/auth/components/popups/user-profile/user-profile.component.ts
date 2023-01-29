@@ -7,6 +7,13 @@ import { HelperService } from "../../../../services/helper.service";
 import { matchPasswords } from "../../../../helpers/app.validators";
 import { MatDialogRef } from "@angular/material/dialog";
 import { AuthService } from "../../../../services/auth.service";
+import { Store } from "@ngrx/store";
+import { AuthState } from "../../../store/auth.state";
+import { AuthActions } from "../../../store/auth.actions";
+import { authCurrentUserSelector } from "../../../store/auth.selectors";
+import { filter } from "rxjs";
+import { isTypeMatched } from "../../../../helpers/utils";
+import { KEYS_OF_USER } from "../../../../types.keys";
 
 @Component({
   selector: 'app-user-profile',
@@ -20,7 +27,8 @@ export class UserProfileComponent implements OnInit {
       private userService: UserService,
       private authService: AuthService,
       private dialogRef: MatDialogRef<UserProfileComponent>,
-      private helperService: HelperService
+      private helperService: HelperService,
+      private store: Store<AuthState>
   ) {
   }
 
@@ -64,15 +72,19 @@ export class UserProfileComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    const loggedUserId = JSON.parse(localStorage.getItem('user')!)['uid'];
-    this.userService.GetAUser(loggedUserId).subscribe(user => {
-      this.user = user;
-      this.basicDataForm.patchValue({
-        firstName: user.FirstName,
-        lastName: user.LastName,
-        phone: user.PhoneNumber
+    this.store.select(authCurrentUserSelector)
+      .pipe(filter(user => isTypeMatched(user, KEYS_OF_USER)))
+      .subscribe(userData => {
+        debugger;
+        this.user = userData;
+        this.basicDataForm.patchValue({
+          firstName: userData.FirstName,
+          lastName: userData.LastName,
+          phone: userData.PhoneNumber
+        });
       });
-    })
+    const loggedUserId = JSON.parse(localStorage.getItem('user')!)['uid'];
+    this.store.dispatch(AuthActions.get_current_user({ id: loggedUserId }));
   }
 
   changeTitle(index: number) {

@@ -1,6 +1,11 @@
 import { User } from "../../types";
 
 export interface AuthState {
-    isLoggedIn: boolean;
-    currentUser: User
+    currentUser: User;
+    users: User[]
 }
+
+export const initialState: AuthState = {
+  users: [],
+  currentUser: {}
+};

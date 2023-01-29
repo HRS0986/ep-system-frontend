@@ -8,7 +8,7 @@ import { AuthRoutes, CustomerRoutes, NotificationRoutes, ProjectRoutes, ReportRo
 const routes: Routes = [
     {
         path: '',
-        redirectTo: `/${CustomerRoutes.Root}`,
+        redirectTo: `/${CustomerRoutes.Root}/${CustomerRoutes.Ep.url}`,
         pathMatch: 'full'
     },
     {
