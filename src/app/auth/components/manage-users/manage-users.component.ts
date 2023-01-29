@@ -57,11 +57,9 @@ export class ManageUsersComponent implements OnInit {
     ADD_NEW_USER = UserManagement.ADD_NEW_USER;
 
     ngOnInit() {
-      debugger;
       this.store.select(authUsersSelector)
         .pipe(filter(user => isTypeMatched(user[0], KEYS_OF_USER)))
         .subscribe(data => {
-          debugger;
           this.dataSource = new MatTableDataSource<User>(data);
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;

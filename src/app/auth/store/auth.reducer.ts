@@ -8,6 +8,12 @@ export const authReducer = createReducer(
     return {
       ...state,
       users: data.users
+    };
+  }),
+  on(AuthActions.get_current_user_success, (state: AuthState, data) => {
+    return {
+      ...state,
+      currentUser: data
     }
   })
 );
