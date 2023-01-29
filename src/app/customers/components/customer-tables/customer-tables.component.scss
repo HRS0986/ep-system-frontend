@@ -1,0 +1,27 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-column-- {
+  width: 10%;
+  font-weight: bold;
+  padding-left: 60px !important;
+}
+
+.mat-column-Action {
+  width: 10%;
+  text-align: center;
+}
+
+.mat-column-Customer-Type {
+  font-weight: bold;
+}
+
+th[class*='mat-column-Action'] {
+  padding-left: 10px !important;
+}

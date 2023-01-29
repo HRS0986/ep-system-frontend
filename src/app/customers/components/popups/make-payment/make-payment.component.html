@@ -1,1 +1,116 @@
-<p>make-payment works!</p>
+<h2 mat-dialog-title>{{MAKE_PAYMENT_TITLE}}</h2>
+<mat-dialog-content style="max-height: fit-content">
+
+    <div class="d-flex flex-wrap my-3">
+        <div class="flex-fill mx-3">
+            <div class="d-flex justify-content-center">
+                <div class="">
+                    <p>{{INSTALLMENT}}&nbsp;:&nbsp;</p>
+                </div>
+                <div class="">
+                    <p style="font-weight: bolder">{{installment | mask: 'separator.2':','}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-fill mx-3">
+            <div class="d-flex justify-content-center">
+                <div class="">
+                    <p>{{TOTAL_PAYABLE}}&nbsp;:&nbsp;</p>
+                </div>
+                <div class="">
+                    <p style="font-weight: bolder">{{totalPayable | mask: 'separator.2':','}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-fill mx-3">
+            <div class="d-flex  justify-content-center">
+                <div class="">
+                    <p>{{ARREARS}}&nbsp;:&nbsp;</p>
+                </div>
+                <div class="">
+                    <p style="font-weight: bolder">
+                        {{+arrears < 0 ? "(":""}}
+                        {{arrears | mask: 'separator.2':','}}
+                        {{+arrears < 0 ? ")":""}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{AMOUNT}}</mat-label>
+        <input
+                mask="separator"
+                thousandSeparator=","
+                matTooltip=""
+                matTooltipPosition="right"
+                (change)="onChangeAmount()"
+                #amountTooltip="matTooltip"
+                matTooltipHideDelay="500"
+                matInput [(ngModel)]="amount">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{REMARKS}}</mat-label>
+        <input matInput [value]="remarks">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{PAYMENT_DATE}}</mat-label>
+        <input matInput [matDatepicker]="pickerPaymentDate" [(ngModel)]="paymentDate">
+        <mat-datepicker-toggle matSuffix [for]="pickerPaymentDate"></mat-datepicker-toggle>
+        <mat-datepicker #pickerPaymentDate></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{PARTICULARS}}</mat-label>
+        <mat-select [(ngModel)]="particulars">
+            <mat-option *ngFor="let item of ParticularsList" [value]="item.value" [hidden]="!item.display">
+                {{item.value}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{REFERENCE_NO}}</mat-label>
+        <input
+                matTooltip=""
+                matTooltipPosition="right"
+                #refTooltip="matTooltip"
+                (change)="onChangeReference()"
+                matTooltipHideDelay="500"
+                matInput [(ngModel)]="refNo">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="particulars == 'Paid By Cheque'" appearance="fill" class="w-100">
+        <mat-label>{{CHEQUE_NUMBER_TEXT}}</mat-label>
+        <input matInput [(ngModel)]="chequeNumber">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="particulars == 'Paid By Cheque'" appearance="fill" class="w-100">
+        <mat-label>{{BANK}}</mat-label>
+        <input matInput [(ngModel)]="bank">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="particulars == 'Paid By Cheque'" appearance="fill" class="w-100">
+        <mat-label>{{REALIZE_DATE}}</mat-label>
+        <input matInput [matDatepicker]="pickerRealizeDate" [(ngModel)]="realizeDate">
+        <mat-datepicker-toggle matSuffix [for]="pickerRealizeDate"></mat-datepicker-toggle>
+        <mat-datepicker #pickerRealizeDate></mat-datepicker>
+    </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button class="btn-p" mat-raised-button color="primary" cdkFocusInitial (click)="onClickPay()" [disabled]="isdPayDisabled">
+        <mat-icon>done</mat-icon>
+        {{PAY}}
+    </button>
+    <button mat-button mat-dialog-close [mat-dialog-close]="false">
+        <mat-icon>close</mat-icon>
+        {{CANCEL_BUTTON_TEXT}}
+    </button>
+</mat-dialog-actions>

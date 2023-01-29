@@ -4,12 +4,20 @@ import { CustomerRoutes } from "../route-data";
 import { EpCustomersComponent } from "./components/ep-customers/ep-customers.component";
 import { AdvancedCustomersComponent } from "./components/advanced-customers/advanced-customers.component";
 import { OldCustomersComponent } from "./components/old-customers/old-customers.component";
+import { ViewCustomerComponent } from "./components/view-customer/view-customer.component";
+import { LedgerComponent } from "./components/ledger/ledger.component";
+import { CustomerTablesComponent } from "./components/customer-tables/customer-tables.component";
 
 const routes: Routes = [
     {
         path: '',
-        redirectTo: CustomerRoutes.Ep.url,
-        pathMatch: 'full'
+        redirectTo: CustomerRoutes.All.url,
+        pathMatch: "full"
+    },
+    {
+        path: CustomerRoutes.All.url,
+        component: CustomerTablesComponent,
+        data: { title: CustomerRoutes.All.title }
     },
     {
         path: CustomerRoutes.Ep.url,
@@ -28,8 +36,13 @@ const routes: Routes = [
     },
     {
         path: CustomerRoutes.View.url,
-        component: EpCustomersComponent,
+        component: ViewCustomerComponent,
         data: { title: CustomerRoutes.View.title }
+    },
+    {
+        path: CustomerRoutes.Ledger.url,
+        component: LedgerComponent,
+        data: { title: CustomerRoutes.Ledger.title }
     }
 ];
 

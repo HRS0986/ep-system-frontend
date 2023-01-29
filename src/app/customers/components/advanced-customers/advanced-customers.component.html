@@ -1,1 +1,85 @@
-<p>advanced-customers works!</p>
+<mat-card class="mx-3" style="margin-bottom: 70px; min-height: 200px; min-width: fit-content">
+  <mat-card-content>
+    <div class="d-flex justify-content-center flex-column align-items-center">
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+    </div>
+    <div>
+      <div class="row w-100">
+        <div class="col-9 d-flex align-items-center">
+          <mat-form-field *ngIf="!isLoading" appearance="standard" class="w-25 left-0">
+            <mat-label>{{SEARCH_PLACEHOLDER}}</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+          </mat-form-field>
+        </div>
+        <div class="col-3 d-flex justify-content-end mb-2">
+          <button *ngIf="!isLoading" class="btn-p" style="height: fit-content" mat-raised-button (click)="ngOnClickAdd()" color="primary">
+            <mat-icon>person_add_alt</mat-icon> &nbsp;
+            {{ADD_CUSTOMER_BUTTON_TEXT}}
+          </button>
+        </div>
+      </div>
+
+      <div [hidden]="isLoading" class="mat-elevation-z8 w-100">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="{{ID_COLUMN}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ID_COLUMN}} </th>
+            <td mat-cell *matCellDef="let row"> {{row.ID}} </td>
+          </ng-container>
+
+          <!-- Progress Column -->
+          <ng-container matColumnDef="{{NAME_COLUMN}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{NAME_COLUMN}} </th>
+            <td mat-cell *matCellDef="let row"> {{row.Name}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="{{PROJECT_COLUMN}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_COLUMN}} </th>
+            <td mat-cell *matCellDef="let row"> {{row.Project}} </td>
+          </ng-container>
+
+          <!-- Fruit Column -->
+          <ng-container matColumnDef="{{BALANCE_COLUMN}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{BALANCE_COLUMN}} </th>
+            <td mat-cell *matCellDef="let row"> {{row.Balance | mask: 'separator.2':','}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="{{ARREARS_COLUMN}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ARREARS_COLUMN}} </th>
+            <td mat-cell *matCellDef="let row">
+              {{row.Arrears < 0 ? "(":""}}
+              {{row.Arrears| mask: 'separator.2':','}}
+              {{row.Arrears < 0 ? ")":""}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="{{PAYMENT_EP_BALANCE}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PAYMENT_EP_BALANCE}} </th>
+            <td mat-cell *matCellDef="let row"> {{row.PaymentEPBalance | mask: 'separator.2':','}} </td>
+          </ng-container>
+
+          <!-- Action Column -->
+          <ng-container matColumnDef="{{ACTIONS_COLUMN}}">
+            <th mat-header-cell *matHeaderCellDef> {{ACTIONS_COLUMN}} </th>
+            <td mat-cell *matCellDef="let row">
+              <app-action-menu [customer]="row"></app-action-menu>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">{{NO_SEARCH_RESULT_TEXT}}</td>
+          </tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[25, 5, 10, 100]"></mat-paginator>
+
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

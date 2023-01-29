@@ -17,5 +17,5 @@ export class IsAdminGuard implements CanActivate {
     }
     return true;
   }
-  
+
 }

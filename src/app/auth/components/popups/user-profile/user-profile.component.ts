@@ -76,7 +76,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   changeTitle(index: number) {
-    console.log(index);
     if (index === 0) {
       this.selectedTabIndex = 0;
       this.TITLE = UserMessages.EDIT_USER_PROFILE_TITLE;

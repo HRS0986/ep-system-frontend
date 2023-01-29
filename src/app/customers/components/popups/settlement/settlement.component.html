@@ -1,1 +1,91 @@
-<p>settlement works!</p>
+<h2 mat-dialog-title>{{SETTLE_PAYMENT_TITLE}}</h2>
+<mat-dialog-content style="max-height: fit-content">
+
+    <div class="d-flex flex-wrap my-3">
+        <div class="flex-fill mx-3">
+            <div class="d-flex justify-content-start">
+                <div class="">
+                    <p>{{TOTAL_RECEIVABLE_BALANCE_LABEL}}&nbsp;:&nbsp;</p>
+                </div>
+                <div class="">
+                    <p style="font-weight: bolder">{{totalReceivableBalance | mask: 'separator.2':','}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-fill mx-3">
+            <div class="d-flex justify-content-start">
+                <div class="">
+                    <p>{{PAID_AMOUNT_LABEL}}&nbsp;:&nbsp;</p>
+                </div>
+                <div class="">
+                    <p style="font-weight: bolder">{{paidAmount | mask: 'separator.2':','}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap my-3">
+        <div class="flex-fill mx-3">
+            <div class="d-flex justify-content-start">
+                <div class="">
+                    <p>{{REDUCED_INTEREST_LABEL}}&nbsp;:&nbsp;</p>
+                </div>
+                <div class="">
+                    <p style="font-weight: bolder">{{reducedInterest | mask: 'separator.2':','}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-fill mx-3">
+            <div class="d-flex  justify-content-center">
+                <div class="">
+                    <p>{{BALANCE_LABEL}}&nbsp;:&nbsp;</p>
+                </div>
+                <div class="">
+                    <p style="font-weight: bolder">{{settlementBalance | mask: 'separator.2':','}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{REMARKS}}</mat-label>
+        <input matInput [(ngModel)]="remarks">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{REFERENCE_NO}}</mat-label>
+        <input
+                matTooltip=""
+                matTooltipPosition="right"
+                (change)="onChangeRef()"
+                #refTooltip="matTooltip"
+                matTooltipHideDelay="500"
+                matInput
+                [(ngModel)]="referenceNo">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{PARTICULARS_LABEL}}</mat-label>
+        <input matInput [(ngModel)]="particulars">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{DATE}}</mat-label>
+        <input matInput [matDatepicker]="pickerRealizeDate" [(ngModel)]="date">
+        <mat-datepicker-toggle matSuffix [for]="pickerRealizeDate"></mat-datepicker-toggle>
+        <mat-datepicker #pickerRealizeDate></mat-datepicker>
+    </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button class="btn-p" mat-raised-button color="primary" (click)="onClickSettle()"  cdkFocusInitial>
+        <mat-icon>done</mat-icon>
+        {{SETTLE_BUTTON_TEXT}}
+    </button>
+    <button mat-button mat-dialog-close [mat-dialog-close]="false">
+        <mat-icon>close</mat-icon>
+        {{CANCEL_BUTTON_TEXT}}
+    </button>
+</mat-dialog-actions>

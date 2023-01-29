@@ -12,26 +12,36 @@ import { ChangeInstallmentComponent } from './components/popups/change-installme
 import { SettlementComponent } from './components/popups/settlement/settlement.component';
 import { LedgerComponent } from './components/ledger/ledger.component';
 import { MaterialModule } from "../app.material.module";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ViewCustomerComponent } from './components/view-customer/view-customer.component';
+import { NgxMaskModule } from "ngx-mask";
+import { ActionMenuComponent } from './components/action-menu/action-menu.component';
+import { CustomerTablesComponent } from './components/customer-tables/customer-tables.component';
 
 
 @NgModule({
-  declarations: [
-    OldCustomersComponent,
-    EpCustomersComponent,
-    AdvancedCustomersComponent,
-    ViewOldCustomerComponent,
-    AddNewCustomerComponent,
-    MakePaymentComponent,
-    ChangeInstallmentComponent,
-    SettlementComponent,
-    LedgerComponent
-  ],
-  imports: [
-    CommonModule,
-    CustomersRoutingModule,
-    MaterialModule,
-      FormsModule
-  ]
+    declarations: [
+        OldCustomersComponent,
+        EpCustomersComponent,
+        AdvancedCustomersComponent,
+        ViewOldCustomerComponent,
+        AddNewCustomerComponent,
+        MakePaymentComponent,
+        ChangeInstallmentComponent,
+        SettlementComponent,
+        LedgerComponent,
+        ViewCustomerComponent,
+        ActionMenuComponent,
+        CustomerTablesComponent
+    ],
+    imports: [
+        CommonModule,
+        CustomersRoutingModule,
+        MaterialModule,
+        FormsModule,
+        NgxMaskModule.forChild(),
+        ReactiveFormsModule
+    ]
 })
-export class CustomersModule { }
+export class CustomersModule {
+}

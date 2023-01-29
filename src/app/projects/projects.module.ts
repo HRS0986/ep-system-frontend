@@ -21,6 +21,9 @@ import { PROJECT_FEATURE_NAME } from "./store/projects.selectors";
         AddEditProjectComponent,
         ActionMenuComponent
     ],
+    exports: [
+        ActionMenuComponent
+    ],
     imports: [
         CommonModule,
         ProjectsRoutingModule,

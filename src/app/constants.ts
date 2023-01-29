@@ -20,12 +20,13 @@ export enum CustomerTypes {
     RESALE_CUSTOMER
 }
 
-export enum AlertTypes {
+export enum NotificationTypes {
     SUCCESS,
     ERROR,
     WARNING,
     INFO,
     ARREARS,
+    ALL
 }
 
 export class Common {
@@ -92,6 +93,7 @@ export class Customer {
     public static readonly DELETE_CUSTOMER_TEXT = 'Customer Deleted Successfully';
     public static readonly DELETE_CUSTOMER_TITLE = 'Delete Customer';
     public static readonly DELETE_CUSTOMER_MESSAGE = 'Are you sure you want to delete this customer?';
+    public static readonly CUSTOMER_TYPE = 'Customer Type';
 }
 
 export class UserMessages {
@@ -116,6 +118,7 @@ export class NewCustomer {
 
     public static readonly BasicDetails = class BasicDetails {
         public static readonly BASIC_CUSTOMER_TAB_TEXT = 'Customer Details';
+        public static readonly SECONDARY_CONTACT_LABEL = 'Secondary Contact Numbers';
         public static readonly NAME_LABEL = 'Customer Name';
         public static readonly ADDRESS_LABEL = 'Address';
         public static readonly PHONE_LABEL = 'Phone Number';
@@ -259,6 +262,7 @@ export class OldCustomer {
     public static readonly LOAN_AMOUNT_LABEL = 'Loan Amount';
     public static readonly VIEW_BUTTON_TEXT = 'View';
     public static readonly SETTLED_PAYMENT_LABEL = 'Settled';
+    public static readonly VIEW_POPUP_TITLE = 'View Old Customer';
 }
 
 export class NavigationMenu {
@@ -377,7 +381,7 @@ export class Notifications {
     public static readonly MARK_AS_UNREAD_BUTTON_TEXT = 'Mark as unread';
 }
 
-export const NotificationColors: { SUCCESS: string; WARNING: string; ERROR: string; INFO: string; ARREARS: string; } = {
+export const NotificationColors: { [key :string]: string; } = {
     SUCCESS: '#84ad88',
     WARNING: '#af914e',
     ERROR: '#e8b3ad',
