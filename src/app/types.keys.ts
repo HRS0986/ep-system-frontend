@@ -79,7 +79,7 @@ export const KEYS_OF_CASH_COLLECTION_REPORT = [
     "DeedAndPlan"
 ];
 
-export const KEYS_OF_CLIENT = [
+export const KEYS_OF_CUSTOMER = [
     'ID',
     'Project',
     'Name',

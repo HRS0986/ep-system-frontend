@@ -1,15 +1,17 @@
-import { Customer } from "../../types";
+import { Customer, Ledger } from "../../types";
 
 export interface CustomersState {
     EpCustomers: Customer[];
     AdvancedCustomers: Customer[];
     OldCustomers: Customer[];
-    ResellCustomers: Customer[];
+    ResaleCustomers: Customer[];
+    Ledger: Ledger[]
 }
 
 export const initialState: CustomersState = {
     EpCustomers: new Array<Customer>(),
     AdvancedCustomers: new Array<Customer>(),
     OldCustomers: new Array<Customer>(),
-    ResellCustomers: new Array<Customer>(),
+    ResaleCustomers: new Array<Customer>(),
+    Ledger: new Array<Ledger>()
 };

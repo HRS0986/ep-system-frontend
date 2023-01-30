@@ -7,7 +7,13 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { Customer } from "../../../types";
 import { AddNewCustomerComponent } from "../popups/add-new-customer/add-new-customer.component";
-import { CustomerService } from "../../../services/customer.service";
+import { Store } from "@ngrx/store";
+import { CustomersState } from "../../store/customers.state";
+import { AdvancedCustomerActions } from "../../store/customers.actions";
+import { advancedCustomerSelector } from "../../store/customers.selectors";
+import { filter } from "rxjs";
+import { isTypeMatched } from "../../../helpers/utils";
+import { KEYS_OF_CUSTOMER } from "../../../types.keys";
 
 @Component({
   selector: 'app-advanced-customers',
@@ -19,7 +25,7 @@ export class AdvancedCustomersComponent implements OnInit {
   constructor(
     private router: Router,
     private matDialog: MatDialog,
-    private customerService: CustomerService
+    private store: Store<CustomersState>
   ) {
   }
 
@@ -51,12 +57,15 @@ export class AdvancedCustomersComponent implements OnInit {
   NO_SEARCH_RESULT_TEXT = Common.NO_SEARCH_RESULT_TEXT;
 
   ngOnInit() {
-    this.customerService.GetAllAdvancedClientData().subscribe(data => {
-      this.dataSource = new MatTableDataSource(data);
-      this.isLoading = false;
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    });
+    this.store.select(advancedCustomerSelector)
+      .pipe(filter(customer => isTypeMatched(customer[0], KEYS_OF_CUSTOMER)))
+      .subscribe(data => {
+        this.dataSource = new MatTableDataSource(data);
+        this.isLoading = false;
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      });
+    this.store.dispatch(AdvancedCustomerActions.get_all());
   }
 
   ngOnClickAdd() {
