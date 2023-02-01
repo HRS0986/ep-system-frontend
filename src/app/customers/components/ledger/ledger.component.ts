@@ -13,7 +13,7 @@ import { ViewOldCustomerComponent } from "../popups/view-old-customer/view-old-c
 import { Location } from "@angular/common";
 import { Store } from "@ngrx/store";
 import { CustomersState } from "../../store/customers.state";
-import { ledgerSelector } from "../../store/customers.selectors";
+import { customerSelector, ledgerSelector } from "../../store/customers.selectors";
 import { isTypeMatched } from "../../../helpers/utils";
 import { KEYS_OF_LEDGER } from "../../../types.keys";
 import { LedgerActions } from "../../store/customers.actions";
@@ -76,6 +76,9 @@ export class LedgerComponent implements OnInit {
           this.isOldCustomer = params['old'];
           this.customerName = params['name'];
           this.isDebug = params['debug'] == '1';
+          this.store.select(customerSelector(this.customerId)).subscribe(data => {
+            this.customer = data!;
+          })
         }
       );
 
@@ -93,9 +96,9 @@ export class LedgerComponent implements OnInit {
           return isTypeMatched(customer![0].Ledger[0], KEYS_OF_LEDGER);
         }))
         .subscribe(ledger => {
-            const relatedLedger = ledger.find(l => l.customerId == this.customerId)!.Ledger
-            this.dataSource.data = relatedLedger;
-            this.isLoading = false;
+          const relatedLedger = ledger.find(l => l.customerId == this.customerId)!.Ledger
+          this.dataSource.data = relatedLedger;
+          this.isLoading = false;
         });
       this.store.dispatch(LedgerActions.get_ledger({ customerId: this.customerId }));
     }
@@ -106,9 +109,10 @@ export class LedgerComponent implements OnInit {
   }
 
   onClickMakePayment(): void {
-    const dialogRef = this.matDialog.open(MakePaymentComponent, { width: '400px', data: { customer: this.customer } });
-
-    dialogRef.afterClosed().subscribe(result => {
+    this.matDialog.open(MakePaymentComponent, {
+      width: '400px',
+      data: this.customer
+    }).afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }

@@ -19,7 +19,7 @@ export class MakePaymentComponent implements OnInit {
       private customerService: CustomerService,
       private helperService: HelperService,
       private dialogRef: MatDialogRef<MakePaymentComponent>,
-      @Inject(MAT_DIALOG_DATA) private data: { customer: Customer }
+      @Inject(MAT_DIALOG_DATA) private data: Customer
   ) { }
 
   @ViewChild('amountTooltip') amountTooltip!: MatTooltip;
@@ -58,17 +58,18 @@ export class MakePaymentComponent implements OnInit {
   paymentData: any = [ ];
 
   ngOnInit(): void {
-    this.totalPayable = (this.data.customer.MonthRental + +this.data.customer.Arrears!.toString()).toString();
-    this.arrears = this.data.customer.Arrears!.toString();
-    this.installment = this.data.customer.MonthRental.toString();
+    debugger;
+    this.totalPayable = (this.data.MonthRental + +this.data.Arrears!.toString()).toString();
+    this.arrears = this.data.Arrears!.toString();
+    this.installment = this.data.MonthRental.toString();
   }
 
   onClickPay(): void {
     this.paymentData = [
       ["Date", new Date().toDateString()],
-      ["Customer Name", this.data.customer.Name],
+      ["Customer Name", this.data.Name],
       ["Payment", parseFloat(this.amount).toFixed(2) + " LKR"],
-      ["Balance", this.data.customer.Balance!.toFixed(2) + " LKR"],
+      ["Balance", this.data.Balance!.toFixed(2) + " LKR"],
       ["Particulars", this.particulars],
     ];
     if (/^\d+$/.test(this.amount) && (parseInt(this.amount) > 0)){
@@ -76,7 +77,7 @@ export class MakePaymentComponent implements OnInit {
       if ((/^\d+$/.test(this.refNo) && (parseInt(this.refNo) > 0))|| this.refNo.length === 0){
         this.refTooltip.message = '';
         this.isdPayDisabled = true;
-        this.customerService.MakePayment(this.data.customer, this.paymentDate.toISOString(), parseInt(this.amount), parseInt(this.refNo) || 0, this.particulars, this.remarks).then(result => {
+        this.customerService.MakePayment(this.data, this.paymentDate.toISOString(), parseInt(this.amount), parseInt(this.refNo) || 0, this.particulars, this.remarks).then(result => {
           if (result.status) {
             this.helperService.openSnackBar({text:result.message, status: SnackBarStatus.SUCCESS});
             this.exportToPDF();
