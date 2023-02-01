@@ -5,9 +5,15 @@ import { MatSort } from "@angular/material/sort";
 import { AllCustomers, Common, OldCustomer } from "../../../constants";
 import { Router } from "@angular/router";
 import { MatPaginator } from "@angular/material/paginator";
-import { CustomerService } from "../../../services/customer.service";
 import { Customer } from "../../../types";
 import { ViewOldCustomerComponent } from "../popups/view-old-customer/view-old-customer.component";
+import { oldCustomerSelector } from "../../store/customers.selectors";
+import { filter } from "rxjs";
+import { isTypeMatched } from "../../../helpers/utils";
+import { KEYS_OF_CUSTOMER } from "../../../types.keys";
+import { OldCustomerActions } from "../../store/customers.actions";
+import { Store } from "@ngrx/store";
+import { CustomersState } from "../../store/customers.state";
 
 @Component({
   selector: 'app-old-customers',
@@ -17,7 +23,8 @@ import { ViewOldCustomerComponent } from "../popups/view-old-customer/view-old-c
 export class OldCustomersComponent implements OnInit {
 
 
-  constructor(private router: Router, private matDialog: MatDialog, private customerService: CustomerService) {  }
+  constructor(private router: Router, private matDialog: MatDialog, private store: Store<CustomersState>) {
+  }
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -48,12 +55,19 @@ export class OldCustomersComponent implements OnInit {
 
 
   ngOnInit() {
-    this.customerService.GetOldClientData().subscribe(data => {
-      this.dataSource = new MatTableDataSource<Customer>(data);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-      this.isLoading = false;
-    });
+    this.store.select(oldCustomerSelector)
+      .pipe(filter(customer => {
+        debugger;
+        return isTypeMatched(customer[0], KEYS_OF_CUSTOMER)
+      }))
+      .subscribe(data => {
+        debugger;
+        this.dataSource = new MatTableDataSource(data);
+        this.isLoading = false;
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      });
+    this.store.dispatch(OldCustomerActions.get_all());
   }
 
   ngOnClickViewCustomer(customer: Customer) {

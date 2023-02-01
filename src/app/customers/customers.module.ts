@@ -17,6 +17,11 @@ import { ViewCustomerComponent } from './components/view-customer/view-customer.
 import { NgxMaskModule } from "ngx-mask";
 import { ActionMenuComponent } from './components/action-menu/action-menu.component';
 import { CustomerTablesComponent } from './components/customer-tables/customer-tables.component';
+import { StoreModule } from "@ngrx/store";
+import { CUSTOMERS_FEATURE_NAME } from "./store/customers.selectors";
+import { customerReducer } from "./store/customers.reducer";
+import { EffectsModule } from "@ngrx/effects";
+import { CustomerEffects } from "./store/customers.effects";
 
 
 @NgModule({
@@ -40,7 +45,9 @@ import { CustomerTablesComponent } from './components/customer-tables/customer-t
         MaterialModule,
         FormsModule,
         NgxMaskModule.forChild(),
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        StoreModule.forFeature(CUSTOMERS_FEATURE_NAME, customerReducer),
+        EffectsModule.forFeature([CustomerEffects])
     ]
 })
 export class CustomersModule {

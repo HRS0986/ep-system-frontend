@@ -5,9 +5,15 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSort } from "@angular/material/sort";
-import { CustomerService } from "../../../services/customer.service";
 import { Customer } from "../../../types";
 import { AddNewCustomerComponent } from "../popups/add-new-customer/add-new-customer.component";
+import { epCustomerSelector } from "../../store/customers.selectors";
+import { filter } from "rxjs";
+import { isTypeMatched } from "../../../helpers/utils";
+import { KEYS_OF_CUSTOMER } from "../../../types.keys";
+import { EpCustomerActions } from "../../store/customers.actions";
+import { Store } from "@ngrx/store";
+import { CustomersState } from "../../store/customers.state";
 
 @Component({
   selector: 'app-ep-customers',
@@ -19,7 +25,7 @@ export class EpCustomersComponent implements OnInit {
   constructor(
     private router: Router,
     private matDialog: MatDialog,
-    private customerService: CustomerService
+    private store: Store<CustomersState>
   ) {
   }
 
@@ -51,14 +57,15 @@ export class EpCustomersComponent implements OnInit {
   NO_SEARCH_RESULT_TEXT = Common.NO_SEARCH_RESULT_TEXT;
 
   ngOnInit() {
-    this.customerService.GetCurrentClientData(CustomerTypes.EP_CUSTOMER).subscribe(data => {
-      data = Array.from(data);
-      this.dataSource = new MatTableDataSource(data);
-      this.isLoading = false;
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    });
-
+    this.store.select(epCustomerSelector)
+      .pipe(filter(customer => isTypeMatched(customer[0], KEYS_OF_CUSTOMER)))
+      .subscribe(data => {
+        this.dataSource = new MatTableDataSource(data);
+        this.isLoading = false;
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      });
+    this.store.dispatch(EpCustomerActions.get_all());
   }
 
   ngOnClickAdd() {
