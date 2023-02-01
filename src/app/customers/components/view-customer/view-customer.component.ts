@@ -285,7 +285,7 @@ export class ViewCustomerComponent implements OnInit {
   }
 
   onClickMakePayment(): void {
-    const dialogRef = this.matDialog.open(MakePaymentComponent, {width: '600px', data: {customer: this.customer}});
+    const dialogRef = this.matDialog.open(MakePaymentComponent, {width: '600px', data: this.customer});
 
     const subscription = dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
