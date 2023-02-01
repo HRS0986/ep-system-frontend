@@ -47,7 +47,7 @@ export const LedgerActions = createActionGroup({
   source: LEDGER,
   events: {
     GET_LEDGER: props<{ customerId: string }>(),
-    GET_LEDGER_SUCCESS: props<{ ledger: Ledger[] }>(),
+    GET_LEDGER_SUCCESS: props<{ ledger: Ledger[], customerId: string }>(),
     GET_LEDGER_FAILED: props<{ error: string }>()
   }
 });

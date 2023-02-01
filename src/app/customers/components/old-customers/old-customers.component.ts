@@ -56,8 +56,12 @@ export class OldCustomersComponent implements OnInit {
 
   ngOnInit() {
     this.store.select(oldCustomerSelector)
-      .pipe(filter(customer => isTypeMatched(customer[0], KEYS_OF_CUSTOMER)))
+      .pipe(filter(customer => {
+        debugger;
+        return isTypeMatched(customer[0], KEYS_OF_CUSTOMER)
+      }))
       .subscribe(data => {
+        debugger;
         this.dataSource = new MatTableDataSource(data);
         this.isLoading = false;
         this.dataSource.sort = this.sort;

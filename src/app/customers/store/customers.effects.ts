@@ -15,7 +15,8 @@ import { CustomerService } from "../../services/customer.service";
 
 @Injectable()
 export class CustomerEffects {
-  constructor(private actions$: Actions, private customerService: CustomerService, private store: Store<ReportsState>) {  }
+  constructor(private actions$: Actions, private customerService: CustomerService, private store: Store<ReportsState>) {
+  }
 
   getEpCustomer$ = createEffect(() => this.actions$.pipe(
     ofType(EpCustomerActions.get_all),
@@ -26,7 +27,7 @@ export class CustomerEffects {
           .pipe(
             map(customerData => EpCustomerActions.get_all_success({ customers: customerData })),
             catchError((error) => of(EpCustomerActions.get_all_failed({ error: error })))
-          )
+          );
       } else {
         return of(EpCustomerActions.get_all_success({ customers: epCustomerData }));
       }
@@ -42,7 +43,7 @@ export class CustomerEffects {
           .pipe(
             map(customerData => AdvancedCustomerActions.get_all_success({ customers: customerData })),
             catchError((error) => of(AdvancedCustomerActions.get_all_failed({ error: error })))
-          )
+          );
       } else {
         return of(AdvancedCustomerActions.get_all_success({ customers: advancedCustomerData }));
       }
@@ -53,12 +54,13 @@ export class CustomerEffects {
     ofType(OldCustomerActions.get_all),
     withLatestFrom(this.store.select(oldCustomerSelector)),
     mergeMap(([_, oldCustomerData]) => {
+      debugger;
       if (!oldCustomerData.length) {
         return from(this.customerService.GetAllAdvancedClientData())
           .pipe(
             map(customerData => OldCustomerActions.get_all_success({ customers: customerData })),
             catchError((error) => of(OldCustomerActions.get_all_failed({ error: error })))
-          )
+          );
       } else {
         return of(OldCustomerActions.get_all_success({ customers: oldCustomerData }));
       }
@@ -69,16 +71,17 @@ export class CustomerEffects {
     ofType(LedgerActions.get_ledger),
     withLatestFrom(this.store.select(ledgerSelector)),
     mergeMap(([action, ledgerData]) => {
-      if (!ledgerData.length) {
+      const isLedgerExist = ledgerData.filter(ld => ld.customerId == action.customerId).length > 0;
+      if (!isLedgerExist) {
         return from(this.customerService.GetLedger(action.customerId))
           .pipe(
-            map(ledger => LedgerActions.get_ledger_success({ ledger: ledger })),
+            map(ledger => LedgerActions.get_ledger_success({ ledger: ledger, customerId: action.customerId })),
             catchError((error) => of(LedgerActions.get_ledger_failed({ error: error })))
-          )
+          );
       } else {
-        return of(LedgerActions.get_ledger_success({ ledger: ledgerData }));
+        const ledger = ledgerData.find(l => l.customerId == action.customerId)!.Ledger;
+        return of(LedgerActions.get_ledger_success({ ledger: ledger, customerId: action.customerId }));
       }
     })
   ));
-
 }

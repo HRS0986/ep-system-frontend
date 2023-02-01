@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Common, Customer, LedgerMessages, Particulars } from "../../../constants";
-import { Ledger, Customer as CustomerType } from "../../../types";
-import { firstValueFrom, Subscription } from "rxjs";
+import { Customer as CustomerType, Ledger } from "../../../types";
+import { filter } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { SettlementComponent } from "../popups/settlement/settlement.component";
@@ -11,6 +11,12 @@ import { CustomerService } from "../../../services/customer.service";
 import { CustomerRoutes } from "../../../route-data";
 import { ViewOldCustomerComponent } from "../popups/view-old-customer/view-old-customer.component";
 import { Location } from "@angular/common";
+import { Store } from "@ngrx/store";
+import { CustomersState } from "../../store/customers.state";
+import { ledgerSelector } from "../../store/customers.selectors";
+import { isTypeMatched } from "../../../helpers/utils";
+import { KEYS_OF_LEDGER } from "../../../types.keys";
+import { LedgerActions } from "../../store/customers.actions";
 
 @Component({
   selector: 'app-ledger',
@@ -24,8 +30,10 @@ export class LedgerComponent implements OnInit {
     private location: Location,
     private matDialog: MatDialog,
     private route: ActivatedRoute,
-    private customerService: CustomerService
-  ) { }
+    private customerService: CustomerService,
+    private store: Store<CustomersState>
+  ) {
+  }
 
   MAKE_PAYMENT_BUTTON_TEXT = LedgerMessages.MAKE_PAYMENT_BUTTON_TEXT;
   DATE_COLUMN_TEXT = LedgerMessages.DATE_COLUMN_TEXT;
@@ -55,7 +63,6 @@ export class LedgerComponent implements OnInit {
     LedgerMessages.REMARKS_COLUMN_TEXT
   ];
   dataSource: MatTableDataSource<Ledger> = new MatTableDataSource<Ledger>();
-  subscriptions: Subscription[] = [];
   customerId!: string;
   isOldCustomer!: boolean;
   customer!: CustomerType;
@@ -63,7 +70,7 @@ export class LedgerComponent implements OnInit {
   isDebug = false;
 
   ngOnInit(): void {
-    const querySubscription = this.route.queryParams
+    this.route.queryParams
       .subscribe(params => {
           this.customerId = params['id'];
           this.isOldCustomer = params['old'];
@@ -71,32 +78,27 @@ export class LedgerComponent implements OnInit {
           this.isDebug = params['debug'] == '1';
         }
       );
-          console.log(this.isDebug)
-
-    let ledgerSubscription: Subscription;
 
     if (this.isDebug) {
-      ledgerSubscription = this.customerService.GetLedgerDebug(this.customerId)
+      this.customerService.GetLedgerDebug(this.customerId)
         .subscribe(ledger => {
             this.dataSource.data = ledger;
             this.isLoading = false;
           }
         );
-    }else {
-      ledgerSubscription = this.customerService.GetLedger(this.customerId)
+    } else {
+      this.store.select(ledgerSelector)
+        .pipe(filter(customer => {
+          if (customer.length == 0) return false;
+          return isTypeMatched(customer![0].Ledger[0], KEYS_OF_LEDGER);
+        }))
         .subscribe(ledger => {
-            this.dataSource.data = ledger;
+            const relatedLedger = ledger.find(l => l.customerId == this.customerId)!.Ledger
+            this.dataSource.data = relatedLedger;
             this.isLoading = false;
-          }
-        );
+        });
+      this.store.dispatch(LedgerActions.get_ledger({ customerId: this.customerId }));
     }
-
-    firstValueFrom(this.customerService.GetAClient(this.customerId)).then(client => {
-      this.customer = client as CustomerType;
-    });
-
-    this.subscriptions.push(querySubscription);
-    this.subscriptions.push(ledgerSubscription);
   }
 
   onClickBack(): void {
@@ -104,33 +106,29 @@ export class LedgerComponent implements OnInit {
   }
 
   onClickMakePayment(): void {
-    const dialogRef = this.matDialog.open(MakePaymentComponent, {width: '400px', data:{customer: this.customer}});
+    const dialogRef = this.matDialog.open(MakePaymentComponent, { width: '400px', data: { customer: this.customer } });
 
-    const subscription = dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
-
-    this.subscriptions.push(subscription);
   }
 
   onClickSettle() {
-    const dialogRef = this.matDialog.open(SettlementComponent, {width: '400px', data: {customer: this.customer}});
+    const dialogRef = this.matDialog.open(SettlementComponent, { width: '400px', data: { customer: this.customer } });
 
-    const subscription = dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
-
-    this.subscriptions.push(subscription);
   }
 
   onClickCustomerName() {
-    if (this.isOldCustomer){
+    if (this.isOldCustomer) {
       const dialogRef = this.matDialog.open(ViewOldCustomerComponent, { width: "650px", data: this.customer });
       dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog result: ${result}`);
       });
-    }else{
-      this.router.navigate([CustomerRoutes.Root, CustomerRoutes.View.url], {queryParams: {id: this.customerId}}).then(() => {
+    } else {
+      this.router.navigate([CustomerRoutes.Root, CustomerRoutes.View.url], { queryParams: { id: this.customerId } }).then(() => {
         window.location.reload();
       });
     }

@@ -9,4 +9,4 @@ export const epCustomerSelector = createSelector(getCustomerState, state => stat
 export const advancedCustomerSelector = createSelector(getCustomerState, state => state.AdvancedCustomers);
 export const resaleCustomerSelector = createSelector(getCustomerState, state => state.ResaleCustomers);
 export const oldCustomerSelector = createSelector(getCustomerState, state => state.OldCustomers);
-export const ledgerSelector = createSelector(getCustomerState, state => state.Ledger);
+export const ledgerSelector = createSelector(getCustomerState, state => state.Ledgers);
