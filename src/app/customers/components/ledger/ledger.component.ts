@@ -13,7 +13,7 @@ import { ViewOldCustomerComponent } from "../popups/view-old-customer/view-old-c
 import { Location } from "@angular/common";
 import { Store } from "@ngrx/store";
 import { CustomersState } from "../../store/customers.state";
-import { customerSelector, ledgerSelector } from "../../store/customers.selectors";
+import { singleCustomerSelector, ledgerSelector } from "../../store/customers.selectors";
 import { isTypeMatched } from "../../../helpers/utils";
 import { KEYS_OF_LEDGER } from "../../../types.keys";
 import { LedgerActions } from "../../store/customers.actions";
@@ -76,7 +76,7 @@ export class LedgerComponent implements OnInit {
           this.isOldCustomer = params['old'];
           this.customerName = params['name'];
           this.isDebug = params['debug'] == '1';
-          this.store.select(customerSelector(this.customerId)).subscribe(data => {
+          this.store.select(singleCustomerSelector(this.customerId)).subscribe(data => {
             this.customer = data!;
           })
         }

@@ -13,5 +13,5 @@ export const initialState: CustomersState = {
   AdvancedCustomers: new Array<Customer>(),
   OldCustomers: new Array<Customer>(),
   ResaleCustomers: new Array<Customer>(),
-  Ledgers: new Array<{ customerId: string, Ledger: Ledger[] }>()
+  Ledgers: new Array<{ customerId: string, Ledger: Ledger[] }>(),
 };

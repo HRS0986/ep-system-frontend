@@ -10,7 +10,7 @@ export const advancedCustomerSelector = createSelector(getCustomerState, state =
 export const resaleCustomerSelector = createSelector(getCustomerState, state => state.ResaleCustomers);
 export const oldCustomerSelector = createSelector(getCustomerState, state => state.OldCustomers);
 export const ledgerSelector = createSelector(getCustomerState, state => state.Ledgers);
-export const customerSelector = (customerId: string) =>  createSelector(getCustomerState, state => {
+export const singleCustomerSelector = (customerId: string) =>  createSelector(getCustomerState, state => {
   const allCustomers = [...state.EpCustomers, ...state.OldCustomers, ...state.AdvancedCustomers, ...state.ResaleCustomers]
   return allCustomers.find(c => c.ID == customerId);
 });

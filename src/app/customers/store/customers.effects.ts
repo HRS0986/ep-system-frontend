@@ -11,6 +11,7 @@ import {
 } from "./customers.selectors";
 import { AdvancedCustomerActions, EpCustomerActions, LedgerActions, OldCustomerActions } from "./customers.actions";
 import { CustomerService } from "../../services/customer.service";
+import { CustomerTypes } from "../../constants";
 
 
 @Injectable()
@@ -23,7 +24,7 @@ export class CustomerEffects {
     withLatestFrom(this.store.select(epCustomerSelector)),
     mergeMap(([_, epCustomerData]) => {
       if (!epCustomerData.length) {
-        return from(this.customerService.GetAllClientData())
+        return from(this.customerService.GetCurrentClientData(CustomerTypes.EP_CUSTOMER))
           .pipe(
             map(customerData => EpCustomerActions.get_all_success({ customers: customerData })),
             catchError((error) => of(EpCustomerActions.get_all_failed({ error: error })))
@@ -56,7 +57,7 @@ export class CustomerEffects {
     mergeMap(([_, oldCustomerData]) => {
       debugger;
       if (!oldCustomerData.length) {
-        return from(this.customerService.GetAllAdvancedClientData())
+        return from(this.customerService.GetOldClientData())
           .pipe(
             map(customerData => OldCustomerActions.get_all_success({ customers: customerData })),
             catchError((error) => of(OldCustomerActions.get_all_failed({ error: error })))
