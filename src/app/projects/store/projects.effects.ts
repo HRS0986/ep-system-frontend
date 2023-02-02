@@ -17,7 +17,7 @@ export class ProjectsEffects {
         ofType(ProjectActions.get_all),
         withLatestFrom(this.store.select(projectsSelector)),
         mergeMap(([_, projectsData]) => {
-            if (!projectsData.length) {
+            if (projectsData == undefined) {
                 return this.projectService.GetAllProjects()
                     .pipe(
                         map(projectsData => ProjectActions.get_all_success({ projects: projectsData })),

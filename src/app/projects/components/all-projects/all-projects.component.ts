@@ -4,14 +4,11 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatSort } from "@angular/material/sort";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
-import { filter } from "rxjs";
 import { Common, Projects } from "../../../constants";
 import { Project } from "../../../types";
 import { AddEditProjectComponent } from "../popups/add-edit-project/add-edit-project.component";
 import { Store } from "@ngrx/store";
 import { projectsSelector } from "../../store/projects.selectors";
-import { isTypeMatched } from "../../../helpers/utils";
-import { KEYS_OF_PROJECT } from "../../../types.keys";
 import { ProjectActions } from "../../store/projects.actions";
 import { ProjectsState } from "../../store/projects.state";
 
@@ -23,10 +20,11 @@ import { ProjectsState } from "../../store/projects.state";
 export class AllProjectsComponent implements OnInit {
 
   constructor(
-      private router: Router,
-      private matDialog: MatDialog,
-      private store: Store<ProjectsState>,
-  ) { }
+    private router: Router,
+    private matDialog: MatDialog,
+    private store: Store<ProjectsState>,
+  ) {
+  }
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -65,16 +63,19 @@ export class AllProjectsComponent implements OnInit {
   NO_SEARCH_RESULT_TEXT = Common.NO_SEARCH_RESULT_TEXT;
 
   ngOnInit() {
+    this.store.dispatch(ProjectActions.get_all());
     this.store.select(projectsSelector)
-        .pipe(filter(projects => isTypeMatched(projects[0], KEYS_OF_PROJECT)))
-        .subscribe(data => {
-          data = Array.from(data);
+      .subscribe(data => {
+        if (data == undefined) {
+          this.isLoading = true;
+        } else {
+          data = Array.from(data!);
           this.dataSource = new MatTableDataSource(data);
-          this.isLoading = false;
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
-        })
-    this.store.dispatch(ProjectActions.get_all());
+          this.isLoading = false;
+        }
+      })
   }
 
   applyFilter(event: Event) {
@@ -87,8 +88,8 @@ export class AllProjectsComponent implements OnInit {
   }
 
   ngOnClickAdd() {
-    const dialogRef = this.matDialog.open(AddEditProjectComponent, {width: '800px', data: {edit: 0}});
-   dialogRef.afterClosed().subscribe(result => {
+    const dialogRef = this.matDialog.open(AddEditProjectComponent, { width: '800px', data: { edit: 0 } });
+    dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
