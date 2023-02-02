@@ -22,7 +22,7 @@ export class NotificationEffects {
         ofType(NotificationActions.get_all),
         withLatestFrom(this.store.select(notificationSelector)),
         mergeMap(([_, notificationData]) => {
-            if (!notificationData.length) {
+            if (notificationData == undefined) {
                 return from(this.notificationService.GetNotifications())
                     .pipe(
                         map(notifications => NotificationActions.get_all_success({ notifications: notifications })),

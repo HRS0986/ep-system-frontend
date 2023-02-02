@@ -1,9 +1,9 @@
 import { Notification } from "../../types";
 
 export interface NotificationsState {
-    notifications: Notification[];
+    notifications?: Notification[];
 }
 
 export const initialState: NotificationsState = {
-    notifications: new Array<Notification>()
+    notifications: undefined
 }
