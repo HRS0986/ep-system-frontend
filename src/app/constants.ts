@@ -251,11 +251,11 @@ export class Settlement {
     public static readonly REMARKS_LABEL = 'Remarks';
     public static readonly REFERENCE_NO_LABEL = 'Reference No';
     public static readonly PARTICULARS_LABEL = 'Particulars';
+    public static readonly NUMBERS_REGEX = '[0-9]*';
 }
 
 export class OldCustomer {
-    public static readonly OLD_CUSTOMER_TITLE = 'Old Customers';
-    public static readonly NAME_LABEL = 'Name';
+  public static readonly NAME_LABEL = 'Name';
     public static readonly PROJECT_LABEL = 'Project';
     public static readonly ID_LABEL = 'ID';
     public static readonly INSTALLMENT_LABEL = 'Installment';
