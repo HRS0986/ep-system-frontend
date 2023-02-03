@@ -75,7 +75,7 @@ export class AllProjectsComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
           this.isLoading = false;
         }
-      })
+      });
   }
 
   applyFilter(event: Event) {

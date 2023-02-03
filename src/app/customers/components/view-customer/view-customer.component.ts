@@ -10,20 +10,25 @@ import {
 } from "../../../constants";
 import { HelperService } from "../../../services/helper.service";
 import { ChangeInstallmentComponent } from "../popups/change-installment/change-installment.component";
-import { firstValueFrom, Subscription } from "rxjs";
 import { MatDialog } from "@angular/material/dialog";
 import { DeleteConfirmPopupComponent } from "../../../delete-confirm-popup/delete-confirm-popup.component";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, Validators } from "@angular/forms";
 import { ProjectService } from "../../../services/projects.service";
 import { SettlementComponent } from "../popups/settlement/settlement.component";
-import { Project, Customer as CustomerType } from "../../../types";
+import { Customer as CustomerType, Project } from "../../../types";
 import { MakePaymentComponent } from "../popups/make-payment/make-payment.component";
 import { CustomerService } from "../../../services/customer.service";
 import firebase from "firebase/compat";
-import Timestamp = firebase.firestore.Timestamp;
 import { CustomerRoutes } from "../../../route-data";
 import { Location } from "@angular/common";
+import { Store } from "@ngrx/store";
+import { CustomersState } from "../../store/customers.state";
+import { ProjectsState } from "../../../projects/store/projects.state";
+import { projectsSelector } from "../../../projects/store/projects.selectors";
+import { ProjectActions } from "../../../projects/store/projects.actions";
+import { singleCustomerSelector } from "../../store/customers.selectors";
+import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
   selector: 'app-view-customer',
@@ -40,7 +45,9 @@ export class ViewCustomerComponent implements OnInit {
     private customerService: CustomerService,
     private helperService: HelperService,
     private projectService: ProjectService,
-    private location: Location
+    private location: Location,
+    private customerStore: Store<CustomersState>,
+    private projectsStore: Store<ProjectsState>
   ) {
   }
 
@@ -48,8 +55,6 @@ export class ViewCustomerComponent implements OnInit {
   customerId!: string;
   customer!: CustomerType;
   isLoading: boolean = true;
-
-  subscriptions: Subscription[] = [];
 
   MAKE_PAYMENT_BUTTON_TEXT = LedgerMessages.MAKE_PAYMENT_BUTTON_TEXT;
   SAVE_BUTTON_TEXT: string = Customer.SAVE_BUTTON_TEXT;
@@ -178,13 +183,40 @@ export class ViewCustomerComponent implements OnInit {
   }
 
   ngOnInit() {
-    const querySubscription = this.route.queryParams
+    this.projectsStore.dispatch(ProjectActions.get_all());
+
+    this.route.queryParams
       .subscribe(params => {
           this.customerId = params['id'];
+          this.projectsStore.select(projectsSelector)
+            .subscribe(data => {
+              if (data == undefined) {
+                this.isLoading = true;
+              } else {
+                this.projects = data;
+                this.customerStore.select(singleCustomerSelector(this.customerId)).subscribe(customerData => {
+                  this.customer = customerData!;
+                  this.setCustomerDetails();
+                  // @ts-ignore
+                  let firstRentalDateTimestamp = this.customer.FirstRentalDate as Timestamp;
+                  // @ts-ignore
+                  let saleDateTimestamp = this.customer.SaleDate as Timestamp;
+                  let dueDateTimestamp = this.customer.DueDate as Timestamp;
+
+                  let firstRentalDate = firstRentalDateTimestamp.toDate();
+                  let saleDate = saleDateTimestamp.toDate();
+                  let dueDate = dueDateTimestamp.toDate();
+                  this.customerForm.controls['firstRentalDate'].setValue(firstRentalDate.toLocaleDateString());
+                  this.customerForm.controls['saleDate'].setValue(saleDate);
+                  this.customerForm.controls['dueDate'].setValue(dueDate.toLocaleDateString());
+                  this.isLoading = false;
+                })
+              }
+            });
         }
       );
 
-    const formSubscription = this.customerForm.valueChanges.subscribe(() => {
+    this.customerForm.valueChanges.subscribe(() => {
       this.formChangedCount++;
       // NOTE: The form has 34 input fields. In page load, all fields are refilled with user data
       if (this.formChangedCount > this.EDITABLE_FIELDS_COUNT) {
@@ -192,33 +224,8 @@ export class ViewCustomerComponent implements OnInit {
         this.isFormChanged = true;
       }
     });
-
-    firstValueFrom(this.customerService.GetAClient(this.customerId)).then(client => {
-      this.customer = client as CustomerType;
-      this.setCustomerDetails();
-      // @ts-ignore
-      let firstRentalDateTimestamp = this.customer.FirstRentalDate as Timestamp;
-      // @ts-ignore
-      let saleDateTimestamp = this.customer.SaleDate as Timestamp;
-      let dueDateTimestamp = this.customer.DueDate as Timestamp;
-
-      let firstRentalDate = firstRentalDateTimestamp.toDate();
-      let saleDate = saleDateTimestamp.toDate();
-      let dueDate = dueDateTimestamp.toDate();
-      console.log(saleDate.toLocaleDateString(), dueDate.toLocaleDateString())
-      this.customerForm.controls['firstRentalDate'].setValue(firstRentalDate.toLocaleDateString());
-      this.customerForm.controls['saleDate'].setValue(saleDate);
-      this.customerForm.controls['dueDate'].setValue(dueDate.toLocaleDateString());
-      this.isLoading = false;
-    });
-
-    this.projectService.GetAllProjects().subscribe(data => {
-      this.projects = data;
-    });
-
-    this.subscriptions.push(querySubscription);
-    this.subscriptions.push(formSubscription);
   }
+
   onClickBack(): void {
     this.location.back();
   }
@@ -277,44 +284,35 @@ export class ViewCustomerComponent implements OnInit {
       snackBarRef.dismiss();
       this.isFormChanged = false;
       if (result.status) {
-        this.helperService.openSnackBar({text: result.message, status: SnackBarStatus.SUCCESS});
+        this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.SUCCESS });
       } else {
-        this.helperService.openSnackBar({text: result.message, status: SnackBarStatus.FAILED});
+        this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.FAILED });
       }
     });
   }
 
   onClickMakePayment(): void {
-    const dialogRef = this.matDialog.open(MakePaymentComponent, {width: '600px', data: this.customer});
-
-    const subscription = dialogRef.afterClosed().subscribe(result => {
+    const dialogRef = this.matDialog.open(MakePaymentComponent, { width: '600px', data: this.customer });
+    dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
-
-    this.subscriptions.push(subscription);
   }
 
   onClickSettle() {
-    const dialogRef = this.matDialog.open(SettlementComponent, {width: '400px', data: {customer: this.customer}});
-
-    const subscription = dialogRef.afterClosed().subscribe(result => {
+    const dialogRef = this.matDialog.open(SettlementComponent, { width: '400px', data: { customer: this.customer } });
+    dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
-
-    this.subscriptions.push(subscription);
   }
 
   onClickChangeInstallment(): void {
     const dialogRef = this.matDialog.open(ChangeInstallmentComponent, {
       width: '500px',
-      data: {customer: this.customer}
+      data: { customer: this.customer }
     });
-
-    const subscription = dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
-
-    this.subscriptions.push(subscription);
   }
 
   onClickDelete() {
