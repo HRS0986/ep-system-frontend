@@ -89,7 +89,7 @@ export class Customer {
     public static readonly INVALID_INSTALLMENT_VALUE_MESSAGE_TEXT = 'Invalid installment value';
     public static readonly INVALID_MONTH_COUNT_VALUE_MESSAGE_TEXT = 'Invalid month count';
     public static readonly VIEW_CUSTOMER_DETAILS_TITLE = 'View Customer Details';
-    public static readonly BACK = 'Back To Customers';
+    public static readonly BACK = 'Back';
     public static readonly DELETE_CUSTOMER_TEXT = 'Customer Deleted Successfully';
     public static readonly DELETE_CUSTOMER_TITLE = 'Delete Customer';
     public static readonly DELETE_CUSTOMER_MESSAGE = 'Are you sure you want to delete this customer?';
