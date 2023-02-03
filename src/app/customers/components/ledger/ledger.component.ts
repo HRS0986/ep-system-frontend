@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Common, Customer, LedgerMessages, Particulars } from "../../../constants";
 import { Customer as CustomerType, Ledger } from "../../../types";
-import { filter } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatTableDataSource } from "@angular/material/table";
 import { SettlementComponent } from "../popups/settlement/settlement.component";
@@ -14,8 +13,6 @@ import { Location } from "@angular/common";
 import { Store } from "@ngrx/store";
 import { CustomersState } from "../../store/customers.state";
 import { singleCustomerSelector, ledgerSelector } from "../../store/customers.selectors";
-import { isTypeMatched } from "../../../helpers/utils";
-import { KEYS_OF_LEDGER } from "../../../types.keys";
 import { LedgerActions } from "../../store/customers.actions";
 
 @Component({

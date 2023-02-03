@@ -112,7 +112,7 @@ export class AllNotificationsComponent implements OnInit {
   }
 
   async getLetter(notification: Notification) {
-    const dialogRef = this.matDialog.open(LetterComponent, { width: '500px', data: { alert: notification } });
+    const dialogRef = this.matDialog.open(LetterComponent, { width: '500px', data: notification });
     dialogRef.afterClosed().subscribe(async result => {
       if (result != false) {
         const arrears = notification.Data.Arrears;
