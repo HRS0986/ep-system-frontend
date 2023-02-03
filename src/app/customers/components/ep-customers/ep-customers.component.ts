@@ -58,12 +58,16 @@ export class EpCustomersComponent implements OnInit {
 
   ngOnInit() {
     this.store.select(epCustomerSelector)
-      .pipe(filter(customer => isTypeMatched(customer[0], KEYS_OF_CUSTOMER)))
       .subscribe(data => {
-        this.dataSource = new MatTableDataSource(data);
-        this.isLoading = false;
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
+        if (data == undefined) {
+          this.isLoading = true;
+        } else {
+          data = Array.from(data!);
+          this.dataSource = new MatTableDataSource(data);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+          this.isLoading = false;
+        }
       });
     this.store.dispatch(EpCustomerActions.get_all());
   }

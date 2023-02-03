@@ -5,7 +5,6 @@ import * as jsPDF from "jspdf";
 import { HelperService } from "../../../services/helper.service";
 import { MatPaginator } from "@angular/material/paginator";
 import firebase from "firebase/compat";
-import Timestamp = firebase.firestore.Timestamp;
 import { MatTableDataSource } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
 import { ReportService } from "../../../services/report.service";
@@ -14,10 +13,8 @@ import { ReportRoutes } from "../../../route-data";
 import { Store } from "@ngrx/store";
 import { ReportsState } from "../../store/reports.state";
 import { cashCollectionReportSelector } from "../../store/reports.selectors";
-import { filter } from "rxjs";
-import { KEYS_OF_CASH_COLLECTION_REPORT } from "../../../types.keys";
-import { isTypeMatched } from "../../../helpers/utils";
 import { ReportActions } from "../../store/reports.actions";
+import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
   selector: 'app-cash-collection-report',
@@ -27,11 +24,12 @@ import { ReportActions } from "../../store/reports.actions";
 export class CashCollectionReportComponent implements OnInit {
 
   constructor(
-      private formBuilder: FormBuilder,
-      private reportService: ReportService,
-      private helperService: HelperService,
-      private store: Store<ReportsState>
-  ) { }
+    private formBuilder: FormBuilder,
+    private reportService: ReportService,
+    private helperService: HelperService,
+    private store: Store<ReportsState>
+  ) {
+  }
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -77,13 +75,17 @@ export class CashCollectionReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.select(cashCollectionReportSelector)
-        .pipe(filter(reports => isTypeMatched(reports[0], KEYS_OF_CASH_COLLECTION_REPORT)))
-        .subscribe(data => {
-          this.dataSource = new MatTableDataSource<CashCollectionReport>(data);
+      .subscribe(data => {
+        if (data == undefined) {
+          this.isLoading = true;
+        } else {
+          data = Array.from(data!);
+          this.dataSource = new MatTableDataSource(data);
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
           this.isLoading = false;
-        })
+        }
+      })
     const lastMonth = new Date().getMonth() - 1;
     const startDate = new Date(new Date().getFullYear(), lastMonth, 1);
     const endDate = new Date(new Date().getFullYear(), lastMonth, new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0).getDate());
@@ -101,7 +103,7 @@ export class CashCollectionReportComponent implements OnInit {
         end: this.dateForm.value.endDate
       }));
     } else {
-      this.helperService.openSnackBar({text:Reports.INVALID_DATE_RANGE, status: SnackBarStatus.FAILED});
+      this.helperService.openSnackBar({ text: Reports.INVALID_DATE_RANGE, status: SnackBarStatus.FAILED });
     }
   }
 
@@ -139,23 +141,23 @@ export class CashCollectionReportComponent implements OnInit {
         [this.DATE, this.BILL_NO, this.LOT_NO, this.PROJECT, this.SALE, this.EP, this.ADVANCE, this.FULL_PAYMENT, this.DEED_AND_PLAN]
       ],
       body: this.dataSource.data.map(
-          row => {
-            const date = row.Date as Timestamp;
-            return [
-              date.toDate().toLocaleDateString(),
-              row.BillNo,
-              row.LotNo,
-              row.Project,
-              parseFloat(row.Sale).toFixed(2),
-              parseFloat(row.EP).toFixed(2),
-              parseFloat(row.Advance).toFixed(2),
-              parseFloat(row.FullPayment).toFixed(2),
-              parseFloat(row.DeedAndPlan).toFixed(2)
-            ];
-          }
+        row => {
+          const date = row.Date as Timestamp;
+          return [
+            date.toDate().toLocaleDateString(),
+            row.BillNo,
+            row.LotNo,
+            row.Project,
+            parseFloat(row.Sale).toFixed(2),
+            parseFloat(row.EP).toFixed(2),
+            parseFloat(row.Advance).toFixed(2),
+            parseFloat(row.FullPayment).toFixed(2),
+            parseFloat(row.DeedAndPlan).toFixed(2)
+          ];
+        }
       ),
       foot: [
-        ["", "", "","", this.getTotalSale(), this.getTotalEP(), this.getTotalAdvance(), this.getTotalFullPayment(), this.getTotalDeedAndPlan()]
+        ["", "", "", "", this.getTotalSale(), this.getTotalEP(), this.getTotalAdvance(), this.getTotalFullPayment(), this.getTotalDeedAndPlan()]
       ]
       ,
       theme: 'grid'

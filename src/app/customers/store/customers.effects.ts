@@ -11,6 +11,7 @@ import {
 } from "./customers.selectors";
 import { AdvancedCustomerActions, EpCustomerActions, LedgerActions, OldCustomerActions } from "./customers.actions";
 import { CustomerService } from "../../services/customer.service";
+import { CustomerTypes } from "../../constants";
 
 
 @Injectable()
@@ -22,8 +23,8 @@ export class CustomerEffects {
     ofType(EpCustomerActions.get_all),
     withLatestFrom(this.store.select(epCustomerSelector)),
     mergeMap(([_, epCustomerData]) => {
-      if (!epCustomerData.length) {
-        return from(this.customerService.GetAllClientData())
+      if (epCustomerData == undefined) {
+        return from(this.customerService.GetCurrentClientData(CustomerTypes.EP_CUSTOMER))
           .pipe(
             map(customerData => EpCustomerActions.get_all_success({ customers: customerData })),
             catchError((error) => of(EpCustomerActions.get_all_failed({ error: error })))
@@ -38,7 +39,7 @@ export class CustomerEffects {
     ofType(AdvancedCustomerActions.get_all),
     withLatestFrom(this.store.select(advancedCustomerSelector)),
     mergeMap(([_, advancedCustomerData]) => {
-      if (!advancedCustomerData.length) {
+      if (advancedCustomerData == undefined) {
         return from(this.customerService.GetAllAdvancedClientData())
           .pipe(
             map(customerData => AdvancedCustomerActions.get_all_success({ customers: customerData })),
@@ -55,8 +56,8 @@ export class CustomerEffects {
     withLatestFrom(this.store.select(oldCustomerSelector)),
     mergeMap(([_, oldCustomerData]) => {
       debugger;
-      if (!oldCustomerData.length) {
-        return from(this.customerService.GetAllAdvancedClientData())
+      if (oldCustomerData == undefined) {
+        return from(this.customerService.GetOldClientData())
           .pipe(
             map(customerData => OldCustomerActions.get_all_success({ customers: customerData })),
             catchError((error) => of(OldCustomerActions.get_all_failed({ error: error })))

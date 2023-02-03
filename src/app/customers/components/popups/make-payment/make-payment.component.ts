@@ -7,6 +7,7 @@ import { MatTooltip } from "@angular/material/tooltip";
 import { isNumber } from "../../../utils";
 import { CustomerService } from "../../../../services/customer.service";
 import { Customer } from "../../../../types";
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-make-payment',
@@ -55,7 +56,7 @@ export class MakePaymentComponent implements OnInit {
   CANCEL_BUTTON_TEXT = Common.CANCEL_BUTTON_TEXT;
   ParticularsList = Object['values'](Particulars);
 
-  paymentData: any = [ ];
+  paymentData: any = [];
 
   ngOnInit(): void {
     debugger;
@@ -72,34 +73,32 @@ export class MakePaymentComponent implements OnInit {
       ["Balance", this.data.Balance!.toFixed(2) + " LKR"],
       ["Particulars", this.particulars],
     ];
-    if (/^\d+$/.test(this.amount) && (parseInt(this.amount) > 0)){
+    if (/^\d+$/.test(this.amount) && (parseInt(this.amount) > 0)) {
       this.amountTooltip.message = '';
-      if ((/^\d+$/.test(this.refNo) && (parseInt(this.refNo) > 0))|| this.refNo.length === 0){
+      if ((/^\d+$/.test(this.refNo) && (parseInt(this.refNo) > 0)) || this.refNo.length === 0) {
         this.refTooltip.message = '';
         this.isdPayDisabled = true;
         this.customerService.MakePayment(this.data, this.paymentDate.toISOString(), parseInt(this.amount), parseInt(this.refNo) || 0, this.particulars, this.remarks).then(result => {
           if (result.status) {
-            this.helperService.openSnackBar({text:result.message, status: SnackBarStatus.SUCCESS});
+            this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.SUCCESS });
             this.exportToPDF();
           } else {
-            this.helperService.openSnackBar({text:result.message, status: SnackBarStatus.FAILED});
+            this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.FAILED });
           }
           this.dialogRef.close();
           this.isdPayDisabled = false;
         })
-      }else{
+      } else {
         this.refTooltip.disabled = false;
         this.refTooltip.message = MakePayment.ONLY_NUMBER_ALLOWED_MESSAGE_TEXT;
         this.refTooltip.show();
       }
-    }else{
+    } else {
       this.amountTooltip.disabled = false;
       this.amountTooltip.message = this.INVALID_PAYMENT_AMOUNT;
       this.amountTooltip.show();
     }
   }
-
-
 
   onChangeAmount() {
     const isValidAmount = isNumber(this.amount.toString()) && this.amount != null;
@@ -132,11 +131,11 @@ export class MakePaymentComponent implements OnInit {
         valign: 'top'
       },
       columnStyles: {
-        0: {fontSize: 12},
-        1: {fontSize: 12},
-        2: {fontSize: 12},
-        3: {fontSize: 12},
-        4: {fontSize: 12},
+        0: { fontSize: 12 },
+        1: { fontSize: 12 },
+        2: { fontSize: 12 },
+        3: { fontSize: 12 },
+        4: { fontSize: 12 },
       },
       body: this.paymentData,
       theme: 'plain',
