@@ -23,7 +23,7 @@ export class CustomerEffects {
     ofType(EpCustomerActions.get_all),
     withLatestFrom(this.store.select(epCustomerSelector)),
     mergeMap(([_, epCustomerData]) => {
-      if (!epCustomerData.length) {
+      if (epCustomerData == undefined) {
         return from(this.customerService.GetCurrentClientData(CustomerTypes.EP_CUSTOMER))
           .pipe(
             map(customerData => EpCustomerActions.get_all_success({ customers: customerData })),
@@ -39,7 +39,7 @@ export class CustomerEffects {
     ofType(AdvancedCustomerActions.get_all),
     withLatestFrom(this.store.select(advancedCustomerSelector)),
     mergeMap(([_, advancedCustomerData]) => {
-      if (!advancedCustomerData.length) {
+      if (advancedCustomerData == undefined) {
         return from(this.customerService.GetAllAdvancedClientData())
           .pipe(
             map(customerData => AdvancedCustomerActions.get_all_success({ customers: customerData })),
@@ -56,7 +56,7 @@ export class CustomerEffects {
     withLatestFrom(this.store.select(oldCustomerSelector)),
     mergeMap(([_, oldCustomerData]) => {
       debugger;
-      if (!oldCustomerData.length) {
+      if (oldCustomerData == undefined) {
         return from(this.customerService.GetOldClientData())
           .pipe(
             map(customerData => OldCustomerActions.get_all_success({ customers: customerData })),

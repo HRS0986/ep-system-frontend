@@ -91,15 +91,16 @@ export class LedgerComponent implements OnInit {
         );
     } else {
       this.store.select(ledgerSelector)
-        .pipe(filter(customer => {
-          if (customer.length == 0) return false;
-          return isTypeMatched(customer![0].Ledger[0], KEYS_OF_LEDGER);
-        }))
-        .subscribe(ledger => {
-          const relatedLedger = ledger.find(l => l.customerId == this.customerId)!.Ledger
-          this.dataSource.data = relatedLedger;
-          this.isLoading = false;
-        });
+        .subscribe(data => {
+          if (data == undefined) {
+            this.isLoading = true;
+          } else {
+            let relatedLedger = data.find(l => l.customerId == this.customerId)!.Ledger
+            relatedLedger = Array.from(relatedLedger!);
+            this.dataSource =new MatTableDataSource(relatedLedger);
+            this.isLoading = false;
+          }
+        })
       this.store.dispatch(LedgerActions.get_ledger({ customerId: this.customerId }));
     }
   }
