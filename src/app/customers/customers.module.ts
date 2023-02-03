@@ -37,7 +37,7 @@ import { CustomerEffects } from "./store/customers.effects";
         LedgerComponent,
         ViewCustomerComponent,
         ActionMenuComponent,
-        CustomerTablesComponent
+        CustomerTablesComponent,
     ],
     imports: [
         CommonModule,

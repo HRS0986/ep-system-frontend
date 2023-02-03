@@ -11,9 +11,6 @@ import { Store } from "@ngrx/store";
 import { CustomersState } from "../../store/customers.state";
 import { AdvancedCustomerActions } from "../../store/customers.actions";
 import { advancedCustomerSelector } from "../../store/customers.selectors";
-import { filter } from "rxjs";
-import { isTypeMatched } from "../../../helpers/utils";
-import { KEYS_OF_CUSTOMER } from "../../../types.keys";
 
 @Component({
   selector: 'app-advanced-customers',
@@ -91,5 +88,4 @@ export class AdvancedCustomersComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-
 }

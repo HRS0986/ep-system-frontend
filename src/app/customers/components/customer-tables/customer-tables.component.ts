@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TypeLIstItem } from "../../../types";
 import { Common, Customer, NavigationMenu, Reports } from "../../../constants";
-import { CustomerRoutes, ReportRoutes } from "../../../route-data";
+import { CustomerRoutes } from "../../../route-data";
 import { MatTableDataSource } from "@angular/material/table";
 
 @Component({

@@ -26,7 +26,7 @@
     "@ngrx/store-devtools": "^13.2.0",
     "bootstrap": "^5.2.3",
     "jspdf": "^2.5.1",
-    "jspdf-autotable": "^3.5.28",
+    "jspdf-autotable": "^3.5.23",
     "mat-table-exporter": "^10.2.4",
     "moment": "^2.29.4",
     "ngx-mask": "^13.1.15",

@@ -10,20 +10,22 @@ import { NOTIFICATION_FEATURE_NAME } from "./store/notifications.selectors";
 import { notificationReducer } from "./store/notifications.reducer";
 import { EffectsModule } from "@ngrx/effects";
 import { NotificationEffects } from "./store/notifications.effects";
+import { FormsModule } from "@angular/forms";
 
 
 @NgModule({
-    declarations: [
-        AllNotificationsComponent,
-        LetterComponent
-    ],
-    imports: [
-        CommonModule,
-        NotificationsRoutingModule,
-        MaterialModule,
-        StoreModule.forFeature(NOTIFICATION_FEATURE_NAME, notificationReducer),
-        EffectsModule.forFeature([NotificationEffects])
-    ]
+  declarations: [
+    AllNotificationsComponent,
+    LetterComponent
+  ],
+  imports: [
+    CommonModule,
+    NotificationsRoutingModule,
+    MaterialModule,
+    FormsModule,
+    StoreModule.forFeature(NOTIFICATION_FEATURE_NAME, notificationReducer),
+    EffectsModule.forFeature([NotificationEffects])
+  ]
 })
 export class NotificationsModule {
 }
