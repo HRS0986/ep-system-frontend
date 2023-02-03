@@ -56,16 +56,16 @@ export class OldCustomersComponent implements OnInit {
 
   ngOnInit() {
     this.store.select(oldCustomerSelector)
-      .pipe(filter(customer => {
-        debugger;
-        return isTypeMatched(customer[0], KEYS_OF_CUSTOMER)
-      }))
       .subscribe(data => {
-        debugger;
-        this.dataSource = new MatTableDataSource(data);
-        this.isLoading = false;
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
+        if (data == undefined) {
+          this.isLoading = true;
+        } else {
+          data = Array.from(data!);
+          this.dataSource = new MatTableDataSource(data);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+          this.isLoading = false;
+        }
       });
     this.store.dispatch(OldCustomerActions.get_all());
   }

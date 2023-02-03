@@ -13,7 +13,7 @@ import { ViewOldCustomerComponent } from "../popups/view-old-customer/view-old-c
 import { Location } from "@angular/common";
 import { Store } from "@ngrx/store";
 import { CustomersState } from "../../store/customers.state";
-import { customerSelector, ledgerSelector } from "../../store/customers.selectors";
+import { singleCustomerSelector, ledgerSelector } from "../../store/customers.selectors";
 import { isTypeMatched } from "../../../helpers/utils";
 import { KEYS_OF_LEDGER } from "../../../types.keys";
 import { LedgerActions } from "../../store/customers.actions";
@@ -76,7 +76,7 @@ export class LedgerComponent implements OnInit {
           this.isOldCustomer = params['old'];
           this.customerName = params['name'];
           this.isDebug = params['debug'] == '1';
-          this.store.select(customerSelector(this.customerId)).subscribe(data => {
+          this.store.select(singleCustomerSelector(this.customerId)).subscribe(data => {
             this.customer = data!;
           })
         }
@@ -91,15 +91,16 @@ export class LedgerComponent implements OnInit {
         );
     } else {
       this.store.select(ledgerSelector)
-        .pipe(filter(customer => {
-          if (customer.length == 0) return false;
-          return isTypeMatched(customer![0].Ledger[0], KEYS_OF_LEDGER);
-        }))
-        .subscribe(ledger => {
-          const relatedLedger = ledger.find(l => l.customerId == this.customerId)!.Ledger
-          this.dataSource.data = relatedLedger;
-          this.isLoading = false;
-        });
+        .subscribe(data => {
+          if (data == undefined) {
+            this.isLoading = true;
+          } else {
+            let relatedLedger = data.find(l => l.customerId == this.customerId)!.Ledger
+            relatedLedger = Array.from(relatedLedger!);
+            this.dataSource =new MatTableDataSource(relatedLedger);
+            this.isLoading = false;
+          }
+        })
       this.store.dispatch(LedgerActions.get_ledger({ customerId: this.customerId }));
     }
   }

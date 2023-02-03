@@ -23,7 +23,7 @@ export class ReportEffects {
         ofType(ReportActions.get_ep_report),
         withLatestFrom(this.store.select(epReportSelector)),
         mergeMap(([_, reportsData]) => {
-            if (!reportsData.length) {
+            if (reportsData == undefined) {
                 return from(this.reportService.GetEPReport())
                     .pipe(
                         map(reportsData => ReportActions.get_ep_report_success({ reports: reportsData.data })),
@@ -38,7 +38,7 @@ export class ReportEffects {
         ofType(ReportActions.get_customer_report),
         withLatestFrom(this.store.select(customerReportSelector)),
         mergeMap(([_, reportsData]) => {
-            if (!reportsData.length) {
+            if (reportsData == undefined) {
                 return from(this.reportService.GetCustomerReport())
                     .pipe(
                         map(reportsData => ReportActions.get_customer_report_success({ reports: reportsData.data })),
@@ -54,7 +54,7 @@ export class ReportEffects {
         ofType(ReportActions.get_arrears_report),
         withLatestFrom(this.store.select(arrearsReportSelector)),
         mergeMap(([_, reportsData]) => {
-            if (!reportsData.length) {
+            if (reportsData == undefined) {
                 return from(this.reportService.GetArrearsReport())
                     .pipe(
                         map(reportsData => ReportActions.get_arrears_report_success({ reports: reportsData.data })),
@@ -70,7 +70,7 @@ export class ReportEffects {
         ofType(ReportActions.get_cash_collection_report),
         withLatestFrom(this.store.select(cashCollectionReportSelector)),
         mergeMap(([actionData, reportsData]) => {
-            if (!reportsData.length) {
+            if (reportsData == undefined) {
                 return from(this.reportService.GetCashCollectionReport(actionData.start, actionData.end))
                     .pipe(
                         map(reportsData => ReportActions.get_cash_collection_report_success({ reports: reportsData.data })),

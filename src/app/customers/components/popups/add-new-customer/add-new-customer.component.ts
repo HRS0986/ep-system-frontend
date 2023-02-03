@@ -9,7 +9,6 @@ import {
 } from "../../../../constants";
 import { FormBuilder, Validators } from "@angular/forms";
 import { HelperService } from "../../../../services/helper.service";
-import { ProjectService } from "../../../../services/projects.service";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Customer, Project } from "../../../../types";
 import { MatTooltip } from "@angular/material/tooltip";
@@ -17,6 +16,10 @@ import { isNumber } from "../../../utils";
 import { MatDatepickerInput } from "@angular/material/datepicker";
 import { AuthService } from "../../../../services/auth.service";
 import { CustomerService } from "../../../../services/customer.service";
+import { Store } from "@ngrx/store";
+import { ProjectsState } from "../../../../projects/store/projects.state";
+import { ProjectActions } from "../../../../projects/store/projects.actions";
+import { projectsSelector } from "../../../../projects/store/projects.selectors";
 
 @Component({
   selector: 'app-add-new-customer',
@@ -31,8 +34,8 @@ export class AddNewCustomerComponent implements OnInit {
       private customerService: CustomerService,
       private helperService: HelperService,
       private auth: AuthService,
-      private projectService: ProjectService,
-      @Inject(MAT_DIALOG_DATA) private data: { customerType: CustomerTypes }
+      @Inject(MAT_DIALOG_DATA) private data: { customerType: CustomerTypes },
+      private store: Store<ProjectsState>
   ) { }
 
   @ViewChild('interestRateTooltip') interestRateTooltip!: MatTooltip;
@@ -149,10 +152,11 @@ export class AddNewCustomerComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.store.dispatch(ProjectActions.get_all())
     this.epForm.controls['firstRentalDate'].setValue(new Date());
     this.isAdvancedCustomer = this.data.customerType == CustomerTypes.ADVANCED_CUSTOMER;
-    this.projectService.GetAllProjects().subscribe(data => {
-      this.projects = data;
+    this.store.select(projectsSelector).subscribe(data => {
+      this.projects = data!;
     });
   }
 

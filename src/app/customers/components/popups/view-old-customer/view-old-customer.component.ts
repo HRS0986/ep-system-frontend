@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AllCustomers, Letter, NewCustomer, OldCustomer } from "../../../../constants";
 import { FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { CustomerService } from "../../../../services/customer.service";
 import { Customer as CustomerType } from "../../../../types";
 import { CustomerRoutes } from "../../../../route-data";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
@@ -22,7 +21,6 @@ export class ViewOldCustomerComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private dialogRef: MatDialogRef<ViewOldCustomerComponent>,
-        private customerService: CustomerService,
         @Inject(MAT_DIALOG_DATA) private data: CustomerType
     ) {
     }

@@ -67,13 +67,17 @@ export class ArrearsReportComponent implements OnInit {
 
     ngOnInit(): void {
       this.store.select(arrearsReportSelector)
-          .pipe(filter(reports => isTypeMatched(reports[0], KEYS_OF_ARREARS_REPORT)))
-          .subscribe(data => {
-            this.dataSource = new MatTableDataSource<ArrearsReport>(data);
+        .subscribe(data => {
+          if (data == undefined) {
+            this.isLoading = true;
+          } else {
+            data = Array.from(data!);
+            this.dataSource = new MatTableDataSource(data);
             this.dataSource.sort = this.sort;
             this.dataSource.paginator = this.paginator;
             this.isLoading = false;
-          })
+          }
+        })
         this.store.dispatch(ReportActions.get_arrears_report());
     }
 
