@@ -74,7 +74,7 @@
     </mat-form-field>
 
     <div class="text-end">
-      <button class="btn-p" type="submit" mat-raised-button color="primary" cdkFocusInitial>
+      <button class="btn-p" type="submit" mat-raised-button color="primary" cdkFocusInitial [disabled]="settlementForm.invalid">
         <mat-icon>done</mat-icon>
         {{SETTLE_BUTTON_TEXT}}
       </button>

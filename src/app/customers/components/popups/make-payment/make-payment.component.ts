@@ -1,13 +1,12 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import jsPDF from "jspdf";
-import { Common, MakePayment, Particulars, SnackBarStatus } from "../../../../constants";
+import { Common, MakePayment, Particulars, Settlement, SnackBarStatus } from "../../../../constants";
 import { HelperService } from "../../../../services/helper.service";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { MatTooltip } from "@angular/material/tooltip";
-import { isNumber } from "../../../utils";
 import { CustomerService } from "../../../../services/customer.service";
 import { Customer } from "../../../../types";
 import 'jspdf-autotable';
+import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-make-payment',
@@ -17,29 +16,18 @@ import 'jspdf-autotable';
 export class MakePaymentComponent implements OnInit {
 
   constructor(
-      private customerService: CustomerService,
-      private helperService: HelperService,
-      private dialogRef: MatDialogRef<MakePaymentComponent>,
-      @Inject(MAT_DIALOG_DATA) private data: Customer
-  ) { }
+    private customerService: CustomerService,
+    private helperService: HelperService,
+    private formBuilder: FormBuilder,
+    private dialogRef: MatDialogRef<MakePaymentComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: Customer
+  ) {
+  }
 
-  @ViewChild('amountTooltip') amountTooltip!: MatTooltip;
-  @ViewChild('refTooltip') refTooltip!: MatTooltip;
-
-  amount!: string;
   totalPayable!: string;
   installment: string = '';
   arrears: string = '';
-  remarks: string = '';
-  particulars: string = 'Paid By Cash';
-  refNo: string = '';
-  chequeNumber: string = '';
-  bank: string = '';
-  realizeDate: Date = new Date();
-  paymentDate: Date = new Date();
-  isdPayDisabled: boolean = false;
 
-  INVALID_PAYMENT_AMOUNT = MakePayment.INVALID_PAYMENT_AMOUNT_MESSAGE_TEXT;
   MAKE_PAYMENT_TITLE = MakePayment.MAKE_PAYMENT_TITLE;
   CHEQUE_NUMBER_TEXT = MakePayment.CHEQUE_NUMBER_TEXT;
   BANK = MakePayment.BANK_TEXT;
@@ -58,6 +46,17 @@ export class MakePaymentComponent implements OnInit {
 
   paymentData: any = [];
 
+  paymentForm = this.formBuilder.group({
+    amount: this.formBuilder.control("", [Validators.required, Validators.min(1)]),
+    remarks: this.formBuilder.control(''),
+    paymentDate: this.formBuilder.control(new Date()),
+    particulars: this.formBuilder.control(''),
+    refNo: this.formBuilder.control('', [Validators.pattern(Settlement.NUMBERS_REGEX)]),
+    chequeNumber: this.formBuilder.control(''),
+    bank: this.formBuilder.control(''),
+    realizeDate: this.formBuilder.control(new Date())
+  });
+
   ngOnInit(): void {
     debugger;
     this.totalPayable = (this.data.MonthRental + +this.data.Arrears!.toString()).toString();
@@ -69,41 +68,27 @@ export class MakePaymentComponent implements OnInit {
     this.paymentData = [
       ["Date", new Date().toDateString()],
       ["Customer Name", this.data.Name],
-      ["Payment", parseFloat(this.amount).toFixed(2) + " LKR"],
+      ["Payment", parseFloat(this.paymentForm.value.amount).toFixed(2) + " LKR"],
       ["Balance", this.data.Balance!.toFixed(2) + " LKR"],
-      ["Particulars", this.particulars],
+      ["Particulars", this.paymentForm.value.particulars],
     ];
-    if (/^\d+$/.test(this.amount) && (parseInt(this.amount) > 0)) {
-      this.amountTooltip.message = '';
-      if ((/^\d+$/.test(this.refNo) && (parseInt(this.refNo) > 0)) || this.refNo.length === 0) {
-        this.refTooltip.message = '';
-        this.isdPayDisabled = true;
-        this.customerService.MakePayment(this.data, this.paymentDate.toISOString(), parseInt(this.amount), parseInt(this.refNo) || 0, this.particulars, this.remarks).then(result => {
-          if (result.status) {
-            this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.SUCCESS });
-            this.exportToPDF();
-          } else {
-            this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.FAILED });
-          }
-          this.dialogRef.close();
-          this.isdPayDisabled = false;
-        })
-      } else {
-        this.refTooltip.disabled = false;
-        this.refTooltip.message = MakePayment.ONLY_NUMBER_ALLOWED_MESSAGE_TEXT;
-        this.refTooltip.show();
-      }
-    } else {
-      this.amountTooltip.disabled = false;
-      this.amountTooltip.message = this.INVALID_PAYMENT_AMOUNT;
-      this.amountTooltip.show();
-    }
-  }
-
-  onChangeAmount() {
-    const isValidAmount = isNumber(this.amount.toString()) && this.amount != null;
-    if (isValidAmount) {
-      this.amountTooltip.disabled = true;
+    if (this.paymentForm.valid) {
+      this.customerService.MakePayment(
+        this.data,
+        this.paymentForm.value.paymentDate.toISOString(),
+        parseInt(this.paymentForm.value.amount),
+        parseInt(this.paymentForm.value.refNo) || 0,
+        this.paymentForm.value.particulars,
+        this.paymentForm.value.remarks
+      ).then(result => {
+        if (result.status) {
+          this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.SUCCESS });
+          this.exportToPDF();
+        } else {
+          this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.FAILED });
+        }
+        this.dialogRef.close();
+      })
     }
   }
 
@@ -148,11 +133,20 @@ export class MakePaymentComponent implements OnInit {
     pdf.output('dataurlnewwindow')
   }
 
-  onChangeReference() {
-    const isValidRef = isNumber(this.refNo.toString());
-    if (isValidRef) {
-      this.refTooltip.disabled = true;
+  getAmountErrorMessage() {
+    console.log(this.paymentForm.value.amount.invalid);
+    if (this.paymentForm.controls['amount'].hasError('required')) {
+      return MakePayment.PAYMENT_AMOUNT_IS_REQUIRED;
     }
+    return MakePayment.PAYMENT_AMOUNT_RANGE_ERROR;
+  }
+
+  getRefNoErrorMessage() {
+    console.log(this.paymentForm.value.amount.invalid);
+    if (this.paymentForm.controls['refNo'].hasError('pattern')) {
+      return MakePayment.ONLY_NUMBER_ALLOWED_MESSAGE_TEXT;
+    }
+    return '';
   }
 
 }

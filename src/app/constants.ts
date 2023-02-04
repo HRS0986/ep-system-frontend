@@ -224,7 +224,8 @@ export class ChangeInstallment {
 
 export class MakePayment {
     public static readonly MAKE_PAYMENT_TITLE = 'Make Payment';
-    public static readonly INVALID_PAYMENT_AMOUNT_MESSAGE_TEXT = 'Invalid payment amount';
+    public static readonly PAYMENT_AMOUNT_IS_REQUIRED = 'Payment Amount is required';
+    public static readonly PAYMENT_AMOUNT_RANGE_ERROR = 'Payment Amount should be greater than zero';
     public static readonly PAY_BUTTON_TEXT = 'Pay';
     public static readonly AMOUNT_LABEL = 'Amount';
     public static readonly ARREARS_LABEL = 'Arrears';

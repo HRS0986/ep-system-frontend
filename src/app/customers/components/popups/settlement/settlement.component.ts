@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Common, Reports, Settlement, SnackBarStatus } from "../../../../constants";
+import { Common, MakePayment, Reports, Settlement, SnackBarStatus } from "../../../../constants";
 import { HelperService } from "../../../../services/helper.service";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Customer } from "../../../../types";
@@ -56,30 +56,31 @@ export class SettlementComponent implements OnInit {
   }
 
   onClickSettle(): void {
-    this.customerService.Settlement(
-      this.data.customer.ID as string,
-      parseInt(this.settlementForm.value.referenceNo),
-      this.settlementForm.value.particulars,
-      this.settlementForm.value.remarks,
-      this.settlementForm.value.date
-    ).then(result => {
-      if (result.status) {
-        this.dialogRef.close();
-        this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.SUCCESS });
-      } else {
-        this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.FAILED });
-      }
-    }).catch(err => {
-      console.error(err)
-      this.helperService.openSnackBar({ text: err.message, status: SnackBarStatus.FAILED });
-    });
-
+    if (this.settlementForm.valid) {
+      this.customerService.Settlement(
+        this.data.customer.ID as string,
+        parseInt(this.settlementForm.value.referenceNo),
+        this.settlementForm.value.particulars,
+        this.settlementForm.value.remarks,
+        this.settlementForm.value.date
+      ).then(result => {
+        if (result.status) {
+          this.dialogRef.close();
+          this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.SUCCESS });
+        } else {
+          this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.FAILED });
+        }
+      }).catch(err => {
+        console.error(err)
+        this.helperService.openSnackBar({ text: err.message, status: SnackBarStatus.FAILED });
+      });
+    }
   }
 
   getErrorMessage() {
     console.log(this.settlementForm.value.referenceNo.invalid);
     if (this.settlementForm.controls['referenceNo'].hasError('pattern')) {
-      return 'Only numbers are allowed';
+      return MakePayment.ONLY_NUMBER_ALLOWED_MESSAGE_TEXT;
     }
     return '';
   }
