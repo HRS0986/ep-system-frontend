@@ -1,11 +1,18 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { ChangeInstallment, Common, MakePayment, Reports, SnackBarStatus, Customer } from "../../../../constants";
+import { Component, Inject, OnInit } from '@angular/core';
+import {
+  ChangeInstallment,
+  Common,
+  Customer,
+  MakePayment,
+  Reports,
+  Settlement,
+  SnackBarStatus
+} from "../../../../constants";
 import { HelperService } from "../../../../services/helper.service";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { MatTooltip } from "@angular/material/tooltip";
-import { isNumber } from "../../../utils";
 import { Customer as CustomerType } from "../../../../types";
 import { CustomerService } from "../../../../services/customer.service";
+import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-change-installment',
@@ -15,26 +22,17 @@ import { CustomerService } from "../../../../services/customer.service";
 export class ChangeInstallmentComponent implements OnInit {
 
   constructor(
-      @Inject(MAT_DIALOG_DATA) private data: { customer: CustomerType },
-      private customerService: CustomerService,
-      private helperService: HelperService,
-      private dialogRef: MatDialogRef<ChangeInstallmentComponent>
+    @Inject(MAT_DIALOG_DATA) private data: { customer: CustomerType },
+    private customerService: CustomerService,
+    private helperService: HelperService,
+    private dialogRef: MatDialogRef<ChangeInstallmentComponent>,
+    private formBuilder: FormBuilder
   ) {
   }
 
-  @ViewChild('installmentTooltip') installmentTooltip!: MatTooltip;
-  @ViewChild('monthCountTooltip') monthCountTooltip!: MatTooltip;
-
   currentInstallment: string = '';
   currentBalance: string = '';
-  remarks: string = '';
-  particular: string = 'Installment Changed';
-  newInstallment!: string;
-  newMonthCount!: string;
-  date: Date = new Date();
 
-  INVALID_INSTALLMENT: string = Customer.INVALID_INSTALLMENT_VALUE_MESSAGE_TEXT;
-  INVALID_MONTH_COUNT: string = Customer.INVALID_MONTH_COUNT_VALUE_MESSAGE_TEXT;
   CANCEL_BUTTON_TEXT: string = Common.CANCEL_BUTTON_TEXT;
   CHANGE_BUTTON_TEXT: string = ChangeInstallment.CHANGE_BUTTON_TEXT;
   NEW_INSTALLMENT_LABEL: string = ChangeInstallment.NEW_INSTALLMENT_LABEL;
@@ -46,28 +44,29 @@ export class ChangeInstallmentComponent implements OnInit {
   PARTICULARS_LABEL: string = MakePayment.PARTICULARS_LABEL;
   DATE: string = Reports.DATE;
 
+  installmentForm = this.formBuilder.group({
+    newInstallment: this.formBuilder.control('', [Validators.required, Validators.pattern(Settlement.NUMBERS_REGEX)]),
+    newMonthCount: this.formBuilder.control('', [Validators.required, Validators.pattern(Settlement.NUMBERS_REGEX)]),
+    remarks: this.formBuilder.control('',),
+    particular: this.formBuilder.control(''),
+    date: this.formBuilder.control(new Date())
+  });
+
   ngOnInit(): void {
     this.currentInstallment = this.data.customer.MonthRental!.toString();
     this.currentBalance = this.data.customer.Balance!.toString();
   }
 
   calculateInstallment(): void {
-    if (this.isValidNumber(this.newMonthCount)) {
-      this.newInstallment = this.calculateNewRental(parseInt(this.newMonthCount)).toFixed(2).toString();
-    } else {
-      this.monthCountTooltip.disabled = false;
-      this.monthCountTooltip.message = this.INVALID_MONTH_COUNT;
-      this.monthCountTooltip.show();
+    if (this.isValidNumber(this.installmentForm.value.newMonthCount)) {
+      this.installmentForm.value.newInstallment = this.calculateNewRental(parseInt(this.installmentForm.value.newMonthCount)).toFixed(2).toString();
     }
   }
 
   calculateMonthCount(): void {
-    if (this.isValidNumber(this.newInstallment)) {
-      this.newMonthCount = this.calculateNewRental(parseInt(this.newMonthCount)).toString();
-    } else {
-      this.installmentTooltip.disabled = false;
-      this.installmentTooltip.message = this.INVALID_INSTALLMENT;
-      this.installmentTooltip.show();
+    if (this.isValidNumber(this.installmentForm.value.newInstallment)) {
+      debugger
+      this.installmentForm.value.newMonthCount = this.calculateNewRental(parseInt(this.installmentForm.value.newInstallment)).toString();
     }
   }
 
@@ -76,24 +75,20 @@ export class ChangeInstallmentComponent implements OnInit {
   }
 
   onClickChange(): void {
-    if (this.isValidNumber(this.newInstallment) && this.isValidNumber(this.newMonthCount)) {
-      this.customerService.ChangeInstallment(this.data.customer.ID!, parseInt(this.newMonthCount), parseInt(this.newInstallment), this.date).then(result => {
+    if (this.installmentForm.valid) {
+      this.customerService.ChangeInstallment(
+        this.data.customer.ID!,
+        parseInt(this.installmentForm.value.newMonthCount),
+        parseInt(this.installmentForm.value.newInstallment),
+        this.installmentForm.value.date
+      ).then(result => {
         this.dialogRef.close();
         if (result.status) {
-          this.helperService.openSnackBar({text: result.message, status: SnackBarStatus.SUCCESS});
+          this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.SUCCESS });
         } else {
-          this.helperService.openSnackBar({text: result.message, status: SnackBarStatus.FAILED});
+          this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.FAILED });
         }
-      })
-    } else {
-      if (!this.isValidNumber(this.newInstallment)) {
-        this.installmentTooltip.message = this.INVALID_INSTALLMENT;
-        this.installmentTooltip.show();
-      }
-      if (!this.isValidNumber(this.newMonthCount)) {
-        this.monthCountTooltip.message = this.INVALID_MONTH_COUNT;
-        this.monthCountTooltip.show();
-      }
+      });
     }
   }
 
@@ -114,19 +109,18 @@ export class ChangeInstallmentComponent implements OnInit {
     return (remainingPayment + newInterest) / rentalFactor;
   }
 
-
-  onChangeMonthCount() {
-    const isValidMonthCount = isNumber(this.newMonthCount.toString()) && this.newMonthCount != null;
-    if (isValidMonthCount) {
-      this.monthCountTooltip.disabled = true;
+  getMonthCountErrors(): string {
+    if (this.installmentForm.controls['newMonthCount'].hasError('pattern')) {
+      return Customer.INVALID_MONTH_COUNT_VALUE_MESSAGE_TEXT;
     }
+    return ChangeInstallment.INSTALLMENT_IS_REQUIRED;
   }
 
-  onChangeMonthRental() {
-    const isValidMonthRental = isNumber(this.newInstallment.toString()) && this.newInstallment != null;
-    if (isValidMonthRental) {
-      this.installmentTooltip.disabled = true;
+  getRentalErrorMessage() {
+    if (this.installmentForm.controls['newInstallment'].hasError('pattern')) {
+      return MakePayment.ONLY_NUMBER_ALLOWED_MESSAGE_TEXT;
     }
+    return ChangeInstallment.INSTALLMENT_IS_REQUIRED;
   }
 
 }

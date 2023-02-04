@@ -35,14 +35,11 @@
                     <mat-form-field appearance="fill" class="w-100">
                         <mat-label>{{PURCHASING_PRICE}}</mat-label>
                         <input
-                                matTooltip=""
-                                matTooltipPosition="right"
-                                #dateTooltip="matTooltip"
-                                matTooltipHideDelay="500"
                                 matInput
                                 type="number"
                                 formControlName="PurchasingPrice"
                                 required>
+                      <mat-error *ngIf="projectForm.controls['PurchasingPrice'].invalid">{{getPriceError()}}</mat-error>
                     </mat-form-field>
                 </div>
             </div>
