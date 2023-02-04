@@ -174,7 +174,6 @@ export class AddNewCustomerComponent implements OnInit {
   onChangeDuration(event: any) {
     const monthCount = this.epForm.controls['monthCount'].value;
     const isValidMonthCount = isNumber(this.epForm.controls['monthCount'].value) && this.epForm.controls['monthCount'].value != null;
-    debugger;
     if (isValidMonthCount) {
       this.monthCountTooltip.disabled = true;
     }
