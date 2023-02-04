@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>{{LETTER_DETAILS}}</h2>
+<mat-dialog-content style="max-height: fit-content">
+  <div class="d-flex flex-wrap my-3">
+    <div class="d-flex justify-content-start align-items-center flex-column">
+      <div class="text-start w-100 fw-bold">
+        <p>{{ADDRESS}}&nbsp;:&nbsp;</p>
+      </div>
+      <div class="align-items-center">
+        <mat-form-field appearance="outline">
+          <textarea [disabled]="!autoFillAddress" matInput [(ngModel)]="CUSTOMER_ADDRESS"> </textarea>
+        </mat-form-field>
+        <mat-checkbox [(ngModel)]="autoFillAddress" class="ms-5">{{AUTO_FILL_ADDRESS}}</mat-checkbox>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button class="btn-p" mat-raised-button color="primary" cdkFocusInitial [mat-dialog-close]="[CUSTOMER_ADDRESS, autoFillAddress]">
+    <mat-icon>done</mat-icon>
+    {{OK_BUTTON_TEXT}}
+  </button>
+  <button mat-button mat-dialog-close [mat-dialog-close]="false">
+    <mat-icon>close</mat-icon>
+    {{CLOSE_BUTTON_TEXT}}
+  </button>
+</mat-dialog-actions>

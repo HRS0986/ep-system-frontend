@@ -1,0 +1,117 @@
+<div class="row justify-content-center align-items-center" style="margin-right: 0; height: 93%; padding-left: 150px">
+    <div class="col-6 d-flex justify-content-end">
+        <img src="{{LOGO_PATH}}" alt="logo" style="width: fit-content; height: fit-content">
+    </div>
+    <div class="col-6">
+        <mat-card style="width: 400px; height:auto" [class.mat-elevation-z8]="true" class="p-4">
+
+            <mat-card-header class="justify-content-center mb-3">
+                <mat-card-title>
+                    <p class="h2">
+                        {{TITLE}}
+                    </p>
+                </mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <mat-stepper [linear]="true" labelPosition="bottom">
+                    <mat-step [stepControl]="signupForm">
+                        <ng-template matStepLabel>{{FIRST_STEP}}</ng-template>
+                        <div class="w-100">
+                            <form [formGroup]="signupForm" (ngSubmit)="onClickNext()" class="d-flex flex-column"
+                                  ngNativeValidate>
+                                <mat-form-field appearance="fill" class="mt-2 w-100">
+                                    <mat-label>{{FIRST_NAME}}</mat-label>
+                                    <input matInput [placeholder]="FIRST_NAME" formControlName="firstName" required>
+                                </mat-form-field>
+                                <mat-form-field appearance="fill" class="mt-2 w-100">
+                                    <mat-label>{{LAST_NAME}}</mat-label>
+                                    <input matInput [placeholder]="LAST_NAME" formControlName="lastName" required>
+                                </mat-form-field>
+                                <mat-form-field appearance="fill" class="mt-2 w-100">
+                                    <mat-label>{{CONTACT_NUMBER}}</mat-label>
+                                    <input matInput [placeholder]="CONTACT_NUMBER" formControlName="contactNo" required>
+                                    <mat-error *ngIf="contactNoError">{{INVALID_CONTACT_NUMBER_ERROR}}</mat-error>
+                                </mat-form-field>
+                                <div>
+                                    <button
+                                            type="submit"
+                                            mat-raised-button
+                                            color="primary"
+                                            class="mt-3 mb-2 btn-p w-100"
+                                            style="height: 50px;"
+                                            matStepperNext>
+                                        {{NEXT}}
+                                        <mat-icon style="font-size: 17px; margin-top: 3px">arrow_forward_ios</mat-icon>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </mat-step>
+                    <mat-step [stepControl]="passwordForm">
+                        <ng-template matStepLabel>{{SECOND_STEP}}</ng-template>
+                        <form [formGroup]="passwordForm" (ngSubmit)="onSubmit()" class="d-flex flex-column"
+                              ngNativeValidate>
+                            <mat-form-field appearance="fill" class="mt-2 w-100">
+                                <mat-label>{{CURRENT_PASSWORD}}</mat-label>
+                                <input matInput [placeholder]="CURRENT_PASSWORD" formControlName="currentPassword"
+                                       [type]="hideCurrentPassword ? 'password' : 'text'" required>
+                                <button mat-icon-button matSuffix type="button"
+                                        (click)="hideCurrentPassword = !hideCurrentPassword">
+                                    <mat-icon>{{hideCurrentPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill" class="mt-2 w-100">
+                                <mat-label>{{NEW_PASSWORD}}</mat-label>
+                                <input
+                                        matInput [placeholder]="NEW_PASSWORD"
+                                        formControlName="newPassword"
+                                        [type]="hideNewPassword ? 'password' : 'text'"
+                                        [matTooltip]="STRONG_PASSWORD_ERROR"
+                                        #npTooltip="matTooltip"
+                                        matTooltipPosition="right"
+                                        matTooltipHideDelay="500"
+                                        required>
+                                <button mat-icon-button matSuffix type="button"
+                                        (click)="hideNewPassword = !hideNewPassword">
+                                    <mat-icon>{{hideNewPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill" class="mt-2 w-100">
+                                <mat-label>{{CONFIRM_PASSWORD}}</mat-label>
+                                <input matInput [placeholder]="CONFIRM_PASSWORD" formControlName="confirmPassword"
+                                       [type]="hideConfirmPassword ? 'password' : 'text'" required>
+                                <button mat-icon-button matSuffix type="button"
+                                        (click)="hideConfirmPassword = !hideConfirmPassword">
+                                    <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                                <mat-error>{{PASSWORD_MISMATCH_ERROR}}</mat-error>
+                            </mat-form-field>
+                            <div class="d-flex justify-content-between">
+                                <button
+                                        mat-raised-button
+                                        color="primary"
+                                        type="button"
+                                        class="mt-3 mb-2 w-50 me-3 btn-s"
+                                        (click)="isSecondStep = false"
+                                        style="height: 50px;"
+                                        matStepperPrevious>
+                                    <mat-icon style="font-size: 17px; margin-top: 3px">arrow_back_ios</mat-icon>
+                                    {{PREVIOUS}}
+                                </button>
+                                <button mat-raised-button color="primary" type="submit" class="mt-3 w-50 mb-2 btn-p"
+                                        style="height: 50px;">
+                                    <mat-icon style="font-size: 17px; margin-top: 3px">how_to_reg</mat-icon>
+                                    {{SIGN_UP_BUTTON_TEXT}}
+                                </button>
+                            </div>
+                        </form>
+                    </mat-step>
+                </mat-stepper>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+

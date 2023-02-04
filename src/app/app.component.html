@@ -1,0 +1,74 @@
+<ng-template [ngIf]="isLoggedIn && !isFirstLogin" [ngIfElse]="elseBlock">
+
+    <!--  Sidenav-->
+    <mat-drawer-container class="drawer-container h-100" autosize>
+        <mat-drawer #drawer class="sidenav" mode="side" opened style="border-right: 0; width: 250px">
+            <div class="logo-card w-100 mb-3">
+                <img src="{{logo}}" alt="logo">
+            </div>
+            <ng-container *ngFor="let menuItem of navigationMenuItems">
+                <a mat-button class="menu-btn" [routerLink]="menuItem.navigationLink"
+                   *ngIf="menuItem.subMenuItems.length == 0">
+                    <mat-icon class="menu-icon">{{menuItem.iconName}}</mat-icon>
+                    {{menuItem.menuText}}
+                </a>
+                <mat-expansion-panel class="sidenav" style="box-shadow: none" *ngIf="menuItem.subMenuItems.length != 0">
+                    <mat-expansion-panel-header style="padding-left: 16px; color: #eeeeee"
+                                                [routerLink]="menuItem.navigationLink">
+                        <mat-panel-title class="w-100 menu-btn m-0">
+                            <a mat-button class="menu-btn ps-0" style="color: #eeeeee">
+                                <mat-icon class="menu-icon">{{menuItem.iconName}}</mat-icon>
+                                {{menuItem.menuText}}
+                            </a>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <a mat-button class="menu-btn w-100" style="padding-left: 30px !important;"
+                       [routerLink]="subMenu.navigationLink" *ngFor="let subMenu of menuItem.subMenuItems">
+                        <mat-icon class="menu-icon">{{subMenu.iconName}}</mat-icon>
+                        {{subMenu.menuText}}
+                    </a>
+                </mat-expansion-panel>
+            </ng-container>
+        </mat-drawer>
+
+        <mat-drawer-content style="background-color: #f0f0f0">
+            <div class="justify-content-center d-flex flex-column">
+                <!--  Toolbar-->
+                <mat-toolbar class="toolbar w-100" style="margin-bottom: 20px;">
+                    <button mat-icon-button (click)="drawer.toggle()">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                    <span>{{PageTitle}}</span>
+                    <span class="spacer"></span>
+                    <a mat-button (click)="logout()">Logout</a>
+                    <a mat-button [routerLink]="NOTIFICATIONS_URL">
+                        <mat-icon matBadgeColor="warn" matBadgeSize="small" [matBadge]="notificationCount"
+                                  [matBadgeHidden]="!hideNotification">notifications
+                        </mat-icon>
+                    </a>
+                    <a mat-button (click)="onClickUserData()">
+                        <mat-icon>account_circle</mat-icon>
+                    </a>
+                    <span>{{name}}</span>
+                </mat-toolbar>
+                <!--  Toolbar-->
+                <router-outlet></router-outlet>
+            </div>
+            <footer class="footer footer-card row justify-content-center bg-light align-items-center"
+                    style="height: 5%;">
+                {{COPYRIGHT}}
+            </footer>
+        </mat-drawer-content>
+    </mat-drawer-container>
+    <!--  Sidenav-->
+
+</ng-template>
+
+<ng-template #elseBlock>
+    <router-outlet></router-outlet>
+    <footer class="footer footer-card-flat row justify-content-center bg-light align-items-center"
+            style="height: 50px;">
+        {{COPYRIGHT}}
+    </footer>
+</ng-template>
+

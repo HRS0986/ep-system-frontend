@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<div mat-dialog-content>
+    {{data.body}}
+</div>
+<div>
+    <b>Name</b>: {{data.entityName}}
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="false">{{CANCEL}}</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="true">{{DELETE}}</button>
+</div>

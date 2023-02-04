@@ -1,0 +1,315 @@
+<mat-card class="mx-3" style="margin-bottom: 70px; min-width: fit-content">
+  <mat-card-content style="min-height: 200px" class="justify-content-center d-flex align-items-center">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <div>
+      <div class="col-12 d-flex justify-content-between mb-4" *ngIf="!isLoading">
+
+        <div>
+          <a mat-raised-button color="primary" class="btn-s me-3"
+             style="color: black; max-height: fit-content !important;" (click)="onClickBack()">
+            <mat-icon style="font-size: 17px; margin-top: 3px">arrow_back_ios</mat-icon>
+            {{BACK}}
+          </a>
+        </div>
+
+        <div>
+          <button mat-raised-button (click)="onClickDelete()" color="warn" class="me-3">
+            <mat-icon>delete</mat-icon> &nbsp;
+            {{DELETE_BUTTON_TEXT}}
+          </button>
+          <button mat-raised-button (click)="onClickMakePayment()" color="accent" class="me-3 btn-p">
+            <mat-icon>local_atm</mat-icon> &nbsp;
+            {{MAKE_PAYMENT_BUTTON_TEXT}}
+          </button>
+          <button mat-raised-button (click)="onClickViewLedger()" color="accent" class="me-3 btn-p">
+            <mat-icon>account_balance_wallet</mat-icon> &nbsp;
+            {{LEDGER_LABEL}}
+          </button>
+          <button mat-raised-button (click)="onClickChangeInstallment()" color="accent" class="me-3 btn-p">
+            <mat-icon>currency_exchange</mat-icon> &nbsp;
+            {{CHANGE_INSTALLMENT_BUTTON_TEXT}}
+          </button>
+          <button mat-raised-button (click)="onClickSettle()" color="accent" class="me-3 btn-p">
+            <mat-icon>credit_card</mat-icon> &nbsp;
+            {{SETTLEMENT_BUTTON_TEXT}}
+          </button>
+          <button [class]="isFormChanged ? 'btn-p':'btn-disabled'" style="color: white" mat-raised-button
+                  (click)="ngOnClickSave()" color="primary" [disabled]="!isFormChanged">
+            <mat-icon>edit</mat-icon> &nbsp;
+            {{SAVE_BUTTON_TEXT}}
+          </button>
+        </div>
+
+      </div>
+      <form [formGroup]="customerForm" *ngIf="!isLoading">
+        <div class="row">
+          <div class="col-6" style="border-right: 1px solid gray">
+            <div class="col-11">
+              <mat-form-field class="w-100">
+                <mat-label>{{NAME_LABEL}}</mat-label>
+                <input matInput placeholder="Customer Name" formControlName="name"/>
+              </mat-form-field>
+              <mat-form-field class="w-100">
+                <mat-label>{{PROJECT_LABEL}}</mat-label>
+                <mat-select formControlName="project" name="food">
+                  <mat-option *ngFor="let project of projects" [value]="project.ProjectName">
+                    {{project.ProjectName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <div class="row">
+                <div class="col-6">
+                  <mat-form-field class="w-100 me-4">
+                    <mat-label>{{ID_LABEL}}</mat-label>
+                    <input matInput [readonly]="true" placeholder="ID" formControlName="id"/>
+                  </mat-form-field>
+                </div>
+                <div class="col-6">
+                  <mat-form-field class="w-100">
+                    <mat-label>{{EMAIL_LABEL}}</mat-label>
+                    <input matInput placeholder="Email" formControlName="email"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-6">
+                  <mat-form-field class="w-100">
+                    <mat-label>{{ADDRESS_LABEL}}</mat-label>
+                    <textarea matInput placeholder="Address" formControlName="address"></textarea>
+                  </mat-form-field>
+                </div>
+                <div class="col-6 d-flex align-items-end">
+                  <mat-form-field class="w-100">
+                    <mat-label>{{LOCATION}}</mat-label>
+                    <input matInput placeholder="Location" formControlName="locationCoordinates"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-4">
+                  <mat-form-field class="w-100 me-4">
+                    <mat-label>{{NIC_LABEL}}</mat-label>
+                    <input matInput placeholder="NIC" formControlName="nic"/>
+                  </mat-form-field>
+                </div>
+                <div class="col-4">
+                  <mat-form-field class="w-100 me-4">
+                    <mat-label>{{DATE_OF_SALE_LABEL}}</mat-label>
+                    <input matInput [matDatepicker]="pickerSale" formControlName="saleDate">
+                    <mat-datepicker-toggle matSuffix [for]="pickerSale"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerSale></mat-datepicker>
+                    <mat-error>Invalid Date</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-4">
+                  <mat-form-field class="w-100">
+                    <mat-label>{{BOND_NUMBER_LABEL}}</mat-label>
+                    <input matInput placeholder="Bond Number" formControlName="bondNo"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-4">
+                  <mat-form-field class="w-100">
+                    <mat-label>{{PHONE_LABEL}}</mat-label>
+                    <input matInput placeholder="Contact Number" formControlName="contactNo"/>
+                  </mat-form-field>
+                </div>
+                <div class="col-4">
+                  <mat-form-field class="w-100 me-4">
+                    <mat-label>{{PLAN_NUMBER_LABEL}}</mat-label>
+                    <input matInput placeholder="Plan Number" formControlName="planNo"/>
+                  </mat-form-field>
+                </div>
+                <div class="col-4">
+                  <mat-form-field class="w-100">
+                    <mat-label>{{DEED_NUMBER_LABEL}}</mat-label>
+                    <input matInput placeholder="Deed Number" formControlName="deedNo"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-4">
+                  <mat-form-field class="w-100">
+                    <mat-label>{{WHATSAPP_NUMBER_LABEL}}</mat-label>
+                    <input matInput placeholder="WhatsApp Number" formControlName="whatsappNo"/>
+                  </mat-form-field>
+                </div>
+                <div class="col-4">
+                  <mat-form-field class="w-100 me-4">
+                    <mat-label>{{VIBER_NUMBER_LABEL}}</mat-label>
+                    <input matInput placeholder="Viber Number" formControlName="viberNo"/>
+                  </mat-form-field>
+                </div>
+                <div class="col-4">
+                  <mat-form-field class="w-100">
+                    <mat-label>{{IMO_NUMBER_LABEL}}</mat-label>
+                    <input matInput placeholder="Imo Number" formControlName="imoNo"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <mat-form-field class="w-100">
+                <mat-label>{{NOTE_LABEL}}</mat-label>
+                <textarea matInput placeholder="Note" formControlName="note" rows="2"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-6">
+                  <mat-form-field class="ms-5" style="width: 85%">
+                    <mat-label>{{BLOCK_NUMBER_LABEL}}</mat-label>
+                    <input matInput placeholder="Block Number" formControlName="blockNo"/>
+                  </mat-form-field>
+                </div>
+                <div class="col-6">
+                  <mat-form-field class="me-5" style="width: 85%">
+                    <mat-label>{{INTEREST_RATE_LABEL}}</mat-label>
+                    <input matInput [readonly]="true" placeholder="Interest Rate" formControlName="interestRate"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="ms-5" style="width: 85%">
+                    <mat-label>{{PERCHES_VALUE_LABEL}}</mat-label>
+                    <input mask="separator" thousandSeparator="," matInput [readonly]="true" placeholder="Perches Value"
+                           formControlName="perchesValue"/>
+                  </mat-form-field>
+                </div>
+                <div class="col" [hidden]="isAdvancedCustomer">
+                  <mat-form-field class="me-5" style="width: 85%">
+                    <mat-label>{{INT_PLUS_EP_SALE_VALUE_LABEL}}</mat-label>
+                    <input mask="separator" thousandSeparator="," matInput [readonly]="true"
+                           placeholder="Int + E/P Sale Value" formControlName="intPlusEPSaleValue"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-6">
+                  <mat-form-field class="ms-5" style="width: 85%">
+                    <mat-label>{{EXTENT_LABEL}}</mat-label>
+                    <input matInput [readonly]="true" placeholder="Extent" formControlName="extent"/>
+                  </mat-form-field>
+                </div>
+                <div class="col-6">
+                  <mat-form-field class="me-5" style="width: 85%">
+                    <mat-label>{{DOCUMENT_FEE_LABEL}}</mat-label>
+                    <input mask="separator" thousandSeparator="," matInput [readonly]="true" placeholder="Document Fee"
+                           formControlName="documentFee"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="ms-5" style="width: 85%">
+                    <mat-label>{{TOTAL_BLOCK_VALUE_LABEL}}</mat-label>
+                    <input mask="separator" thousandSeparator="," matInput [readonly]="true"
+                           placeholder="Total Block Value" formControlName="totalBlockValue"/>
+                  </mat-form-field>
+                </div>
+                <div class="col" [hidden]="isAdvancedCustomer">
+                  <mat-form-field class="me-5" style="width: 85%">
+                    <mat-label>{{WITHOUT_INTEREST_LABEL}}</mat-label>
+                    <input mask="separator" thousandSeparator="," matInput [readonly]="true"
+                           placeholder="Without Interest E/P Payment" formControlName="withoutInterestEpPayment"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-6">
+                  <mat-form-field class="ms-5" style="width: 85%">
+                    <mat-label>{{SALE_VALUE_LABEL}}</mat-label>
+                    <input mask="separator" thousandSeparator="," matInput [readonly]="true" placeholder="Sale Value"
+                           formControlName="saleValue"/>
+                  </mat-form-field>
+                </div>
+                <div class="col-6">
+                  <mat-form-field class="me-5" style="width: 85%">
+                    <mat-label>{{TOTAL_RECEIVABLE_BALANCE_LABEL}}</mat-label>
+                    <input mask="separator" thousandSeparator="," matInput [readonly]="true"
+                           placeholder="Total Receivable Balance" formControlName="totalReceivableBalance"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-6">
+                  <mat-form-field class="ms-5" style="width: 85%">
+                    <mat-label>{{DISCOUNT_LABEL}}</mat-label>
+                    <input mask="separator" thousandSeparator="," matInput [readonly]="true" placeholder="Discount"
+                           formControlName="discount"/>
+                  </mat-form-field>
+                </div>
+                <div class="col-6">
+                  <mat-form-field class="me-5" style="width: 85%">
+                    <mat-label>{{NUMBER_OF_MONTH_LABEL}}</mat-label>
+                    <input matInput [readonly]="true" placeholder="Number Of Month" formControlName="monthCount"/>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row w-100" style="padding-left: 50px;">
+                <div class="col-4">
+                  <mat-form-field class="w-100">
+                    <mat-label>{{PAYMENT_EP_BALANCE_LABEL}}</mat-label>
+                    <input mask="separator" thousandSeparator="," matInput [readonly]="true"
+                           placeholder="Payment EP Balance" formControlName="paymentEPBalance"/>
+                  </mat-form-field>
+                </div>
+                <div class="col-4">
+                  <mat-form-field class="w-100">
+                    <mat-label>{{DUE_DATE_LABEL}}</mat-label>
+                    <input matInput [readonly]="true" formControlName="dueDate">
+                  </mat-form-field>
+                </div>
+                <div class="col-4">
+                  <mat-form-field class="w-100">
+                    <mat-label>{{FIRST_RENTAL_DATE_LABEL}}</mat-label>
+                    <input matInput [readonly]="true" formControlName="firstRentalDate">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row w-100" style="padding-left: 50px;">
+                <div class="col-4">
+                  <mat-form-field class="w-100">
+                    <mat-label>{{ADVANCE_PAYMENT_LABEL}}</mat-label>
+                    <input mask="separator" thousandSeparator="," matInput [readonly]="true"
+                           placeholder="Advance Payment" formControlName="advancePayment"/>
+                  </mat-form-field>
+                </div>
+                <div class="col-4">
+                  <mat-form-field class="w-100">
+                    <mat-label>{{MARKETING_SALE_VALUE_LABEL}}</mat-label>
+                    <input mask="separator" thousandSeparator="," matInput [readonly]="true"
+                           placeholder="Marketing Sale Value" formControlName="marketingSaleValue"/>
+                  </mat-form-field>
+                </div>
+                <div class="col-4">
+                  <mat-form-field class="w-100">
+                    <mat-label>{{MONTHLY_RENTAL_AMOUNT_LABEL}}</mat-label>
+                    <input mask="separator" thousandSeparator="," matInput [readonly]="true"
+                           placeholder="M/Rental Amount" formControlName="monthRental"/>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>

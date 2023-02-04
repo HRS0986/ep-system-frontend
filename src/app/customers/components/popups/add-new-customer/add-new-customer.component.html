@@ -1,0 +1,464 @@
+<p>add-new-customer works!</p>
+<mat-dialog-content style="max-height: fit-content">
+    <mat-tab-group [(selectedIndex)]="selectedTabIndex" style="height: 575px">
+        <mat-tab [label]="EP_TAB_TITLE">
+            <form [formGroup]="epForm" class="mt-4">
+                <div class="w-100">
+                    <div class="row w-100">
+                        <div class="col-5 mx-5">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{BLOCK_NUMBER_LABEL}}</mat-label>
+                                <input matInput placeholder="Block Number" formControlName="blockNo"/>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-5 d-flex">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{isAdvancedCustomer ? PAYMENT_BALANCE_LABEL : PAYMENT_EP_BALANCE_LABEL}}</mat-label>
+                                <input
+                                        mask="separator.2"
+                                        thousandSeparator=","
+                                        matTooltip=""
+                                        matTooltipPosition="right"
+                                        #epBalanceTooltip="matTooltip"
+                                        (change)="onPaymentEpBalanceChange()"
+                                        matTooltipHideDelay="500"
+                                        matInput placeholder="Payment Ep Balance"
+                                        formControlName="paymentEpBalance"/>
+                            </mat-form-field>
+                            <button type="button" mat-icon-button (click)="calculatePaymentEpBalance()">
+                                <mat-icon>calculate</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row w-100">
+                        <div [ngClass]="isAdvancedCustomer ? 'col mx-5' : 'col-5 mx-5'">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{PERCHES_VALUE_LABEL}}</mat-label>
+                                <input mask="separator" thousandSeparator="," matInput placeholder="Perches Value"
+                                       formControlName="perchesValue" (change)="setTotalBlockValue($event)"/>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-5" [hidden]="isAdvancedCustomer">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{INTEREST_RATE_LABEL}}</mat-label>
+                                <input matTooltip=""
+                                       mask="separator.2"
+                                       matTooltipPosition="right"
+                                       #interestRateTooltip="matTooltip"
+                                       matTooltipHideDelay="500"
+                                       (change)="onInterestRateChange()"
+                                       matInput placeholder="Interest Rate"
+                                       formControlName="interestRate"/>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row w-100">
+                        <div [ngClass]="isAdvancedCustomer ? 'col mx-5' : 'col-5 mx-5'">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{EXTENT_LABEL}}</mat-label>
+                                <input matInput placeholder="Extent" formControlName="extent"
+                                       (change)="setTotalBlockValue($event)"/>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-5" [hidden]="isAdvancedCustomer">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{INT_PLUS_EP_SALE_VALUE_LABEL}}</mat-label>
+                                <input
+                                        mask="separator.2"
+                                        thousandSeparator=","
+                                        matInput
+                                        matTooltip=""
+                                        matTooltipPosition="right"
+                                        #epInterestTooltip="matTooltip"
+                                        (change)="onIntPlusSaleValueChange()"
+                                        placeholder="Int+E/P Sale Value"
+                                        formControlName="intPlusEPSaleValue"/>
+                            </mat-form-field>
+                            <button type="button" mat-icon-button (click)="calculateInterest()">
+                                <mat-icon>calculate</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row w-100">
+                        <div [ngClass]="isAdvancedCustomer ? 'col mx-5' : 'col-5 mx-5'">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{TOTAL_BLOCK_VALUE_LABEL}}e</mat-label>
+                                <input
+                                        mask="separator.2"
+                                        thousandSeparator=","
+                                        matInput
+                                        placeholder="Total Block Value"
+                                        formControlName="totalBlockValue"/>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-5" [hidden]="isAdvancedCustomer">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{WITHOUT_INTEREST_LABEL}}</mat-label>
+                                <input mask="separator" thousandSeparator="," matInput
+                                       placeholder="Without Interest E/P Payment"
+                                       formControlName="withoutInterestEpPayment"/>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row w-100">
+                        <div class="col-5 mx-5">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{SALE_VALUE_LABEL}}</mat-label>
+                                <input
+                                        mask="separator.2"
+                                        thousandSeparator=","
+                                        matInput
+                                        matTooltip=""
+                                        matTooltipPosition="right"
+                                        #saleValueTooltip="matTooltip"
+                                        matTooltipHideDelay="500"
+                                        placeholder="Sale Value"
+                                        (change)="onSaleValueChange()"
+                                        formControlName="saleValue"/>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-5 d-flex">
+
+                            <mat-form-field class="w-100">
+                                <mat-label>{{DOCUMENT_FEE_LABEL}}</mat-label>
+                                <input
+                                        mask="separator"
+                                        thousandSeparator=","
+                                        matTooltip=""
+                                        matTooltipPosition="right"
+                                        #docChargeTooltip="matTooltip"
+                                        matInput
+                                        placeholder="Document Fee"
+                                        formControlName="documentFee"/>
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+
+                    <div class="row w-100">
+                        <div class="col-5 mx-5">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{DISCOUNT_LABEL}}</mat-label>
+                                <input
+                                        mask="separator"
+                                        thousandSeparator=","
+                                        matInput
+                                        matTooltip=""
+                                        matTooltipPosition="right"
+                                        #discountTooltip="matTooltip"
+                                        placeholder="Discount"
+                                        formControlName="discount"
+                                        (change)="onDiscountChange()"
+                                />
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-5 d-flex">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{TOTAL_RECEIVABLE_BALANCE_LABEL}}</mat-label>
+                                <input
+                                        mask="separator.2"
+                                        thousandSeparator=","
+                                        matInput
+                                        matTooltip=""
+                                        matTooltipPosition="right"
+                                        #totalReceivableBalanceTooltip="matTooltip"
+                                        (change)="onTotalReceivableBalanceChange()"
+                                        placeholder="Total Receivable Balance"
+                                        formControlName="totalReceivableBalance"/>
+                            </mat-form-field>
+                            <button type="button" mat-icon-button (click)="calculateTotalReceivableBalance()">
+                                <mat-icon>calculate</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row w-100">
+                        <div class="col-3 mx-5 d-flex">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{MARKETING_SALE_VALUE_LABEL}}</mat-label>
+                                <input
+                                        matInput
+                                        mask="separator"
+                                        thousandSeparator=","
+                                        placeholder="Marketing Sale Value"
+                                        matTooltip=""
+                                        matTooltipPosition="right"
+                                        #marketingSaleValueTooltip="matTooltip"
+                                        matTooltipHideDelay="500"
+                                        (change)="onMarketingSaleValueChange()"
+                                        formControlName="marketingSaleValue"/>
+                            </mat-form-field>
+                            <button type="button" mat-icon-button (click)="calculateMarketingSaleValue()">
+                                <mat-icon>calculate</mat-icon>
+                            </button>
+                        </div>
+                        <div class="col-3 me-5">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{DUE_DATE_LABEL}}</mat-label>
+                                <input matInput [readonly]="true" formControlName="dueDate" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-3 d-flex">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{NUMBER_OF_MONTH_LABEL}}</mat-label>
+                                <input
+                                        (change)="onChangeDuration($event)"
+                                        matInput
+                                        type="number"
+                                        [max]="isAdvancedCustomer ? 24 : 10000"
+                                        [min]="1"
+                                        matTooltip=""
+                                        matTooltipPosition="right"
+                                        #monthCountTooltip="matTooltip"
+                                        matTooltipHideDelay="500"
+                                        placeholder="Number Of Month"
+                                        formControlName="monthCount"/>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row w-100">
+                        <div class="col-3 mx-5">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{ADVANCE_PAYMENT_LABEL}}</mat-label>
+                                <input
+                                        matInput
+                                        mask="separator"
+                                        thousandSeparator=","
+                                        placeholder="Advance Payment"
+                                        matTooltip=""
+                                        matTooltipPosition="right"
+                                        #advanceTooltip="matTooltip"
+                                        matTooltipHideDelay="500"
+                                        formControlName="advancePayment"
+                                        (change)="onAdvancedPaymentChange()"/>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-3 me-5">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{FIRST_RENTAL_DATE_LABEL}}</mat-label>
+                                <input matInput [matDatepicker]="pickerFirstRental" formControlName="firstRentalDate"
+                                       (dateChange)="onChangeDuration($event)">
+                                <mat-datepicker-toggle matSuffix [for]="pickerFirstRental"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerFirstRental></mat-datepicker>
+                                <mat-error>
+                                    {{isSmallDate ? 'Must be greater or than or equal to sale date' : 'Invalid Date'}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-3 d-flex">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{MONTHLY_RENTAL_AMOUNT_LABEL}}</mat-label>
+                                <input
+                                        mask="separator.2"
+                                        thousandSeparator=","
+                                        matTooltip=""
+                                        matTooltipPosition="right"
+                                        #monthRentalTooltip="matTooltip"
+                                        matTooltipHideDelay="500"
+                                        matInput
+                                        placeholder="M/Rental Amount"
+                                        formControlName="monthRental"/>
+                            </mat-form-field>
+                            <button type="button" mat-icon-button (click)="calculateMonthlyRental()">
+                                <mat-icon>calculate</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </mat-tab>
+        <mat-tab [label]="CUSTOMER_TAB_TITLE">
+            <form [formGroup]="basicCustomerForm" class="mt-4" style="width: 750px">
+                <div class="w-100">
+
+                    <div class="row w-100">
+                        <div class="col-12">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{NAME_LABEL}}</mat-label>
+                                <input matInput placeholder="Customer Name" formControlName="name"/>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row w-100">
+                        <div class="col-12">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{PROJECT_LABEL}}</mat-label>
+                                <mat-select formControlName="project" name="food">
+                                    <mat-option *ngFor="let project of projects" [value]="project.ProjectName">
+                                        {{project.ProjectName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row w-100">
+                        <div class="col-6">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{ID_LABEL}}</mat-label>
+                                <input matInput placeholder="Id" formControlName="id" (change)="onChangeId($event)"/>
+                                <mat-error>Duplicate Client Id</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-6">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{EMAIL_LABEL}}</mat-label>
+                                <input matInput placeholder="Email" formControlName="email"/>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row w-100">
+                        <div class="col-6">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{ADDRESS_LABEL}}</mat-label>
+                                <textarea matInput placeholder="Address" formControlName="address"></textarea>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-6 align-items-end d-flex">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{LOCATION_LABEL}}</mat-label>
+                                <input matInput placeholder="Location" formControlName="locationCoordinates"/>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row w-100">
+                        <div class="col-4">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{NIC_LABEL}}</mat-label>
+                                <input matInput placeholder="NIC" formControlName="nic"/>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-4">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{DATE_OF_SALE_LABEL}}</mat-label>
+                                <input matInput [matDatepicker]="pickerSale" formControlName="saleDate"
+                                       (dateChange)="onSaleDateChange($event)" required>
+                                <mat-datepicker-toggle matSuffix [for]="pickerSale"></mat-datepicker-toggle>
+                                <mat-datepicker #pickerSale></mat-datepicker>
+                                <mat-error>Invalid Date</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-4">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{PLAN_NUMBER_LABEL}}</mat-label>
+                                <input matInput placeholder="Plan Number" formControlName="planNo"/>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row w-100">
+                        <div class="col-4">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{PHONE_LABEL}}</mat-label>
+                                <input matInput placeholder="Contact Number" formControlName="contactNo"/>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-4">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{BOND_NUMBER_LABEL}}</mat-label>
+                                <input matInput placeholder="Bond Number" formControlName="bondNo"/>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-4">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{DEED_NUMBER_LABEL}}</mat-label>
+                                <input matInput placeholder="Deed Number" formControlName="deedNo"/>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row w-100">
+                        <div class="col-4">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{WHATSAPP}}</mat-label>
+                                <input matInput placeholder="WhatsApp Number" formControlName="whatsapp"/>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-4">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{VIBER}}</mat-label>
+                                <input matInput placeholder="Viber Number" formControlName="viber"/>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-4">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{IMO}}</mat-label>
+                                <input matInput placeholder="Imo Number" formControlName="imo"/>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row w-100">
+                        <div class="col-6">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{NOTE_LABEL}}</mat-label>
+                                <textarea matInput placeholder="Note" formControlName="note"></textarea>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-6 align-items-end d-flex">
+                            <mat-form-field class="w-100">
+                                <mat-label>{{SECONDARY_CONTACT_LABEL}}</mat-label>
+                                <textarea matInput placeholder="Enter Number Per Line" formControlName="secondaryContactNumbers"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </mat-tab>
+    </mat-tab-group>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <div class="row w-100 align-items-center">
+        <mat-error *ngIf="showErrorMessage">{{REQUIRED_FIELD_ERROR_TEXT}}</mat-error>
+    </div>
+    <div class="row w-100 align-items-center">
+        <div class="col-6">
+            <button
+                    *ngIf="selectedTabIndex == 1"
+                    mat-flat-button
+                    color="accent"
+                    class="btn-s"
+                    cdkFocusInitial
+                    (click)="onClickPrevious()">
+                <mat-icon style="font-size: 17px; margin-top: 3px">arrow_back_ios</mat-icon>
+                {{PREVIOUS_BUTTON_TEXT}}</button>
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+            <button
+                    class="btn-p"
+                    *ngIf="selectedTabIndex == 0"
+                    mat-flat-button
+                    color="primary"
+                    cdkFocusInitial
+                    (click)="onClickNext()">
+                {{NEXT_BUTTON_TEXT}}
+                <mat-icon style="font-size: 17px; margin-top: 3px">arrow_forward_ios</mat-icon>
+            </button>
+            <button
+                    class="btn-p"
+                    *ngIf="selectedTabIndex == 1"
+                    mat-flat-button
+                    color="primary"
+                    (click)="ngOnSubmit()"
+                    cdkFocusInitial>
+                <mat-icon>done</mat-icon>
+                {{SAVE_BUTTON_TEXT}}</button>
+            <button mat-button [mat-dialog-close]="false">
+                <mat-icon>close</mat-icon>
+                {{CANCEL_BUTTON_TEXT}}</button>
+        </div>
+    </div>
+</mat-dialog-actions>

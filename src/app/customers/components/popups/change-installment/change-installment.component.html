@@ -1,0 +1,89 @@
+<h2 mat-dialog-title>{{CHANGE_INSTALLMENT_TITLE}}</h2>
+<mat-dialog-content style="max-height: fit-content">
+
+    <div class="d-flex flex-wrap my-3">
+        <div class="flex-fill mx-3">
+            <div class="d-flex justify-content-center">
+                <div class="">
+                    <p>{{CURRENT_INSTALLMENT_LABEL}}&nbsp;:&nbsp;</p>
+                </div>
+                <div class="">
+                    <p style="font-weight: bolder">{{currentInstallment | mask: 'separator.2':','}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-fill mx-3">
+            <div class="d-flex justify-content-center">
+                <div class="">
+                    <p>{{BALANCE_LABEL}}&nbsp;:&nbsp;</p>
+                </div>
+                <div class="">
+                    <p style="font-weight: bolder">{{currentBalance | mask: 'separator.2':','}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <mat-form-field appearance="fill" style="width: 85%">
+        <mat-label>{{NEW_INSTALLMENT_LABEL}}</mat-label>
+        <input
+                mask="separator"
+                thousandSeparator=","
+                [(ngModel)]="newInstallment"
+                matTooltip=""
+                (change)="onChangeMonthRental()"
+                matTooltipPosition="right"
+                #installmentTooltip="matTooltip"
+                matTooltipHideDelay="500"
+                matInput>
+    </mat-form-field>
+    <button type="button" mat-icon-button (click)="calculateInstallment()">
+        <mat-icon>calculate</mat-icon>
+    </button>
+
+    <mat-form-field appearance="fill" style="width: 85%">
+        <mat-label>{{NEW_MONTH_COUNT_LABEL}}</mat-label>
+        <input
+                [(ngModel)]="newMonthCount"
+                matTooltip=""
+                (change)="onChangeMonthCount()"
+                matTooltipPosition="right"
+                #monthCountTooltip="matTooltip"
+                matTooltipHideDelay="500"
+                matInput>
+    </mat-form-field>
+    <button type="button" mat-icon-button (click)="calculateMonthCount()">
+        <mat-icon>calculate</mat-icon>
+    </button>
+
+    <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{REMARKS_LABEL}}</mat-label>
+        <input matInput [(ngModel)]="remarks">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{PARTICULARS_LABEL}}</mat-label>
+        <input matInput [(ngModel)]="particular">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{DATE}}</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button class="btn-p" mat-raised-button color="primary" cdkFocusInitial (click)="onClickChange()">
+        <mat-icon>done</mat-icon>
+        {{CHANGE_BUTTON_TEXT}}
+    </button>
+    <button mat-button mat-dialog-close [mat-dialog-close]="false">
+        <mat-icon>close</mat-icon>
+        {{CANCEL_BUTTON_TEXT}}
+    </button>
+</mat-dialog-actions>
+
