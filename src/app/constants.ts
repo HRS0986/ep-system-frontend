@@ -321,6 +321,24 @@ export class Projects {
 
 }
 
+export class RegexPatterns {
+  public static readonly NO_ZERO_REGEX = '([0-9]{2,}|[1-9])';
+}
+
+export class ErrorMessages {
+  public static required(filedName: string) {
+    return `${filedName} is required`;
+  }
+
+  public static min(value: number, filedName = "Value") {
+    return `${filedName} should be greater than ${value}`;
+  }
+
+  public static max(value: number, filedName = "Value") {
+    return `${filedName} should be less than ${value}`;
+  }
+}
+
 export class Reports {
   public static readonly REPORT_TITLE = 'Reports';
   public static readonly CASH_REPORT_TITLE = 'Cash Collection Report';

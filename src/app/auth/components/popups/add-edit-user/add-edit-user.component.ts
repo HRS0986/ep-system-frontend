@@ -3,8 +3,8 @@ import { Common, SignUp, SnackBarStatus, UserManagement, UserMessages } from "..
 import { MatDialogRef } from "@angular/material/dialog";
 import { FormBuilder, Validators } from "@angular/forms";
 import { HelperService } from "../../../../services/helper.service";
-import { matchPasswords } from "../../../../helpers/app.validators";
 import { AuthService } from "../../../../services/auth.service";
+import { CustomValidators } from "../../../../helpers/custom-validators";
 
 @Component({
   selector: 'app-add-edit-user',
@@ -40,7 +40,7 @@ export class AddEditUserComponent implements OnInit {
     email: this.formBuilder.control('', [Validators.required]),
     newPassword: this.formBuilder.control('', [Validators.required]),
     confirmPassword: this.formBuilder.control('', [Validators.required])
-  }, {validators: matchPasswords});
+  }, { validators: CustomValidators.matchPasswords });
 
   ngOnInit(): void {
     const strongPassword = this.helperService.generateStrongPassword()

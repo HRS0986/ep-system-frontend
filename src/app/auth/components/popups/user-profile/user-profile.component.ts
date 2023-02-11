@@ -4,7 +4,6 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { User } from "../../../../types";
 import { UserService } from "../../../../services/user.service";
 import { HelperService } from "../../../../services/helper.service";
-import { matchPasswords } from "../../../../helpers/app.validators";
 import { MatDialogRef } from "@angular/material/dialog";
 import { AuthService } from "../../../../services/auth.service";
 import { Store } from "@ngrx/store";
@@ -14,6 +13,7 @@ import { authCurrentUserSelector } from "../../../store/auth.selectors";
 import { filter } from "rxjs";
 import { isTypeMatched } from "../../../../helpers/utils";
 import { KEYS_OF_USER } from "../../../../types.keys";
+import { CustomValidators } from "../../../../helpers/custom-validators";
 
 @Component({
   selector: 'app-user-profile',
@@ -63,7 +63,7 @@ export class UserProfileComponent implements OnInit {
     oldPassword: this.formBuilder.control('', [Validators.required]),
     newPassword: this.formBuilder.control('', [Validators.required, Validators.pattern(SignUp.STRONG_PASSWORD_REGEX)]),
     confirmPassword: this.formBuilder.control('', [Validators.required])
-  }, {validator: matchPasswords});
+  }, { validator: CustomValidators.matchPasswords });
 
   basicDataForm = this.formBuilder.group({
     firstName: this.formBuilder.control('', [Validators.required]),
