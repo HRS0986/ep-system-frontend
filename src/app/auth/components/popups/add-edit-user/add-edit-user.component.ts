@@ -67,14 +67,14 @@ export class AddEditUserComponent implements OnInit {
 
   getNewPasswordErrorMessage() {
     if (this.userForm.controls['newPassword'].hasError('notMatch')) {
-      return ErrorMessages.passwordsNotMatching();
+      return ErrorMessages.PASSWORDS_NOT_MATCHING;
     }
     return ErrorMessages.required(this.PASSWORD);
   }
 
   getConfirmPasswordErrorMessage() {
     if (this.userForm.controls['confirmPassword'].hasError('notMatch')) {
-      return ErrorMessages.passwordsNotMatching();
+      return ErrorMessages.PASSWORDS_NOT_MATCHING;
     }
     return ErrorMessages.required(this.CONFIRM_PASSWORD);
   }

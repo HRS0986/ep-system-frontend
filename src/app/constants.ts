@@ -326,6 +326,12 @@ export class RegexPatterns {
 }
 
 export class ErrorMessages {
+  public static readonly EMAIL = `Invalid email address`;
+  public static readonly TELEPHONE = `Invalid contact number`;
+  public static readonly FIRST_RENTAL_DATE = `Should be greater or than or equal to sale date`;
+  public static readonly PASSWORDS_NOT_MATCHING = `Passwords are not matching`;
+  public static readonly INCORRECT_OLD_PASSWORD = `Incorrect old password`;
+
   public static required(filedName: string) {
     return `${filedName} is required`;
   }
@@ -336,22 +342,6 @@ export class ErrorMessages {
 
   public static max(value: number, filedName = "Value") {
     return `${filedName} should be less than ${value}`;
-  }
-
-  public static email() {
-    return `Invalid email address`;
-  }
-
-  public static telephone() {
-    return `Invalid contact number`;
-  }
-
-  public static firstRentalDate() {
-    return `Should be greater or than or equal to sale date`;
-  }
-
-  public static passwordsNotMatching() {
-    return `Passwords are not matching`;
   }
 }
 

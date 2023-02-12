@@ -330,7 +330,7 @@ export class AddNewCustomerComponent implements OnInit {
 
   getContactNumberErrorMessage(): string {
     if (this.basicCustomerForm.controls['contactNo'].hasError('pattern')) {
-      return ErrorMessages.telephone();
+      return ErrorMessages.TELEPHONE;
     }
     return ErrorMessages.required(this.PHONE_LABEL);
   }

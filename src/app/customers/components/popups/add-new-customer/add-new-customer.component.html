@@ -253,7 +253,7 @@
                 <mat-datepicker-toggle matSuffix [for]="pickerFirstRental"></mat-datepicker-toggle>
                 <mat-datepicker #pickerFirstRental></mat-datepicker>
                 <mat-error *ngIf="epForm.controls['firstRentalDate'].invalid">
-                  {{VALIDATION_MESSAGES.firstRentalDate()}}
+                  {{VALIDATION_MESSAGES.FIRST_RENTAL_DATE}}
                 </mat-error>
               </mat-form-field>
             </div>
@@ -325,7 +325,7 @@
                 <mat-label>{{EMAIL_LABEL}}</mat-label>
                 <input matInput placeholder="Email" formControlName="email"/>
                 <mat-error *ngIf="basicCustomerForm.controls['email'].invalid">
-                  {{VALIDATION_MESSAGES.email()}}
+                  {{VALIDATION_MESSAGES.EMAIL}}
                 </mat-error>
               </mat-form-field>
             </div>
@@ -403,7 +403,7 @@
                 <mat-label>{{WHATSAPP}}</mat-label>
                 <input matInput placeholder="WhatsApp Number" formControlName="whatsapp"/>
                 <mat-error *ngIf="basicCustomerForm.controls['whatsapp'].invalid">
-                  {{VALIDATION_MESSAGES.telephone()}}
+                  {{VALIDATION_MESSAGES.TELEPHONE}}
                 </mat-error>
               </mat-form-field>
             </div>
@@ -412,7 +412,7 @@
                 <mat-label>{{VIBER}}</mat-label>
                 <input matInput placeholder="Viber Number" formControlName="viber"/>
                 <mat-error *ngIf="basicCustomerForm.controls['viber'].invalid">
-                  {{VALIDATION_MESSAGES.telephone()}}
+                  {{VALIDATION_MESSAGES.TELEPHONE}}
                 </mat-error>
               </mat-form-field>
             </div>
@@ -421,7 +421,7 @@
                 <mat-label>{{IMO}}</mat-label>
                 <input matInput placeholder="Imo Number" formControlName="imo"/>
                 <mat-error *ngIf="basicCustomerForm.controls['imo'].invalid">
-                  {{VALIDATION_MESSAGES.telephone()}}
+                  {{VALIDATION_MESSAGES.TELEPHONE}}
                 </mat-error>
               </mat-form-field>
             </div>
