@@ -39,7 +39,7 @@ export class SignupComponent implements OnInit {
     currentPassword: this.formBuilder.control('', [Validators.required]),
     newPassword: this.formBuilder.control('', [Validators.required, Validators.pattern(SignUp.STRONG_PASSWORD_REGEX)]),
     confirmPassword: this.formBuilder.control('', [Validators.required]),
-  }, { validators: CustomValidators.matchPasswords });
+  }, { validators: CustomValidators.matchTwoFields('newPassword', 'confirmPassword') });
 
     isSubmitted: boolean = false;
     hideCurrentPassword: boolean = true;

@@ -90,9 +90,28 @@ export class AddNewCustomerComponent implements OnInit {
 
   selectedTabIndex = 0;
   showErrorMessage = false;
-  isSmallDate = false;
   projects: Project[] = [];
   isAdvancedCustomer = false;
+
+  basicCustomerForm = this.formBuilder.group({
+    project: this.formBuilder.control('', [Validators.required]),
+    id: this.formBuilder.control('', [Validators.required]),
+    name: this.formBuilder.control('', [Validators.required]),
+    email: this.formBuilder.control('', [Validators.email]),
+    address: this.formBuilder.control(''),
+    nic: this.formBuilder.control(''),
+    contactNo: this.formBuilder.control('', [Validators.required, Validators.pattern(UserMessages.PHONE_NUMBER_REGEX)]),
+    secondaryContactNumbers: this.formBuilder.control(''),
+    saleDate: this.formBuilder.control('', [Validators.required]),
+    bondNo: this.formBuilder.control(''),
+    planNo: this.formBuilder.control(''),
+    deedNo: this.formBuilder.control(''),
+    note: this.formBuilder.control(''),
+    whatsapp: this.formBuilder.control('', [Validators.pattern(UserMessages.PHONE_NUMBER_REGEX)]),
+    viber: this.formBuilder.control('', [Validators.pattern(UserMessages.PHONE_NUMBER_REGEX)]),
+    imo: this.formBuilder.control('', [Validators.pattern(UserMessages.PHONE_NUMBER_REGEX)]),
+    locationCoordinates: this.formBuilder.control(''),
+  });
 
   epForm = this.formBuilder.group({
     blockNo: this.formBuilder.control('', [Validators.required]),
@@ -110,29 +129,9 @@ export class AddNewCustomerComponent implements OnInit {
     totalReceivableBalance: this.formBuilder.control('', [Validators.required, Validators.min(1)]),
     monthCount: this.formBuilder.control('', [Validators.required, Validators.min(1), Validators.max(this.isAdvancedCustomer ? 24 : 10000)]),
     monthRental: this.formBuilder.control('', [Validators.required]),
-    firstRentalDate: this.formBuilder.control('', [Validators.required]),
+    firstRentalDate: this.formBuilder.control('', [Validators.required, CustomValidators.minEqualDate(this.basicCustomerForm.controls['saleDate'])]),
     interestRate: this.formBuilder.control('', [CustomValidators.conditionalRequired(this.isAdvancedCustomer)]),
     dueDate: this.formBuilder.control(''),
-  });
-
-  basicCustomerForm = this.formBuilder.group({
-    project: this.formBuilder.control('', [Validators.required]),
-    id: this.formBuilder.control('', [Validators.required]),
-    name: this.formBuilder.control('', [Validators.required]),
-    email: this.formBuilder.control(''),
-    address: this.formBuilder.control(''),
-    nic: this.formBuilder.control(''),
-    contactNo: this.formBuilder.control('', [Validators.required, Validators.pattern(UserMessages.PHONE_NUMBER_REGEX)]),
-    secondaryContactNumbers: this.formBuilder.control(''),
-    saleDate: this.formBuilder.control('', [Validators.required]),
-    bondNo: this.formBuilder.control(''),
-    planNo: this.formBuilder.control(''),
-    deedNo: this.formBuilder.control(''),
-    note: this.formBuilder.control(''),
-    whatsapp: this.formBuilder.control(''),
-    viber: this.formBuilder.control(''),
-    imo: this.formBuilder.control(''),
-    locationCoordinates: this.formBuilder.control(''),
   });
 
   ngOnInit(): void {
@@ -157,20 +156,10 @@ export class AddNewCustomerComponent implements OnInit {
   onChangeDuration(event: any) {
     const monthCount = this.epForm.controls['monthCount'].value;
     const firstDate = new Date(this.epForm.controls['firstRentalDate'].value);
-    if (event.target.value == null) {
-      this.basicCustomerForm.controls['firstRentalDate'].setErrors({ valid: false });
-    } else {
+    if (event.target.value != null) {
       firstDate.setMonth(firstDate.getMonth() + +monthCount);
-      if (firstDate.getDate() != firstDate.getDate()) {
-        firstDate.setDate(0);
-      }
+      if (firstDate.getDate() != firstDate.getDate()) firstDate.setDate(0);
       this.epForm.controls['dueDate'].setValue(firstDate.toLocaleDateString());
-    }
-  }
-
-  onSaleDateChange(event: any) {
-    if (event.target.value == null) {
-      this.basicCustomerForm.controls['saleDate'].setErrors({ valid: false });
     }
   }
 
@@ -237,18 +226,25 @@ export class AddNewCustomerComponent implements OnInit {
   calculateInterest(): void {
     const isValidRate = this.epForm.controls['interestRate'].valid;
     const isValidEpBalance = this.epForm.controls['paymentEpBalance'].valid;
-    const isValidMonthCount = this.epForm.controls['monthCount'];
+    const isValidMonthCount = this.epForm.controls['monthCount'].valid;
+
     if (isValidRate && isValidEpBalance && isValidMonthCount) {
       let rate = this.epForm.value.interestRate;
       if (this.isAdvancedCustomer) rate = 1;
       const intPlusEpSale = rate * this.epForm.value.paymentEpBalance * 0.01 * this.epForm.value.monthCount / 12;
       this.epForm.controls['intPlusEPSaleValue'].setValue(parseFloat(intPlusEpSale.toString()).toFixed(2));
+    } else {
+      this.epForm.markAsUntouched();
+      this.epForm.controls['interestRate'].markAsTouched();
+      this.epForm.controls['paymentEpBalance'].markAsTouched();
+      this.epForm.controls['monthCount'].markAsTouched();
     }
   }
 
   setTotalBlockValue(_: any) {
     const perchesValue = this.epForm.value.perchesValue;
     let extent = this.epForm.value.extent;
+
     if (perchesValue > 0 && extent > 0) {
       this.epForm.controls['totalBlockValue'].setValue((+perchesValue * +extent).toString());
       this.epForm.controls['saleValue'].setValue((+perchesValue * +extent).toString());
@@ -256,34 +252,51 @@ export class AddNewCustomerComponent implements OnInit {
   }
 
   calculateMarketingSaleValue() {
-    const isValidSaleValue = this.epForm.controls['saleValue'].valid
-    if (isValidSaleValue) {
+    if (this.epForm.controls['saleValue'].valid) {
       this.epForm.controls['marketingSaleValue'].setValue((+this.epForm.value.saleValue - +this.epForm.value.discount).toString());
+    } else {
+      this.epForm.markAsUntouched();
+      this.epForm.controls['saleValue'].markAsTouched();
     }
   }
 
   calculateTotalReceivableBalance(): void {
     const isValidEpBalance = this.epForm.controls['paymentEpBalance'].valid;
     const isValidEpInterest = this.epForm.controls['intPlusEPSaleValue'].valid;
+
     if (isValidEpBalance && isValidEpInterest) {
       const val = parseFloat((+this.epForm.value.paymentEpBalance + +this.epForm.value.documentFee + +this.epForm.value.intPlusEPSaleValue).toString()).toFixed(2);
       this.epForm.controls['totalReceivableBalance'].setValue(val);
+    } else {
+      this.epForm.markAsUntouched();
+      this.epForm.controls['paymentEpBalance'].markAllAsTouched();
+      this.epForm.controls['intPlusEPSaleValue'].markAllAsTouched();
     }
   }
 
   calculateMonthlyRental(): void {
     const isValidMonthCount = this.epForm.controls['monthCount'].valid;
     const isValidTotalReceivableBalance = this.epForm.controls['totalReceivableBalance'].valid;
+
     if (isValidMonthCount && isValidTotalReceivableBalance) {
       this.epForm.controls['monthRental'].setValue(parseFloat((+this.epForm.value.totalReceivableBalance / +this.epForm.value.monthCount).toString()).toFixed(2));
+    } else {
+      this.epForm.markAsUntouched();
+      this.epForm.controls['monthCount'].markAsTouched();
+      this.epForm.controls['totalReceivableBalance'].markAsTouched();
     }
   }
 
   calculatePaymentEpBalance(): void {
     const isValidMarketingSaleValue = this.epForm.controls['marketingSaleValue'].valid;
     const isValidAdvance = this.epForm.controls['advancePayment'].valid;
+
     if (isValidMarketingSaleValue && isValidAdvance) {
       this.epForm.controls['paymentEpBalance'].setValue((+this.epForm.value.marketingSaleValue - +this.epForm.value.advancePayment).toFixed(2));
+    } else {
+      this.epForm.markAsUntouched();
+      this.epForm.controls['advancePayment'].markAsTouched();
+      this.epForm.controls['marketingSaleValue'].markAsTouched();
     }
   }
 
@@ -315,6 +328,13 @@ export class AddNewCustomerComponent implements OnInit {
     return ErrorMessages.required(this.SALE_VALUE_LABEL);
   }
 
+  getContactNumberErrorMessage(): string {
+    if (this.basicCustomerForm.controls['contactNo'].hasError('pattern')) {
+      return ErrorMessages.telephone();
+    }
+    return ErrorMessages.required(this.PHONE_LABEL);
+  }
+
   getMonthCountErrorMessage(): string {
     if (this.epForm.controls['monthCount'].hasError('min')) {
       return ErrorMessages.min(0);
@@ -328,36 +348,27 @@ export class AddNewCustomerComponent implements OnInit {
   ngOnSubmit() {
     if (this.basicCustomerForm.valid) {
       if (this.epForm.valid) {
-        if (this.epForm.value.firstRentalDate < this.basicCustomerForm.value.saleDate) {
-          this.pickerFirstRental.min = this.epForm.value.saleDate;
-          this.epForm.controls['firstRentalDate'].markAsTouched();
-          this.isSmallDate = true;
-          this.selectedTabIndex = 0;
-          this.epForm.controls['firstRentalDate'].setErrors({ invalid: true });
-        } else {
-          this.isSmallDate = false;
-          const client: Customer = this.mapClientObject();
-          this.customerService.IsClientExists(client.ID).then(isClientExist => {
-            if (!isClientExist) {
-              this.customerService.CreateClient(client).then(
-                () => {
-                  this.dialogRef.close();
-                  this.helperService.openSnackBar({
-                    text: NewCustomer.SUCCESS_CREATE_CUSTOMER_MESSAGE_TEXT,
-                    status: SnackBarStatus.SUCCESS
-                  });
-                },
-                (error) => {
-                  console.log(error);
-                  this.helperService.openSnackBar({
-                    text: NewCustomer.ERROR_CREATE_CUSTOMER_MESSAGE_TEXT,
-                    status: SnackBarStatus.FAILED
-                  });
-                }
-              );
-            }
-          });
-        }
+        const client: Customer = this.mapClientObject();
+        this.customerService.IsClientExists(client.ID).then(isClientExist => {
+          if (!isClientExist) {
+            this.customerService.CreateClient(client).then(
+              () => {
+                this.dialogRef.close();
+                this.helperService.openSnackBar({
+                  text: NewCustomer.SUCCESS_CREATE_CUSTOMER_MESSAGE_TEXT,
+                  status: SnackBarStatus.SUCCESS
+                });
+              },
+              (error) => {
+                console.log(error);
+                this.helperService.openSnackBar({
+                  text: NewCustomer.ERROR_CREATE_CUSTOMER_MESSAGE_TEXT,
+                  status: SnackBarStatus.FAILED
+                });
+              }
+            );
+          }
+        });
       } else {
         this.selectedTabIndex = 0;
         this.showErrorMessage = true;

@@ -337,6 +337,22 @@ export class ErrorMessages {
   public static max(value: number, filedName = "Value") {
     return `${filedName} should be less than ${value}`;
   }
+
+  public static email() {
+    return `Invalid email address`;
+  }
+
+  public static telephone() {
+    return `Invalid contact number`;
+  }
+
+  public static firstRentalDate() {
+    return `Should be greater or than or equal to sale date`;
+  }
+
+  public static passwordsNotMatching() {
+    return `Passwords are not matching`;
+  }
 }
 
 export class Reports {

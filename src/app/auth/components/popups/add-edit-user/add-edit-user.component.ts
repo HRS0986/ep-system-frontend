@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Common, SignUp, SnackBarStatus, UserManagement, UserMessages } from "../../../../constants";
+import { Common, ErrorMessages, SignUp, SnackBarStatus, UserManagement } from "../../../../constants";
 import { MatDialogRef } from "@angular/material/dialog";
 import { FormBuilder, Validators } from "@angular/forms";
 import { HelperService } from "../../../../services/helper.service";
@@ -26,21 +26,16 @@ export class AddEditUserComponent implements OnInit {
   EMAIL = UserManagement.EMAIL_LABEL;
   CANCEL_BUTTON_TEXT = Common.CANCEL_BUTTON_TEXT;
   SAVE_BUTTON_TEXT = Common.SAVE_BUTTON_TEXT;
-  REQUIRED_FIELD_ERROR_TEXT = Common.REQUIRED_FIELD_MESSAGE_TEXT;
-  INVALID_EMAIL_ERROR = UserMessages.INVALID_EMAIL_MESSAGE_TEXT;
-  PASSWORDS_NOT_MATCH_ERROR = SignUp.PASSWORD_MISMATCH_MESSAGE_TEXT;
+  VALIDATION_MESSAGES = ErrorMessages;
 
-  isSubmitted = false;
-  isError = false;
-  isInvalidEmail = false;
   hideNewPassword: boolean = true;
   hideConfirmPassword: boolean = true;
 
   userForm = this.formBuilder.group({
-    email: this.formBuilder.control('', [Validators.required]),
+    email: this.formBuilder.control('', [Validators.required, Validators.email]),
     newPassword: this.formBuilder.control('', [Validators.required]),
     confirmPassword: this.formBuilder.control('', [Validators.required])
-  }, { validators: CustomValidators.matchPasswords });
+  }, { validators: CustomValidators.matchTwoFields('newPassword', 'confirmPassword') });
 
   ngOnInit(): void {
     const strongPassword = this.helperService.generateStrongPassword()
@@ -52,7 +47,6 @@ export class AddEditUserComponent implements OnInit {
   }
 
   onClickSave() {
-    this.isSubmitted = true;
     if (this.userForm.valid) {
       this.authService.SignUp(this.userForm.controls['email'].value, this.userForm.controls['newPassword'].value).then(() => {
         this.dialogRef.close();
@@ -67,15 +61,22 @@ export class AddEditUserComponent implements OnInit {
         });
       })
     } else {
-      this.isInvalidEmail = this.userForm.controls['email'].errors!['email'];
-      if (this.userForm.errors?.['passwordsNotMatch']) {
-        this.userForm.get('confirmPassword')!.setErrors({valid: false});
-      }
       this.userForm.markAllAsTouched();
-      if (!this.isInvalidEmail) {
-        this.isError = true;
-      }
     }
+  }
+
+  getNewPasswordErrorMessage() {
+    if (this.userForm.controls['newPassword'].hasError('notMatch')) {
+      return ErrorMessages.passwordsNotMatching();
+    }
+    return ErrorMessages.required(this.PASSWORD);
+  }
+
+  getConfirmPasswordErrorMessage() {
+    if (this.userForm.controls['confirmPassword'].hasError('notMatch')) {
+      return ErrorMessages.passwordsNotMatching();
+    }
+    return ErrorMessages.required(this.CONFIRM_PASSWORD);
   }
 
 }

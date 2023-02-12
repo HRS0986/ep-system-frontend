@@ -63,7 +63,7 @@ export class UserProfileComponent implements OnInit {
     oldPassword: this.formBuilder.control('', [Validators.required]),
     newPassword: this.formBuilder.control('', [Validators.required, Validators.pattern(SignUp.STRONG_PASSWORD_REGEX)]),
     confirmPassword: this.formBuilder.control('', [Validators.required])
-  }, { validator: CustomValidators.matchPasswords });
+  }, { validator: CustomValidators.matchTwoFields('newPassword', 'confirmPassword') });
 
   basicDataForm = this.formBuilder.group({
     firstName: this.formBuilder.control('', [Validators.required]),

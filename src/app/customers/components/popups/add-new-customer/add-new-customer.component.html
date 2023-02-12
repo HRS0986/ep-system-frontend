@@ -1,4 +1,3 @@
-<p>add-new-customer works!</p>
 <mat-dialog-content style="max-height: fit-content">
   <mat-tab-group [(selectedIndex)]="selectedTabIndex" style="height: 575px">
     <mat-tab [label]="EP_TAB_TITLE">
@@ -249,12 +248,12 @@
             <div class="col-3 me-5">
               <mat-form-field class="w-100">
                 <mat-label>{{FIRST_RENTAL_DATE_LABEL}}</mat-label>
-                <input matInput [matDatepicker]="pickerFirstRental" formControlName="firstRentalDate"
+                <input matInput [matDatepicker]="pickerFirstRental" formControlName="firstRentalDate" readonly
                        (dateChange)="onChangeDuration($event)">
                 <mat-datepicker-toggle matSuffix [for]="pickerFirstRental"></mat-datepicker-toggle>
                 <mat-datepicker #pickerFirstRental></mat-datepicker>
-                <mat-error>
-                  {{isSmallDate ? 'Must be greater or than or equal to sale date' : 'Invalid Date'}}
+                <mat-error *ngIf="epForm.controls['firstRentalDate'].invalid">
+                  {{VALIDATION_MESSAGES.firstRentalDate()}}
                 </mat-error>
               </mat-form-field>
             </div>
@@ -289,6 +288,9 @@
               <mat-form-field class="w-100">
                 <mat-label>{{NAME_LABEL}}</mat-label>
                 <input matInput placeholder="Customer Name" formControlName="name"/>
+                <mat-error *ngIf="basicCustomerForm.controls['name'].invalid">
+                  {{VALIDATION_MESSAGES.required(NAME_LABEL)}}
+                </mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -302,10 +304,14 @@
                     {{project.ProjectName}}
                   </mat-option>
                 </mat-select>
+                <mat-error *ngIf="basicCustomerForm.controls['project'].invalid">
+                  {{VALIDATION_MESSAGES.required(PROJECT_LABEL)}}
+                </mat-error>
               </mat-form-field>
             </div>
           </div>
 
+          <!--TODO: Create Custom Validator For ID-->
           <div class="row w-100">
             <div class="col-6">
               <mat-form-field class="w-100">
@@ -318,6 +324,9 @@
               <mat-form-field class="w-100">
                 <mat-label>{{EMAIL_LABEL}}</mat-label>
                 <input matInput placeholder="Email" formControlName="email"/>
+                <mat-error *ngIf="basicCustomerForm.controls['email'].invalid">
+                  {{VALIDATION_MESSAGES.email()}}
+                </mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -345,13 +354,15 @@
               </mat-form-field>
             </div>
             <div class="col-4">
+              <!--TODO: Create Custom Validator For DATE-->
               <mat-form-field class="w-100">
                 <mat-label>{{DATE_OF_SALE_LABEL}}</mat-label>
-                <input matInput [matDatepicker]="pickerSale" formControlName="saleDate"
-                       (dateChange)="onSaleDateChange($event)" required>
+                <input matInput [matDatepicker]="pickerSale" formControlName="saleDate" readonly>
                 <mat-datepicker-toggle matSuffix [for]="pickerSale"></mat-datepicker-toggle>
                 <mat-datepicker #pickerSale></mat-datepicker>
-                <mat-error>Invalid Date</mat-error>
+                <mat-error *ngIf="basicCustomerForm.controls['saleDate'].invalid">
+                  {{VALIDATION_MESSAGES.required(DATE_OF_SALE_LABEL)}}
+                </mat-error>
               </mat-form-field>
             </div>
             <div class="col-4">
@@ -367,6 +378,9 @@
               <mat-form-field class="w-100">
                 <mat-label>{{PHONE_LABEL}}</mat-label>
                 <input matInput placeholder="Contact Number" formControlName="contactNo"/>
+                <mat-error *ngIf="basicCustomerForm.controls['contactNo'].invalid">
+                  {{getContactNumberErrorMessage()}}
+                </mat-error>
               </mat-form-field>
             </div>
             <div class="col-4">
@@ -388,18 +402,27 @@
               <mat-form-field class="w-100">
                 <mat-label>{{WHATSAPP}}</mat-label>
                 <input matInput placeholder="WhatsApp Number" formControlName="whatsapp"/>
+                <mat-error *ngIf="basicCustomerForm.controls['whatsapp'].invalid">
+                  {{VALIDATION_MESSAGES.telephone()}}
+                </mat-error>
               </mat-form-field>
             </div>
             <div class="col-4">
               <mat-form-field class="w-100">
                 <mat-label>{{VIBER}}</mat-label>
                 <input matInput placeholder="Viber Number" formControlName="viber"/>
+                <mat-error *ngIf="basicCustomerForm.controls['viber'].invalid">
+                  {{VALIDATION_MESSAGES.telephone()}}
+                </mat-error>
               </mat-form-field>
             </div>
             <div class="col-4">
               <mat-form-field class="w-100">
                 <mat-label>{{IMO}}</mat-label>
                 <input matInput placeholder="Imo Number" formControlName="imo"/>
+                <mat-error *ngIf="basicCustomerForm.controls['imo'].invalid">
+                  {{VALIDATION_MESSAGES.telephone()}}
+                </mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -468,3 +491,4 @@
     </div>
   </div>
 </mat-dialog-actions>
+
