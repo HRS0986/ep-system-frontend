@@ -59,3 +59,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-tab-body-wrapper {
   height: 90%;
 }
+
+button[class*="mat-button-disabled"].mat-raised-button {
+  background-color: #7b9b9b !important;
+}

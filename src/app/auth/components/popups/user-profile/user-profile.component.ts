@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Common, SignUp, SnackBarStatus, UserMessages } from "../../../../constants";
+import { Common, ErrorMessages, SignUp, SnackBarStatus, UserMessages } from "../../../../constants";
 import { FormBuilder, Validators } from "@angular/forms";
 import { User } from "../../../../types";
 import { UserService } from "../../../../services/user.service";
 import { HelperService } from "../../../../services/helper.service";
-import { matchPasswords } from "../../../../helpers/app.validators";
 import { MatDialogRef } from "@angular/material/dialog";
 import { AuthService } from "../../../../services/auth.service";
 import { Store } from "@ngrx/store";
@@ -14,6 +13,7 @@ import { authCurrentUserSelector } from "../../../store/auth.selectors";
 import { filter } from "rxjs";
 import { isTypeMatched } from "../../../../helpers/utils";
 import { KEYS_OF_USER } from "../../../../types.keys";
+import { CustomValidators } from "../../../../helpers/custom-validators";
 
 @Component({
   selector: 'app-user-profile',
@@ -43,27 +43,25 @@ export class UserProfileComponent implements OnInit {
   hideNewPassword: boolean = true;
   hideConfirmPassword: boolean = true;
   isIncorrectOldPassword: boolean = false;
-  isInvalidPhoneNumber: boolean = false;
   user!: User
+
   TITLE: string = UserMessages.EDIT_USER_PROFILE_TITLE;
   CURRENT_PASSWORD: string = SignUp.CURRENT_PASSWORD_LABEL;
   NEW_PASSWORD: string = SignUp.NEW_PASSWORD_LABEL;
   CONFIRM_PASSWORD: string = SignUp.CONFIRM_PASSWORD_LABEL;
-  PASSWORD_MISMATCH_ERROR: string = SignUp.PASSWORD_MISMATCH_MESSAGE_TEXT;
-  INCORRECT_OLD_PASSWORD: string = SignUp.INCORRECT_OLD_PASSWORD;
   STRONG_PASSWORD_ERROR: string = SignUp.STRONG_PASSWORD_MESSAGE_TEXT;
   CANCEL_BUTTON_TEXT = Common.CANCEL_BUTTON_TEXT;
-  INVALID_PHONE_NUMBER_ERROR: string = UserMessages.INVALID_PHONE_NUMBER_MESSAGE_TEXT;
   FIRST_NAME: string = UserMessages.FIRST_NAME_LABEL;
   LAST_NAME: string = UserMessages.LAST_NAME_LABEL;
   PHONE_NUMBER: string = UserMessages.PHONE_NUMBER_LABEL;
   SAVE_BUTTON_TEXT = Common.SAVE_BUTTON_TEXT;
+  VALIDATION_MESSAGES = ErrorMessages;
 
   passwordForm = this.formBuilder.group({
     oldPassword: this.formBuilder.control('', [Validators.required]),
     newPassword: this.formBuilder.control('', [Validators.required, Validators.pattern(SignUp.STRONG_PASSWORD_REGEX)]),
     confirmPassword: this.formBuilder.control('', [Validators.required])
-  }, {validator: matchPasswords});
+  }, { validators: CustomValidators.matchTwoFields('newPassword', 'confirmPassword') });
 
   basicDataForm = this.formBuilder.group({
     firstName: this.formBuilder.control('', [Validators.required]),
@@ -75,7 +73,6 @@ export class UserProfileComponent implements OnInit {
     this.store.select(authCurrentUserSelector)
       .pipe(filter(user => isTypeMatched(user, KEYS_OF_USER)))
       .subscribe(userData => {
-        debugger;
         this.user = userData;
         this.basicDataForm.patchValue({
           firstName: userData.FirstName,
@@ -117,7 +114,23 @@ export class UserProfileComponent implements OnInit {
           });
         }
       })
+    } else {
+      this.basicDataForm.markAllAsTouched();
     }
+  }
+
+  getNewPasswordErrorMessage() {
+    if (this.passwordForm.controls['newPassword'].hasError('notMatch')) {
+      return ErrorMessages.PASSWORDS_NOT_MATCHING;
+    }
+    return ErrorMessages.required(this.NEW_PASSWORD);
+  }
+
+  getConfirmPasswordErrorMessage() {
+    if (this.passwordForm.controls['confirmPassword'].hasError('notMatch')) {
+      return ErrorMessages.PASSWORDS_NOT_MATCHING;
+    }
+    return ErrorMessages.required(this.CONFIRM_PASSWORD);
   }
 
   onChangePassword() {
@@ -136,7 +149,7 @@ export class UserProfileComponent implements OnInit {
             this.passwordForm.get('oldPassword')!.setErrors({valid: false});
             this.passwordForm.markAllAsTouched();
           } else {
-            this.isIncorrectOldPassword = false
+            this.isIncorrectOldPassword = false;
             this.helperService.openSnackBar({
               text: result.message,
               status: SnackBarStatus.FAILED
@@ -145,7 +158,6 @@ export class UserProfileComponent implements OnInit {
         }
       });
     } else {
-      this.passwordForm.get('confirmPassword')!.setErrors({valid: false});
       this.passwordForm.markAllAsTouched();
     }
   }

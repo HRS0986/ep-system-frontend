@@ -6,10 +6,10 @@ import { AuthService } from "../../../services/auth.service";
 import { HelperService } from "../../../services/helper.service";
 import { MatTooltip } from "@angular/material/tooltip";
 import { Login, NewCustomer, SignUp, SnackBarStatus, UserManagement, UserMessages } from "../../../constants";
-import { matchPasswords } from "../../../helpers/app.validators";
 import { User } from "../../../types";
 import { environment } from "../../../../environments/environment";
 import { CustomerRoutes } from "../../../route-data";
+import { CustomValidators } from "../../../helpers/custom-validators";
 
 @Component({
     selector: 'app-sign-up',
@@ -35,11 +35,11 @@ export class SignupComponent implements OnInit {
         contactNo: this.formBuilder.control('', [Validators.required, Validators.pattern(UserMessages.PHONE_NUMBER_REGEX)]),
     });
 
-    passwordForm = this.formBuilder.group({
-        currentPassword: this.formBuilder.control('', [Validators.required]),
-        newPassword: this.formBuilder.control('', [Validators.required, Validators.pattern(SignUp.STRONG_PASSWORD_REGEX)]),
-        confirmPassword: this.formBuilder.control('', [Validators.required]),
-    }, { validators: matchPasswords });
+  passwordForm = this.formBuilder.group({
+    currentPassword: this.formBuilder.control('', [Validators.required]),
+    newPassword: this.formBuilder.control('', [Validators.required, Validators.pattern(SignUp.STRONG_PASSWORD_REGEX)]),
+    confirmPassword: this.formBuilder.control('', [Validators.required]),
+  }, { validators: CustomValidators.matchTwoFields('newPassword', 'confirmPassword') });
 
     isSubmitted: boolean = false;
     hideCurrentPassword: boolean = true;

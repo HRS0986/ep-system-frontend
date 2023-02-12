@@ -1,11 +1,10 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Common, MakePayment, Reports, Settlement, SnackBarStatus } from "../../../../constants";
 import { HelperService } from "../../../../services/helper.service";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { MatTooltip } from "@angular/material/tooltip";
-import { isNumber } from "../../../utils";
 import { Customer } from "../../../../types";
 import { CustomerService } from "../../../../services/customer.service";
+import { FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-settlement',
@@ -15,13 +14,13 @@ import { CustomerService } from "../../../../services/customer.service";
 export class SettlementComponent implements OnInit {
 
   constructor(
-      private helperService: HelperService,
-      private dialogRef: MatDialogRef<SettlementComponent>,
-      @Inject(MAT_DIALOG_DATA) private data: { customer: Customer },
-      private customerService: CustomerService
-  ) { }
-
-  @ViewChild('refTooltip') refTooltip!: MatTooltip;
+    private helperService: HelperService,
+    private formBuilder: FormBuilder,
+    private dialogRef: MatDialogRef<SettlementComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: { customer: Customer },
+    private customerService: CustomerService
+  ) {
+  }
 
   SETTLE_PAYMENT_TITLE = Settlement.SETTLEMENT_TITLE;
   SETTLE_BUTTON_TEXT = Settlement.SETTLE_BUTTON_TEXT;
@@ -35,14 +34,17 @@ export class SettlementComponent implements OnInit {
   PARTICULARS_LABEL = Settlement.PARTICULARS_LABEL;
   DATE = Reports.DATE;
 
-  remarks: string = '';
-  referenceNo: string = '';
-  particulars: string = "Settlement";
   totalReceivableBalance: string = '';
   paidAmount: string = '';
   reducedInterest: string = '';
   settlementBalance: string = '';
-  date = new Date();
+
+  settlementForm = this.formBuilder.group({
+    remarks: this.formBuilder.control(""),
+    referenceNo: this.formBuilder.control("", [Validators.pattern(Settlement.NUMBERS_REGEX)]),
+    particulars: this.formBuilder.control(""),
+    date: this.formBuilder.control(new Date())
+  });
 
   ngOnInit(): void {
     this.customerService.GetSettlementBalance(this.data.customer.ID as string).then(result => {
@@ -54,30 +56,32 @@ export class SettlementComponent implements OnInit {
   }
 
   onClickSettle(): void {
-    if ((/^\d+$/.test(this.referenceNo) && (parseInt(this.referenceNo) > 0))|| this.referenceNo.length === 0){
-      this.refTooltip.message = '';
-      this.customerService.Settlement(this.data.customer.ID as string, parseInt(this.referenceNo), this.particulars, this.remarks, this.date).then(result => {
-        if (result.status){
+    if (this.settlementForm.valid) {
+      this.customerService.Settlement(
+        this.data.customer.ID as string,
+        parseInt(this.settlementForm.value.referenceNo),
+        this.settlementForm.value.particulars,
+        this.settlementForm.value.remarks,
+        this.settlementForm.value.date
+      ).then(result => {
+        if (result.status) {
           this.dialogRef.close();
-          this.helperService.openSnackBar({text:result.message, status: SnackBarStatus.SUCCESS});
-        }else{
-          this.helperService.openSnackBar({text:result.message, status: SnackBarStatus.FAILED});
+          this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.SUCCESS });
+        } else {
+          this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.FAILED });
         }
       }).catch(err => {
         console.error(err)
-        this.helperService.openSnackBar({text:err.message, status: SnackBarStatus.FAILED});
+        this.helperService.openSnackBar({ text: err.message, status: SnackBarStatus.FAILED });
       });
-    }else{
-      this.refTooltip.disabled = false;
-      this.refTooltip.message = MakePayment.ONLY_NUMBER_ALLOWED_MESSAGE_TEXT;
-      this.refTooltip.show();
     }
   }
 
-  onChangeRef() {
-    const isValidRef = isNumber(this.referenceNo.toString()) && this.referenceNo != null;
-    if (isValidRef) {
-      this.refTooltip.disabled = true;
+  getErrorMessage() {
+    console.log(this.settlementForm.value.referenceNo.invalid);
+    if (this.settlementForm.controls['referenceNo'].hasError('pattern')) {
+      return MakePayment.ONLY_NUMBER_ALLOWED_MESSAGE_TEXT;
     }
+    return '';
   }
 }

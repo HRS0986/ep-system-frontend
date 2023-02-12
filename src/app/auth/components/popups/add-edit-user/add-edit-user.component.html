@@ -1,34 +1,40 @@
 <h2 mat-dialog-title>{{ADD_NEW_USER}}</h2>
+
 <mat-card-content style="max-height: fit-content">
     <form [formGroup]="userForm">
         <mat-form-field appearance="fill" class="w-100">
-            <mat-label>{{EMAIL}}</mat-label>
-            <input matInput formControlName="email" type="email" required email>
-            <mat-error class="mb-2" *ngIf="isSubmitted && isInvalidEmail">{{INVALID_EMAIL_ERROR}}</mat-error>
+          <mat-label>{{EMAIL}}</mat-label>
+          <input matInput formControlName="email" type="email">
+          <mat-error class="mb-2" *ngIf="userForm.controls['email'].invalid">
+            {{VALIDATION_MESSAGES.EMAIL}}
+          </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="w-100">
-            <mat-label>{{PASSWORD}}</mat-label>
-            <input matInput formControlName="newPassword" [type]="hideNewPassword ? 'password' : 'text'"  required>
-            <button mat-icon-button matSuffix type="button" (click)="hideNewPassword = !hideNewPassword">
-                <mat-icon>{{hideNewPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-        </mat-form-field>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{PASSWORD}}</mat-label>
+        <input matInput formControlName="newPassword" [type]="hideNewPassword ? 'password' : 'text'">
+        <button mat-icon-button matSuffix type="button" (click)="hideNewPassword = !hideNewPassword">
+          <mat-icon>{{hideNewPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="this.userForm.controls['newPassword'].invalid">
+          {{getNewPasswordErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
 
-        <mat-form-field appearance="fill" class="w-100">
-            <mat-label>{{CONFIRM_PASSWORD}}</mat-label>
-            <input matInput formControlName="confirmPassword" [type]="hideConfirmPassword ? 'password' : 'text'"  required>
-            <button mat-icon-button matSuffix type="button" (click)="hideConfirmPassword = !hideConfirmPassword">
-                <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-            <mat-error>{{PASSWORDS_NOT_MATCH_ERROR}}</mat-error>
-        </mat-form-field>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>{{CONFIRM_PASSWORD}}</mat-label>
+        <input matInput formControlName="confirmPassword" [type]="hideConfirmPassword ? 'password' : 'text'">
+        <button mat-icon-button matSuffix type="button" (click)="hideConfirmPassword = !hideConfirmPassword">
+          <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="this.userForm.controls['confirmPassword'].invalid">
+          {{getConfirmPasswordErrorMessage()}}
+        </mat-error>
+      </mat-form-field>
     </form>
 </mat-card-content>
+
 <mat-dialog-actions>
-    <div class="row w-100 align-items-center" style="margin-top: -25px">
-        <mat-error *ngIf="isError">{{REQUIRED_FIELD_ERROR_TEXT}}</mat-error>
-    </div>
     <div class="row w-100 align-items-center justify-content-end">
         <div class="d-flex justify-content-end">
             <button class="btn-p" mat-raised-button color="primary" cdkFocusInitial (click)="onClickSave()">
