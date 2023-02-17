@@ -3,10 +3,12 @@ import {
   AllCustomers,
   Common,
   Customer,
+  ErrorMessages,
   LedgerMessages,
   NewCustomer,
   SnackBarStatus,
-  UserManagement
+  UserManagement,
+  UserMessages
 } from "../../../constants";
 import { HelperService } from "../../../services/helper.service";
 import { ChangeInstallmentComponent } from "../popups/change-installment/change-installment.component";
@@ -51,11 +53,13 @@ export class ViewCustomerComponent implements OnInit {
   ) {
   }
 
-  formChangedCount = 0;
   customerId!: string;
   customer!: CustomerType;
   isLoading: boolean = true;
+  selectedTabIndex = 0;
 
+  EP_TAB_TITLE = NewCustomer.EpCalculation.EP_TAB_TITLE;
+  CUSTOMER_TAB_TITLE = NewCustomer.BasicDetails.BASIC_CUSTOMER_TAB_TEXT;
   MAKE_PAYMENT_BUTTON_TEXT = LedgerMessages.MAKE_PAYMENT_BUTTON_TEXT;
   SAVE_BUTTON_TEXT: string = Customer.SAVE_BUTTON_TEXT;
   DELETE_BUTTON_TEXT: string = AllCustomers.DELETE_BUTTON_TEXT;
@@ -97,87 +101,89 @@ export class ViewCustomerComponent implements OnInit {
   LEDGER_LABEL = AllCustomers.LEDGER_BUTTON_TEXT;
   LOCATION = NewCustomer.BasicDetails.LOCATION_COORDINATES;
   BACK = Customer.BACK;
+  VALIDATION_MESSAGES = ErrorMessages;
 
   isFormChanged: boolean = false;
   isAdvancedCustomer: boolean = true;
-  EDITABLE_FIELDS_COUNT: number = 35;
   projects: Project[] = [];
 
-
-  customerForm = this.formBuilder.group({
-    project: ['', Validators.required],
-    id: ['', Validators.required],
-    name: ['', Validators.required],
-    address: [''],
-    email: [''],
-    nic: [''],
-    contactNo: ['', Validators.required],
-    saleDate: [''],
-    bondNo: [''],
-    whatsappNo: [''],
-    viberNo: [''],
-    imoNo: [''],
-    planNo: [''],
-    deedNo: [''],
-    note: [''],
-    locationCoordinates: [''],
-
-    blockNo: ['', Validators.required],
-    perchesValue: ['', Validators.required],
-    extent: ['', Validators.required],
-    totalBlockValue: ['', Validators.required],
-    saleValue: ['', Validators.required],
-    discount: [''],
-    marketingSaleValue: ['', Validators.required],
-    advancePayment: ['', Validators.required],
-    withoutInterestEpPayment: ['', Validators.required],
-    paymentEPBalance: ['', Validators.required],
-    documentFee: [''],
-    intPlusEPSaleValue: ['', Validators.required],
-    totalReceivableBalance: ['', Validators.required],
-    monthCount: ['', Validators.required],
-    monthRental: ['', Validators.required],
-    firstRentalDate: ['', Validators.required],
-    interestRate: ['', Validators.required],
-    dueDate: ['', Validators.required],
+  basicCustomerForm = this.formBuilder.group({
+    project: this.formBuilder.control('', [Validators.required]),
+    id: this.formBuilder.control('', [Validators.required]),
+    name: this.formBuilder.control('', [Validators.required]),
+    address: this.formBuilder.control(''),
+    email: this.formBuilder.control(''),
+    nic: this.formBuilder.control(''),
+    contactNo: this.formBuilder.control('', [Validators.required, Validators.pattern(UserMessages.PHONE_NUMBER_REGEX)]),
+    secondaryContactNumbers: this.formBuilder.control(''),
+    saleDate: this.formBuilder.control(''),
+    bondNo: this.formBuilder.control(''),
+    whatsappNo: this.formBuilder.control(''),
+    viberNo: this.formBuilder.control(''),
+    imoNo: this.formBuilder.control(''),
+    planNo: this.formBuilder.control(''),
+    deedNo: this.formBuilder.control(''),
+    note: this.formBuilder.control(''),
+    locationCoordinates: this.formBuilder.control(''),
   });
+
+  epForm = this.formBuilder.group({
+    blockNo: this.formBuilder.control('', [Validators.required]),
+    perchesValue: this.formBuilder.control(['', Validators.required]),
+    extent: this.formBuilder.control('', [Validators.required]),
+    totalBlockValue: this.formBuilder.control('', [Validators.required]),
+    saleValue: this.formBuilder.control('', [Validators.required]),
+    discount: this.formBuilder.control(''),
+    marketingSaleValue: this.formBuilder.control('', [Validators.required]),
+    advancePayment: this.formBuilder.control('', [Validators.required]),
+    withoutInterestEpPayment: this.formBuilder.control('', [Validators.required]),
+    paymentEPBalance: this.formBuilder.control('', [Validators.required]),
+    documentFee: this.formBuilder.control(''),
+    intPlusEPSaleValue: this.formBuilder.control('', [Validators.required]),
+    totalReceivableBalance: this.formBuilder.control('', [Validators.required]),
+    monthCount: this.formBuilder.control('', [Validators.required]),
+    monthRental: this.formBuilder.control('', [Validators.required]),
+    firstRentalDate: this.formBuilder.control('', [Validators.required]),
+    interestRate: this.formBuilder.control('', [Validators.required]),
+    dueDate: this.formBuilder.control('', [Validators.required]),
+  })
 
   mapClientObject(): CustomerType {
     return {
-      Project: this.customerForm.value.project || "",
-      ID: this.customerForm.value.id,
-      Email: this.customerForm.value.email || "",
-      Name: this.customerForm.value.name || "",
-      Address: this.customerForm.value.address || "",
-      NIC: this.customerForm.value.nic || "",
-      PrimaryContactNo: this.customerForm.value.contactNo || "",
-      SecondaryContactNumbers: this.customerForm.value.secondaryContactNumbers || "",
-      SaleDate: new Date(this.customerForm.value.saleDate),
-      BondNo: this.customerForm.value.bondNo || "",
-      PlanNo: this.customerForm.value.planNo || "",
-      DeedNo: this.customerForm.value.deedNo || "",
-      Note: this.customerForm.value.note || "",
-      WhatsAppNo: this.customerForm.value.whatsapp || "",
-      ViberNo: this.customerForm.value.viber || "",
-      ImoNo: this.customerForm.value.imo || "",
-      BlockNo: this.customerForm.value.blockNo || "",
-      PerchesVal: this.customerForm.value.perchesValue,
-      Extent: this.customerForm.value.extent,
-      TotalBlockValue: this.customerForm.value.totalBlockValue,
-      SaleValue: +this.customerForm.value.saleValue,
-      Discount: this.customerForm.value.discount,
-      MarketingSaleValue: +this.customerForm.value.marketingSaleValue,
-      AdvancePayment: +this.customerForm.value.advancePayment,
-      PaymentEPBalance: +this.customerForm.value.paymentEpBalance,
-      DocumentFee: +this.customerForm.value.documentFee,
-      InterestRate: +this.customerForm.value.interestRate,
-      IntPlusEPSaleValue: +this.customerForm.value.intPlusEPSaleValue,
-      WithoutInterestEpPayment: +this.customerForm.value.withoutInterestEpPayment,
-      TotalReceivableBalance: +this.customerForm.value.totalReceivableBalance,
-      MonthCount: +this.customerForm.value.monthCount,
-      MonthRental: +this.customerForm.value.monthRental,
-      FirstRentalDate: new Date(this.customerForm.value.firstRentalDate),
-      DueDate: new Date(this.customerForm.value.dueDate),
+      Project: this.basicCustomerForm.value.project || "",
+      ID: this.basicCustomerForm.value.id,
+      Email: this.basicCustomerForm.value.email || "",
+      Name: this.basicCustomerForm.value.name || "",
+      Address: this.basicCustomerForm.value.address || "",
+      NIC: this.basicCustomerForm.value.nic || "",
+      PrimaryContactNo: this.basicCustomerForm.value.contactNo || "",
+      SecondaryContactNumbers: this.basicCustomerForm.value.secondaryContactNumbers || "",
+      SaleDate: new Date(this.basicCustomerForm.value.saleDate),
+      BondNo: this.basicCustomerForm.value.bondNo || "",
+      PlanNo: this.basicCustomerForm.value.planNo || "",
+      DeedNo: this.basicCustomerForm.value.deedNo || "",
+      Note: this.basicCustomerForm.value.note || "",
+      WhatsAppNo: this.basicCustomerForm.value.whatsapp || "",
+      ViberNo: this.basicCustomerForm.value.viber || "",
+      ImoNo: this.basicCustomerForm.value.imo || "",
+      BlockNo: this.epForm.value.blockNo || "",
+      PerchesVal: this.epForm.value.perchesValue,
+      Extent: this.epForm.value.extent,
+      TotalBlockValue: this.epForm.value.totalBlockValue,
+      SaleValue: +this.epForm.value.saleValue,
+      Discount: this.epForm.value.discount,
+      MarketingSaleValue: +this.epForm.value.marketingSaleValue,
+      AdvancePayment: +this.epForm.value.advancePayment,
+      PaymentEPBalance: +this.epForm.value.paymentEpBalance,
+      DocumentFee: +this.epForm.value.documentFee,
+      InterestRate: +this.epForm.value.interestRate,
+      IntPlusEPSaleValue: +this.epForm.value.intPlusEPSaleValue,
+      WithoutInterestEpPayment: +this.epForm.value.withoutInterestEpPayment,
+      TotalReceivableBalance: +this.epForm.value.totalReceivableBalance,
+      MonthCount: +this.epForm.value.monthCount,
+      MonthRental: +this.epForm.value.monthRental,
+      FirstRentalDate: new Date(this.epForm.value.firstRentalDate),
+      DueDate: new Date(this.epForm.value.dueDate),
       Type: this.customer.Type
     };
   }
@@ -196,6 +202,7 @@ export class ViewCustomerComponent implements OnInit {
                 this.projects = data;
                 this.customerStore.select(singleCustomerSelector(this.customerId)).subscribe(customerData => {
                   this.customer = customerData!;
+                  debugger
                   this.setCustomerDetails();
                   // @ts-ignore
                   let firstRentalDateTimestamp = this.customer.FirstRentalDate as Timestamp;
@@ -206,24 +213,22 @@ export class ViewCustomerComponent implements OnInit {
                   let firstRentalDate = firstRentalDateTimestamp.toDate();
                   let saleDate = saleDateTimestamp.toDate();
                   let dueDate = dueDateTimestamp.toDate();
-                  this.customerForm.controls['firstRentalDate'].setValue(firstRentalDate.toLocaleDateString());
-                  this.customerForm.controls['saleDate'].setValue(saleDate);
-                  this.customerForm.controls['dueDate'].setValue(dueDate.toLocaleDateString());
+                  this.epForm.controls['firstRentalDate'].setValue(firstRentalDate.toLocaleDateString());
+                  this.basicCustomerForm.controls['saleDate'].setValue(saleDate);
+                  this.epForm.controls['dueDate'].setValue(dueDate.toLocaleDateString());
                   this.isLoading = false;
+
+                  this.epForm.valueChanges.subscribe(() => {
+                    this.isFormChanged = true;
+                  });
+                  this.basicCustomerForm.valueChanges.subscribe(() => {
+                    this.isFormChanged = true;
+                  })
                 })
               }
             });
         }
       );
-
-    this.customerForm.valueChanges.subscribe(() => {
-      this.formChangedCount++;
-      // NOTE: The form has 34 input fields. In page load, all fields are refilled with user data
-      if (this.formChangedCount > this.EDITABLE_FIELDS_COUNT) {
-        // NOTE: If any change is made in the form, the Save button will be enabled
-        this.isFormChanged = true;
-      }
-    });
   }
 
   onClickBack(): void {
@@ -231,38 +236,38 @@ export class ViewCustomerComponent implements OnInit {
   }
 
   setCustomerDetails() {
-    this.customerForm.controls['id'].setValue(this.customer.ID);
-    this.customerForm.controls['project'].setValue(this.customer.Project);
-    this.customerForm.controls['name'].setValue(this.customer.Name);
-    this.customerForm.controls['address'].setValue(this.customer.Address);
-    this.customerForm.controls['nic'].setValue(this.customer.NIC);
-    this.customerForm.controls['contactNo'].setValue(this.customer.PrimaryContactNo);
-    this.customerForm.controls['email'].setValue(this.customer.Email);
-    this.customerForm.controls['bondNo'].setValue(this.customer.BondNo);
-    this.customerForm.controls['planNo'].setValue(this.customer.PlanNo);
-    this.customerForm.controls['locationCoordinates'].setValue(this.customer.LocationCoordinates);
-    this.customerForm.controls['whatsappNo'].setValue(this.customer.WhatsAppNo);
-    this.customerForm.controls['viberNo'].setValue(this.customer.ViberNo);
-    this.customerForm.controls['imoNo'].setValue(this.customer.ImoNo);
-    this.customerForm.controls['deedNo'].setValue(this.customer.DeedNo);
-    this.customerForm.controls['note'].setValue(this.customer.Note);
-    this.customerForm.controls['blockNo'].setValue(this.customer.BlockNo);
-    this.customerForm.controls['perchesValue'].setValue(this.customer.PerchesVal);
-    this.customerForm.controls['extent'].setValue(this.customer.Extent);
-    this.customerForm.controls['totalBlockValue'].setValue(this.customer.TotalBlockValue);
-    this.customerForm.controls['saleValue'].setValue(this.customer.SaleValue);
-    this.customerForm.controls['discount'].setValue(this.customer.Discount);
-    this.customerForm.controls['marketingSaleValue'].setValue(this.customer.MarketingSaleValue);
-    this.customerForm.controls['advancePayment'].setValue(this.customer.AdvancePayment);
-    this.customerForm.controls['withoutInterestEpPayment'].setValue(this.customer.WithoutInterestEpPayment);
-    this.customerForm.controls['paymentEPBalance'].setValue(this.customer.PaymentEPBalance);
-    this.customerForm.controls['documentFee'].setValue(this.customer.DocumentFee);
-    this.customerForm.controls['intPlusEPSaleValue'].setValue(this.customer.IntPlusEPSaleValue);
-    this.customerForm.controls['totalReceivableBalance'].setValue(this.customer.TotalReceivableBalance);
-    this.customerForm.controls['monthCount'].setValue(this.customer.MonthCount);
-    this.customerForm.controls['monthRental'].setValue(this.customer.MonthRental);
-    this.customerForm.controls['interestRate'].setValue(this.customer.InterestRate);
-    this.customerForm.controls['dueDate'].setValue(this.customer.DueDate);
+    this.basicCustomerForm.controls['id'].setValue(this.customer.ID);
+    this.basicCustomerForm.controls['project'].setValue(this.customer.Project);
+    this.basicCustomerForm.controls['name'].setValue(this.customer.Name);
+    this.basicCustomerForm.controls['address'].setValue(this.customer.Address);
+    this.basicCustomerForm.controls['nic'].setValue(this.customer.NIC);
+    this.basicCustomerForm.controls['contactNo'].setValue(this.customer.PrimaryContactNo);
+    this.basicCustomerForm.controls['email'].setValue(this.customer.Email);
+    this.basicCustomerForm.controls['bondNo'].setValue(this.customer.BondNo);
+    this.basicCustomerForm.controls['planNo'].setValue(this.customer.PlanNo);
+    this.basicCustomerForm.controls['locationCoordinates'].setValue(this.customer.LocationCoordinates);
+    this.basicCustomerForm.controls['whatsappNo'].setValue(this.customer.WhatsAppNo);
+    this.basicCustomerForm.controls['viberNo'].setValue(this.customer.ViberNo);
+    this.basicCustomerForm.controls['imoNo'].setValue(this.customer.ImoNo);
+    this.basicCustomerForm.controls['deedNo'].setValue(this.customer.DeedNo);
+    this.basicCustomerForm.controls['note'].setValue(this.customer.Note);
+    this.epForm.controls['blockNo'].setValue(this.customer.BlockNo);
+    this.epForm.controls['perchesValue'].setValue(this.customer.PerchesVal);
+    this.epForm.controls['extent'].setValue(this.customer.Extent);
+    this.epForm.controls['totalBlockValue'].setValue(this.customer.TotalBlockValue);
+    this.epForm.controls['saleValue'].setValue(this.customer.SaleValue);
+    this.epForm.controls['discount'].setValue(this.customer.Discount);
+    this.epForm.controls['marketingSaleValue'].setValue(this.customer.MarketingSaleValue);
+    this.epForm.controls['advancePayment'].setValue(this.customer.AdvancePayment);
+    this.epForm.controls['withoutInterestEpPayment'].setValue(this.customer.WithoutInterestEpPayment);
+    this.epForm.controls['paymentEPBalance'].setValue(this.customer.PaymentEPBalance);
+    this.epForm.controls['documentFee'].setValue(this.customer.DocumentFee);
+    this.epForm.controls['intPlusEPSaleValue'].setValue(this.customer.IntPlusEPSaleValue);
+    this.epForm.controls['totalReceivableBalance'].setValue(this.customer.TotalReceivableBalance);
+    this.epForm.controls['monthCount'].setValue(this.customer.MonthCount);
+    this.epForm.controls['monthRental'].setValue(this.customer.MonthRental);
+    this.epForm.controls['interestRate'].setValue(this.customer.InterestRate);
+    this.epForm.controls['dueDate'].setValue(this.customer.DueDate);
   }
 
   onClickViewLedger() {
@@ -275,20 +280,32 @@ export class ViewCustomerComponent implements OnInit {
   }
 
   ngOnClickSave() {
-    const snackBarRef = this.helperService.openAndGetSnackBar({
-      text: Common.SAVING,
-      status: SnackBarStatus.INFO
-    });
-    const client = this.mapClientObject();
-    this.customerService.UpdateClient(client).then(result => {
-      snackBarRef.dismiss();
-      this.isFormChanged = false;
-      if (result.status) {
-        this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.SUCCESS });
+    if (this.epForm.valid) {
+      this.epForm.markAsUntouched();
+      if (this.basicCustomerForm.valid) {
+        this.basicCustomerForm.markAsUntouched();
+        const snackBarRef = this.helperService.openAndGetSnackBar({
+          text: Common.SAVING,
+          status: SnackBarStatus.INFO
+        });
+        const client = this.mapClientObject();
+        this.customerService.UpdateClient(client).then(result => {
+          snackBarRef.dismiss();
+          this.isFormChanged = false;
+          if (result.status) {
+            this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.SUCCESS });
+          } else {
+            this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.FAILED });
+          }
+        });
       } else {
-        this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.FAILED });
+        this.selectedTabIndex = 0;
+        this.basicCustomerForm.markAllAsTouched();
       }
-    });
+    } else {
+      this.selectedTabIndex = 1;
+      this.epForm.markAllAsTouched();
+    }
   }
 
   onClickMakePayment(): void {
@@ -315,6 +332,13 @@ export class ViewCustomerComponent implements OnInit {
     });
   }
 
+  getContactNumberErrorMessage(): string {
+    if (this.basicCustomerForm.controls['contactNo'].hasError('pattern')) {
+      return this.VALIDATION_MESSAGES.TELEPHONE;
+    }
+    return this.VALIDATION_MESSAGES.required(this.PHONE_LABEL);
+  }
+
   onClickDelete() {
     const dialogRef = this.matDialog.open(DeleteConfirmPopupComponent, {
       width: '350px',
@@ -328,6 +352,7 @@ export class ViewCustomerComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.customerService.DeleteClient(this.customer.ID).then(() => {
+          this.onClickBack();
           this.helperService.openSnackBar({
             text: Customer.DELETE_CUSTOMER_TEXT,
             status: SnackBarStatus.SUCCESS

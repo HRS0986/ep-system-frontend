@@ -70,7 +70,9 @@
     <mat-form-field appearance="fill" class="w-100 mb-1">
       <mat-label>{{REFERENCE_NO}}</mat-label>
       <input matInput formControlName="refNo">
-      <mat-error *ngIf="paymentForm.controls['refNo'].invalid">{{getRefNoErrorMessage()}}</mat-error>
+      <mat-error *ngIf="paymentForm.controls['refNo'].invalid">
+        {{VALIDATION_MESSAGES.NUMBERS_ONLY}}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field *ngIf="paymentForm.value.particulars == 'Paid By Cheque'" appearance="fill" class="w-100" mb-1>

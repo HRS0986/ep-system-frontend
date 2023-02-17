@@ -5,118 +5,108 @@
             <div class="row w-100 mx-0">
                 <div class="col-6">
                     <mat-form-field appearance="fill" class="w-100">
-                        <mat-label>{{PROJECT_NAME}}</mat-label>
-                        <input
-                                matInput
-                                formControlName="ProjectName"
-                                required>
+                      <mat-label>{{PROJECT_NAME}}</mat-label>
+                      <input matInput formControlName="ProjectName">
+                      <mat-error *ngIf="projectForm.controls['ProjectName'].invalid">
+                        {{VALIDATION_MESSAGES.required(PROJECT_NAME)}}
+                      </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-6">
-                    <mat-form-field appearance="fill" class="w-100">
-                        <mat-label>{{LAND_NAME}}</mat-label>
-                        <input
-                                matInput
-                                formControlName="LandName"
-                                required>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="row w-100 mx-0">
-                <div class="col-6">
-                    <mat-form-field appearance="fill" class="w-100">
-                        <mat-label>{{PURCHASING_DATE}}</mat-label>
-                        <input matInput [matDatepicker]="picker" formControlName="PurchasingDate" required>
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                </div>
-                <div class="col-6">
-                    <mat-form-field appearance="fill" class="w-100">
-                        <mat-label>{{PURCHASING_PRICE}}</mat-label>
-                        <input
-                                matInput
-                                type="number"
-                                formControlName="PurchasingPrice"
-                                required>
-                      <mat-error *ngIf="projectForm.controls['PurchasingPrice'].invalid">{{getPriceError()}}</mat-error>
-                    </mat-form-field>
+                  <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>{{LAND_NAME}}</mat-label>
+                    <input matInput formControlName="LandName">
+                    <mat-error *ngIf="projectForm.controls['LandName'].invalid">
+                      {{VALIDATION_MESSAGES.required(LAND_NAME)}}
+                    </mat-error>
+                  </mat-form-field>
                 </div>
             </div>
             <div class="row w-100 mx-0">
                 <div class="col-6">
-                    <mat-form-field appearance="fill" class="w-100">
-                        <mat-label>{{EXTEND}}</mat-label>
-                        <input
-                                matInput
-                                formControlName="Extend"
-                                required>
-                    </mat-form-field>
+                  <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>{{PURCHASING_DATE}}</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="PurchasingDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="projectForm.controls['PurchasingDate'].invalid">
+                      {{VALIDATION_MESSAGES.required(PURCHASING_DATE)}}
+                    </mat-error>
+                  </mat-form-field>
                 </div>
                 <div class="col-6">
-                    <mat-form-field appearance="fill" class="w-100">
-                        <mat-label>{{DEED_NO}}</mat-label>
-                        <input
-                                matInput
-                                formControlName="DeedNo"
-                                required>
-                    </mat-form-field>
+                  <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>{{PURCHASING_PRICE}}</mat-label>
+                    <input matInput type="number" formControlName="PurchasingPrice">
+                    <mat-error *ngIf="projectForm.controls['PurchasingPrice'].invalid">
+                      {{getPriceError()}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+            </div>
+            <div class="row w-100 mx-0">
+                <div class="col-6">
+                  <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>{{EXTEND}}</mat-label>
+                    <input matInput formControlName="Extend">
+                    <mat-error *ngIf="projectForm.controls['Extend'].invalid">
+                      {{VALIDATION_MESSAGES.required(EXTEND)}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-6">
+                  <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>{{DEED_NO}}</mat-label>
+                    <input matInput formControlName="DeedNo">
+                    <mat-error *ngIf="projectForm.controls['DeedNo'].invalid">
+                      {{VALIDATION_MESSAGES.required(DEED_NO)}}
+                    </mat-error>
+                  </mat-form-field>
                 </div>
             </div>
             <div class="row w-100 mx-0">
                 <mat-form-field appearance="fill" class="w-100">
                     <mat-label>{{ID}}</mat-label>
-                    <input
-                            matInput
-                            formControlName="ID"
-                            required>
+                  <input matInput formControlName="ID">
                 </mat-form-field>
             </div>
             <div class="row w-100 mx-0">
-                <mat-form-field appearance="fill" class="w-100">
-                    <mat-label>{{PREVIOUS_OWNER}}</mat-label>
-                    <input
-                            matInput
-                            formControlName="PreviousOwner"
-                            required>
-                </mat-form-field>
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>{{PREVIOUS_OWNER}}</mat-label>
+                <input matInput formControlName="PreviousOwner">
+                <mat-error *ngIf="projectForm.controls['PreviousOwner'].invalid">
+                  {{VALIDATION_MESSAGES.required(PREVIOUS_OWNER)}}
+                </mat-error>
+              </mat-form-field>
             </div>
             <div class="row w-100 mx-0">
-                <mat-form-field appearance="fill" class="w-100">
-                    <mat-label>{{PRESENT_OWNER}}</mat-label>
-                    <input
-                            matInput
-                            formControlName="PresentOwner"
-                            required>
-                </mat-form-field>
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>{{PRESENT_OWNER}}</mat-label>
+                <input matInput formControlName="PresentOwner">
+                <mat-error *ngIf="projectForm.controls['PresentOwner'].invalid">
+                  {{VALIDATION_MESSAGES.required(PRESENT_OWNER)}}
+                </mat-error>
+              </mat-form-field>
             </div>
             <div class="row w-100 mx-0">
-                <mat-form-field appearance="fill" class="w-100">
-                    <mat-label>{{ADDRESS}}</mat-label>
-                    <input
-                            matInput
-                            formControlName="Address"
-                            required>
-                </mat-form-field>
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>{{ADDRESS}}</mat-label>
+                <input matInput formControlName="Address">
+                <mat-error *ngIf="projectForm.controls['Address'].invalid">
+                  {{VALIDATION_MESSAGES.required(ADDRESS)}}
+                </mat-error>
+              </mat-form-field>
             </div>
             <div class="row w-100 mx-0">
                 <mat-form-field appearance="fill" class="w-100">
                     <mat-label>{{REMARKS}}</mat-label>
-                    <input
-                            matInput
-                            formControlName="Remarks">
+                  <input matInput formControlName="Remarks">
                 </mat-form-field>
             </div>
         </div>
     </form>
 </mat-card-content>
 <mat-dialog-actions>
-    <div class="row w-100 mx-0 align-items-center">
-        <mat-error *ngIf="showErrorMessage">{{REQUIRED_FIELD_ERROR_TEXT}}</mat-error>
-    </div>
-    <div class="row w-100 mx-0 align-items-center" style="margin-top: -25px">
-        <mat-error *ngIf="isError">{{REQUIRED_FIELD_ERROR_TEXT}}</mat-error>
-    </div>
     <div class="row w-100 mx-0 align-items-center justify-content-end">
         <div class="d-flex justify-content-end">
             <button class="btn-p" mat-raised-button color="primary" cdkFocusInitial (click)="onClickSave()">

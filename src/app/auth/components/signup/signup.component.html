@@ -21,18 +21,26 @@
                             <form [formGroup]="signupForm" (ngSubmit)="onClickNext()" class="d-flex flex-column"
                                   ngNativeValidate>
                                 <mat-form-field appearance="fill" class="mt-2 w-100">
-                                    <mat-label>{{FIRST_NAME}}</mat-label>
-                                    <input matInput [placeholder]="FIRST_NAME" formControlName="firstName" required>
+                                  <mat-label>{{FIRST_NAME}}</mat-label>
+                                  <input matInput [placeholder]="FIRST_NAME" formControlName="firstName">
+                                  <mat-error *ngIf="signupForm.controls['firstName'].invalid">
+                                    {{VALIDATION_MESSAGES.required(FIRST_NAME)}}
+                                  </mat-error>
                                 </mat-form-field>
-                                <mat-form-field appearance="fill" class="mt-2 w-100">
-                                    <mat-label>{{LAST_NAME}}</mat-label>
-                                    <input matInput [placeholder]="LAST_NAME" formControlName="lastName" required>
-                                </mat-form-field>
-                                <mat-form-field appearance="fill" class="mt-2 w-100">
-                                    <mat-label>{{CONTACT_NUMBER}}</mat-label>
-                                    <input matInput [placeholder]="CONTACT_NUMBER" formControlName="contactNo" required>
-                                    <mat-error *ngIf="contactNoError">{{INVALID_CONTACT_NUMBER_ERROR}}</mat-error>
-                                </mat-form-field>
+                              <mat-form-field appearance="fill" class="mt-2 w-100">
+                                <mat-label>{{LAST_NAME}}</mat-label>
+                                <input matInput [placeholder]="LAST_NAME" formControlName="lastName">
+                                <mat-error *ngIf="signupForm.controls['lastName'].invalid">
+                                  {{VALIDATION_MESSAGES.required(LAST_NAME)}}
+                                </mat-error>
+                              </mat-form-field>
+                              <mat-form-field appearance="fill" class="mt-2 w-100">
+                                <mat-label>{{CONTACT_NUMBER}}</mat-label>
+                                <input matInput [placeholder]="CONTACT_NUMBER" formControlName="contactNo">
+                                <mat-error *ngIf="signupForm.controls['contactNo'].invalid">
+                                  {{getContactNoErrorMessage()}}
+                                </mat-error>
+                              </mat-form-field>
                                 <div>
                                     <button
                                             type="submit"
@@ -52,43 +60,50 @@
                         <ng-template matStepLabel>{{SECOND_STEP}}</ng-template>
                         <form [formGroup]="passwordForm" (ngSubmit)="onSubmit()" class="d-flex flex-column"
                               ngNativeValidate>
-                            <mat-form-field appearance="fill" class="mt-2 w-100">
-                                <mat-label>{{CURRENT_PASSWORD}}</mat-label>
-                                <input matInput [placeholder]="CURRENT_PASSWORD" formControlName="currentPassword"
-                                       [type]="hideCurrentPassword ? 'password' : 'text'" required>
-                                <button mat-icon-button matSuffix type="button"
-                                        (click)="hideCurrentPassword = !hideCurrentPassword">
-                                    <mat-icon>{{hideCurrentPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                                </button>
-                            </mat-form-field>
+                          <mat-form-field appearance="fill" class="mt-2 w-100">
+                            <mat-label>{{CURRENT_PASSWORD}}</mat-label>
+                            <input matInput [placeholder]="CURRENT_PASSWORD" formControlName="currentPassword"
+                                   [type]="hideCurrentPassword ? 'password' : 'text'" required>
+                            <button mat-icon-button matSuffix type="button"
+                                    (click)="hideCurrentPassword = !hideCurrentPassword">
+                              <mat-icon>{{hideCurrentPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-error *ngIf="isIncorrectOldPassword">
+                              {{VALIDATION_MESSAGES.INCORRECT_OLD_PASSWORD}}
+                            </mat-error>
+                          </mat-form-field>
 
                             <mat-form-field appearance="fill" class="mt-2 w-100">
                                 <mat-label>{{NEW_PASSWORD}}</mat-label>
-                                <input
-                                        matInput [placeholder]="NEW_PASSWORD"
-                                        formControlName="newPassword"
-                                        [type]="hideNewPassword ? 'password' : 'text'"
-                                        [matTooltip]="STRONG_PASSWORD_ERROR"
-                                        #npTooltip="matTooltip"
-                                        matTooltipPosition="right"
-                                        matTooltipHideDelay="500"
-                                        required>
-                                <button mat-icon-button matSuffix type="button"
-                                        (click)="hideNewPassword = !hideNewPassword">
-                                    <mat-icon>{{hideNewPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                                </button>
+                              <input
+                                matInput [placeholder]="NEW_PASSWORD"
+                                formControlName="newPassword"
+                                [type]="hideNewPassword ? 'password' : 'text'"
+                                [matTooltip]="STRONG_PASSWORD_ERROR"
+                                #npTooltip="matTooltip"
+                                matTooltipPosition="right"
+                                matTooltipHideDelay="500">
+                              <button mat-icon-button matSuffix type="button"
+                                      (click)="hideNewPassword = !hideNewPassword">
+                                <mat-icon>{{hideNewPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                              </button>
+                              <mat-error *ngIf="passwordForm.controls['newPassword'].invalid">
+                                {{getNewPasswordErrorMessage()}}
+                              </mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="fill" class="mt-2 w-100">
-                                <mat-label>{{CONFIRM_PASSWORD}}</mat-label>
-                                <input matInput [placeholder]="CONFIRM_PASSWORD" formControlName="confirmPassword"
-                                       [type]="hideConfirmPassword ? 'password' : 'text'" required>
-                                <button mat-icon-button matSuffix type="button"
-                                        (click)="hideConfirmPassword = !hideConfirmPassword">
-                                    <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                                </button>
-                                <mat-error>{{PASSWORD_MISMATCH_ERROR}}</mat-error>
-                            </mat-form-field>
+                          <mat-form-field appearance="fill" class="mt-2 w-100">
+                            <mat-label>{{CONFIRM_PASSWORD}}</mat-label>
+                            <input matInput [placeholder]="CONFIRM_PASSWORD" formControlName="confirmPassword"
+                                   [type]="hideConfirmPassword ? 'password' : 'text'">
+                            <button mat-icon-button matSuffix type="button"
+                                    (click)="hideConfirmPassword = !hideConfirmPassword">
+                              <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-error *ngIf="passwordForm.controls['confirmPassword'].invalid">
+                              {{getConfirmPasswordErrorMessage()}}
+                            </mat-error>
+                          </mat-form-field>
                             <div class="d-flex justify-content-between">
                                 <button
                                         mat-raised-button

@@ -58,7 +58,9 @@
     <mat-form-field appearance="fill" class="w-100 mb-1">
       <mat-label>{{REFERENCE_NO}}</mat-label>
       <input matInput formControlName="referenceNo"/>
-      <mat-error *ngIf="settlementForm.controls['referenceNo'].invalid">{{getErrorMessage()}}</mat-error>
+      <mat-error *ngIf="settlementForm.controls['referenceNo'].invalid">
+        {{VALIDATION_MESSAGES.NUMBERS_ONLY}}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="w-100 mb-1">

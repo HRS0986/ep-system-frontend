@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Common, MakePayment, Reports, Settlement, SnackBarStatus } from "../../../../constants";
+import { Common, ErrorMessages, Reports, Settlement, SnackBarStatus } from "../../../../constants";
 import { HelperService } from "../../../../services/helper.service";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Customer } from "../../../../types";
@@ -33,6 +33,7 @@ export class SettlementComponent implements OnInit {
   CANCEL_BUTTON_TEXT = Common.CANCEL_BUTTON_TEXT;
   PARTICULARS_LABEL = Settlement.PARTICULARS_LABEL;
   DATE = Reports.DATE;
+  VALIDATION_MESSAGES = ErrorMessages;
 
   totalReceivableBalance: string = '';
   paidAmount: string = '';
@@ -75,13 +76,5 @@ export class SettlementComponent implements OnInit {
         this.helperService.openSnackBar({ text: err.message, status: SnackBarStatus.FAILED });
       });
     }
-  }
-
-  getErrorMessage() {
-    console.log(this.settlementForm.value.referenceNo.invalid);
-    if (this.settlementForm.controls['referenceNo'].hasError('pattern')) {
-      return MakePayment.ONLY_NUMBER_ALLOWED_MESSAGE_TEXT;
-    }
-    return '';
   }
 }

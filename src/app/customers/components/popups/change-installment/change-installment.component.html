@@ -28,8 +28,10 @@
   <form [formGroup]="installmentForm" (submit)="onClickChange()">
     <mat-form-field appearance="fill" style="width: 85%">
       <mat-label>{{NEW_INSTALLMENT_LABEL}}</mat-label>
-      <input mask="separator" formControlName="newInstallment" thousandSeparator="," matInput>
-      <mat-error *ngIf="installmentForm.controls['newInstallment'].invalid">{{getRentalErrorMessage()}}</mat-error>
+      <input mask="separator.2" formControlName="newInstallment" thousandSeparator="," matInput>
+      <mat-error *ngIf="installmentForm.controls['newInstallment'].invalid">
+        {{VALIDATION_MESSAGES.required(NEW_INSTALLMENT_LABEL)}}
+      </mat-error>
     </mat-form-field>
     <button type="button" mat-icon-button (click)="calculateInstallment()">
       <mat-icon>calculate</mat-icon>
@@ -38,7 +40,9 @@
     <mat-form-field appearance="fill" style="width: 85%">
       <mat-label>{{NEW_MONTH_COUNT_LABEL}}</mat-label>
       <input formControlName="newMonthCount" matInput>
-      <mat-error *ngIf="installmentForm.controls['newMonthCount'].invalid">{{getMonthCountErrors()}}</mat-error>
+      <mat-error *ngIf="installmentForm.controls['newMonthCount'].invalid">
+        {{VALIDATION_MESSAGES.required(NEW_MONTH_COUNT_LABEL)}}
+      </mat-error>
     </mat-form-field>
     <button type="button" mat-icon-button (click)="calculateMonthCount()">
       <mat-icon>calculate</mat-icon>

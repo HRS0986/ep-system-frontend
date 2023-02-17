@@ -331,6 +331,7 @@ export class ErrorMessages {
   public static readonly FIRST_RENTAL_DATE = `Should be greater or than or equal to sale date`;
   public static readonly PASSWORDS_NOT_MATCHING = `Passwords are not matching`;
   public static readonly INCORRECT_OLD_PASSWORD = `Incorrect old password`;
+  public static readonly NUMBERS_ONLY = `Numbers only allowed`;
 
   public static required(filedName: string) {
     return `${filedName} is required`;
