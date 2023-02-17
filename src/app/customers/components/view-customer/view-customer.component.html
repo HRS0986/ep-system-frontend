@@ -1,7 +1,9 @@
 <mat-card class="mx-3" style="margin-bottom: 70px; min-width: fit-content">
   <mat-card-content style="min-height: 200px" class="row mx-3">
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
-    <div class="row">
+    <div *ngIf="isLoading" class="w-100 d-flex justify-content-center align-items-center" style="height: 200px">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="row" *ngIf="!isLoading">
       <div class="col-12 d-flex justify-content-between mb-4" *ngIf="!isLoading">
         <a mat-raised-button color="primary" class="btn-s me-3"
            style="color: black; max-height: fit-content !important;" (click)="onClickBack()">
