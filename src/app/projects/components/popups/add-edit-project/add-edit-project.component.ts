@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Common, Projects, SnackBarStatus } from "../../../../constants";
+import { Common, ErrorMessages, Projects, SnackBarStatus } from "../../../../constants";
 import { FormBuilder, Validators } from "@angular/forms";
 import { ProjectService } from "../../../../services/projects.service";
 import { HelperService } from "../../../../services/helper.service";
@@ -27,7 +27,6 @@ export class AddEditProjectComponent implements OnInit {
   ADD_NEW_PROJECT = Projects.ADD_NEW_PROJECT;
   CANCEL_BUTTON_TEXT = Common.CANCEL_BUTTON_TEXT;
   SAVE_BUTTON_TEXT = Common.SAVE_BUTTON_TEXT;
-  REQUIRED_FIELD_ERROR_TEXT = Common.REQUIRED_FIELD_MESSAGE_TEXT;
   TITLE!: string;
 
   EDIT_PROJECT = Projects.EDIT_PROJECT;
@@ -42,6 +41,7 @@ export class AddEditProjectComponent implements OnInit {
   DEED_NO = Projects.DEED_NO;
   REMARKS = Projects.REMARKS;
   ID = Projects.ID;
+  VALIDATION_MESSAGES = ErrorMessages;
 
   isError = false;
   isSubmitted = false;
@@ -139,8 +139,8 @@ export class AddEditProjectComponent implements OnInit {
 
   getPriceError(): string {
     if (this.projectForm.controls["PurchasingPrice"].hasError("min")) {
-      return Projects.PRICE_RANGE_ERROR;
+      return this.VALIDATION_MESSAGES.min(1, this.PURCHASING_PRICE);
     }
-    return "";
+    return this.VALIDATION_MESSAGES.required(this.PURCHASING_PRICE);
   }
 }

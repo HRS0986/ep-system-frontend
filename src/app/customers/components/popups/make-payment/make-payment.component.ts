@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import jsPDF from "jspdf";
-import { Common, MakePayment, Particulars, Settlement, SnackBarStatus } from "../../../../constants";
+import { Common, ErrorMessages, MakePayment, Particulars, Settlement, SnackBarStatus } from "../../../../constants";
 import { HelperService } from "../../../../services/helper.service";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { CustomerService } from "../../../../services/customer.service";
@@ -43,6 +43,7 @@ export class MakePaymentComponent implements OnInit {
   REFERENCE_NO = MakePayment.REFERENCE_NO_LABEL;
   CANCEL_BUTTON_TEXT = Common.CANCEL_BUTTON_TEXT;
   ParticularsList = Object['values'](Particulars);
+  VALIDATION_MESSAGES = ErrorMessages;
 
   paymentData: any = [];
 
@@ -134,19 +135,10 @@ export class MakePaymentComponent implements OnInit {
   }
 
   getAmountErrorMessage() {
-    console.log(this.paymentForm.value.amount.invalid);
     if (this.paymentForm.controls['amount'].hasError('required')) {
-      return MakePayment.PAYMENT_AMOUNT_IS_REQUIRED;
+      return this.VALIDATION_MESSAGES.required(this.AMOUNT);
     }
-    return MakePayment.PAYMENT_AMOUNT_RANGE_ERROR;
-  }
-
-  getRefNoErrorMessage() {
-    console.log(this.paymentForm.value.amount.invalid);
-    if (this.paymentForm.controls['refNo'].hasError('pattern')) {
-      return MakePayment.ONLY_NUMBER_ALLOWED_MESSAGE_TEXT;
-    }
-    return '';
+    return this.VALIDATION_MESSAGES.min(1);
   }
 
 }

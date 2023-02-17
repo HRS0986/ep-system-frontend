@@ -1,13 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {
-  ChangeInstallment,
-  Common,
-  Customer,
-  MakePayment,
-  Reports,
-  Settlement,
-  SnackBarStatus
-} from "../../../../constants";
+import { ChangeInstallment, Common, ErrorMessages, MakePayment, Reports, SnackBarStatus } from "../../../../constants";
 import { HelperService } from "../../../../services/helper.service";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Customer as CustomerType } from "../../../../types";
@@ -43,10 +35,11 @@ export class ChangeInstallmentComponent implements OnInit {
   REMARKS_LABEL: string = MakePayment.REMARKS_LABEL;
   PARTICULARS_LABEL: string = MakePayment.PARTICULARS_LABEL;
   DATE: string = Reports.DATE;
+  VALIDATION_MESSAGES = ErrorMessages;
 
   installmentForm = this.formBuilder.group({
-    newInstallment: this.formBuilder.control('', [Validators.required, Validators.pattern(Settlement.NUMBERS_REGEX)]),
-    newMonthCount: this.formBuilder.control('', [Validators.required, Validators.pattern(Settlement.NUMBERS_REGEX)]),
+    newInstallment: this.formBuilder.control('', [Validators.required]),
+    newMonthCount: this.formBuilder.control('', [Validators.required]),
     remarks: this.formBuilder.control('',),
     particular: this.formBuilder.control(''),
     date: this.formBuilder.control(new Date())
@@ -107,20 +100,6 @@ export class ChangeInstallmentComponent implements OnInit {
 
     console.log(remainingPayment + newInterest);
     return (remainingPayment + newInterest) / rentalFactor;
-  }
-
-  getMonthCountErrors(): string {
-    if (this.installmentForm.controls['newMonthCount'].hasError('pattern')) {
-      return Customer.INVALID_MONTH_COUNT_VALUE_MESSAGE_TEXT;
-    }
-    return ChangeInstallment.INSTALLMENT_IS_REQUIRED;
-  }
-
-  getRentalErrorMessage() {
-    if (this.installmentForm.controls['newInstallment'].hasError('pattern')) {
-      return MakePayment.ONLY_NUMBER_ALLOWED_MESSAGE_TEXT;
-    }
-    return ChangeInstallment.INSTALLMENT_IS_REQUIRED;
   }
 
 }

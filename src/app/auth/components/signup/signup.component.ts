@@ -5,7 +5,15 @@ import { UserService } from "../../../services/user.service";
 import { AuthService } from "../../../services/auth.service";
 import { HelperService } from "../../../services/helper.service";
 import { MatTooltip } from "@angular/material/tooltip";
-import { Login, NewCustomer, SignUp, SnackBarStatus, UserManagement, UserMessages } from "../../../constants";
+import {
+  ErrorMessages,
+  Login,
+  NewCustomer,
+  SignUp,
+  SnackBarStatus,
+  UserManagement,
+  UserMessages
+} from "../../../constants";
 import { User } from "../../../types";
 import { environment } from "../../../../environments/environment";
 import { CustomerRoutes } from "../../../route-data";
@@ -46,8 +54,9 @@ export class SignupComponent implements OnInit {
     hideNewPassword: boolean = true;
     hideConfirmPassword: boolean = true;
     isSecondStep: boolean = false;
-    isLoading: boolean = false;
-    user!: User;
+  isLoading: boolean = false;
+  isIncorrectOldPassword = false;
+  user!: User;
     logo: string = `${window.location.protocol}//${window.location.host}/${environment.config.loginLogo}`;
     LOGO_PATH = "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.jpg";
 
@@ -57,17 +66,14 @@ export class SignupComponent implements OnInit {
     CURRENT_PASSWORD: string = SignUp.CURRENT_PASSWORD_LABEL;
     NEW_PASSWORD: string = SignUp.NEW_PASSWORD_LABEL;
     CONFIRM_PASSWORD: string = SignUp.CONFIRM_PASSWORD_LABEL;
-    SIGN_UP_BUTTON_TEXT: string = SignUp.SIGN_UP_BUTTON_TEXT;
-    PASSWORD_MISMATCH_ERROR: string = SignUp.PASSWORD_MISMATCH_MESSAGE_TEXT;
-    STRONG_PASSWORD_ERROR: string = SignUp.STRONG_PASSWORD_MESSAGE_TEXT;
-    CONTACT_NUMBER: string = UserManagement.CONTACT_NUMBER_LABEL;
-    INVALID_CONTACT_NUMBER_ERROR: string = UserMessages.INVALID_CONTACT_NUMBER_MESSAGE_TEXT;
-    NEXT = NewCustomer.NEXT_BUTTON_TEXT;
-    PREVIOUS = NewCustomer.PREVIOUS_BUTTON_TEXT;
-
+  SIGN_UP_BUTTON_TEXT: string = SignUp.SIGN_UP_BUTTON_TEXT;
+  STRONG_PASSWORD_ERROR: string = SignUp.STRONG_PASSWORD_MESSAGE_TEXT;
+  CONTACT_NUMBER: string = UserManagement.CONTACT_NUMBER_LABEL;
+  NEXT = NewCustomer.NEXT_BUTTON_TEXT;
+  PREVIOUS = NewCustomer.PREVIOUS_BUTTON_TEXT;
     FIRST_STEP = SignUp.SIGNUP_FIRST_STEP_TITLE;
-    SECOND_STEP = SignUp.SIGNUP_SECOND_STEP_TITLE;
-
+  SECOND_STEP = SignUp.SIGNUP_SECOND_STEP_TITLE;
+  VALIDATION_MESSAGES = ErrorMessages;
 
     ngOnInit(): void {
     }
@@ -95,10 +101,11 @@ export class SignupComponent implements OnInit {
                     });
                 } else {
                     if (result.data.code === "auth/wrong-password") {
-                        this.helperService.openSnackBar({
-                            text: Login.WRONG_PASSWORD_MESSAGE_TEXT,
-                            status: SnackBarStatus.FAILED
-                        });
+                      this.isIncorrectOldPassword = true;
+                      this.helperService.openSnackBar({
+                        text: Login.WRONG_PASSWORD_MESSAGE_TEXT,
+                        status: SnackBarStatus.FAILED
+                      });
                     } else {
                         this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.FAILED });
                     }
@@ -106,11 +113,6 @@ export class SignupComponent implements OnInit {
             });
         } else {
             this.passwordForm.markAllAsTouched();
-            if (this.passwordForm.controls['newPassword'].errors!['pattern'] != null) {
-                this.npTooltip.show();
-            } else {
-                this.passwordForm.get('confirmPassword')!.setErrors({ valid: false });
-            }
         }
     }
 
@@ -119,21 +121,35 @@ export class SignupComponent implements OnInit {
             this.isSecondStep = true;
             this.user = {
                 UID: JSON.parse(localStorage.getItem('user')!)['uid'],
-                FirstName: this.signupForm.controls['firstName'].value,
-                LastName: this.signupForm.controls['lastName'].value,
-                PhoneNumber: this.signupForm.controls['contactNo'].value,
-                IsFirstLogin: false,
-                IsActive: true,
+              FirstName: this.signupForm.controls['firstName'].value,
+              LastName: this.signupForm.controls['lastName'].value,
+              PhoneNumber: this.signupForm.controls['contactNo'].value,
+              IsFirstLogin: false,
+              IsActive: true,
             }
-            this.TITLE = SignUp.CHANGE_PASSWORD_TITLE;
+          this.TITLE = SignUp.CHANGE_PASSWORD_TITLE;
         }
     }
 
-    get contactNoError() {
-        if (this.signupForm.controls['contactNo'].errors) {
-            return this.signupForm.controls['contactNo'].errors!['pattern'];
-        }
-        return false
+  getContactNoErrorMessage() {
+    if (this.signupForm.controls['contactNo'].hasError('pattern')) {
+      return this.VALIDATION_MESSAGES.TELEPHONE;
     }
+    return this.VALIDATION_MESSAGES.required(this.CONTACT_NUMBER);
+  }
+
+  getNewPasswordErrorMessage() {
+    if (this.passwordForm.controls['newPassword'].hasError('notMatch')) {
+      return ErrorMessages.PASSWORDS_NOT_MATCHING;
+    }
+    return ErrorMessages.required(this.NEW_PASSWORD);
+  }
+
+  getConfirmPasswordErrorMessage() {
+    if (this.passwordForm.controls['confirmPassword'].hasError('notMatch')) {
+      return ErrorMessages.PASSWORDS_NOT_MATCHING;
+    }
+    return ErrorMessages.required(this.CONFIRM_PASSWORD);
+  }
 
 }

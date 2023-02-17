@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Reports, SnackBarStatus } from "../../../constants";
+import { ErrorMessages, Reports, SnackBarStatus } from "../../../constants";
 import { FormBuilder, Validators } from "@angular/forms";
 import * as jsPDF from "jspdf";
 import { HelperService } from "../../../services/helper.service";
@@ -67,6 +67,7 @@ export class CashCollectionReportComponent implements OnInit {
   EXPORT_TO_EXCEL = Reports.EXPORT_TO_EXCEL;
   BACK = Reports.BACK_TO_REPORTS;
   REPORTS_URL = `/${ReportRoutes.Root}`;
+  VALIDATION_MESSAGES = ErrorMessages;
 
   dateForm = this.formBuilder.group({
     startDate: this.formBuilder.control('', [Validators.required]),

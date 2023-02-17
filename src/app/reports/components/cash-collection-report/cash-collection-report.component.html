@@ -20,18 +20,18 @@
                 </button>
 
                 <mat-form-field appearance="fill" style="width: fit-content">
-                    <mat-label>Enter a date range</mat-label>
-                    <mat-date-range-input [formGroup]="dateForm" [rangePicker]="picker">
-                        <input matStartDate formControlName="startDate" placeholder="Start date" required>
-                        <input matEndDate formControlName="endDate" placeholder="End date" required>
-                    </mat-date-range-input>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-date-range-picker #picker></mat-date-range-picker>
+                  <mat-label>Enter a date range</mat-label>
+                  <mat-date-range-input [formGroup]="dateForm" [rangePicker]="picker">
+                    <input matStartDate formControlName="startDate" placeholder="Start date">
+                    <input matEndDate formControlName="endDate" placeholder="End date">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+                  <mat-error *ngIf="isDateRangeNotSelected">
+                    {{SELECT_DATE_RANGE}}
+                  </mat-error>
                 </mat-form-field>
             </div>
-        </div>
-        <div *ngIf="isDateRangeNotSelected"  class="d-flex justify-content-center flex-column align-items-center">
-            <span>{{SELECT_DATE_RANGE}}</span>
         </div>
         <div class="d-flex justify-content-center flex-column align-items-center" *ngIf="!isLoading && dataSource.data.length == 0">
             <img src="assets/img/no_reports.svg" alt="no_reports" width="400">

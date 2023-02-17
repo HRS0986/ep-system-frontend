@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from "@angular/router";
 import { AuthService } from "../../../services/auth.service";
 import { TokenStorageService } from "../../../services/token-storage.service";
 import { UserService } from "../../../services/user.service";
 import { HelperService } from "../../../services/helper.service";
-import { Login, SnackBarStatus } from "../../../constants";
+import { ErrorMessages, Login, SnackBarStatus } from "../../../constants";
 import { environment } from "../../../../environments/environment";
 import { AuthRoutes } from "../../../route-data";
 import { NgxSpinnerService } from "ngx-spinner";
@@ -29,14 +29,15 @@ export class LoginComponent implements OnInit {
   ) { }
 
   loginForm = this.formBuilder.group({
-    email: this.formBuilder.control(''),
-    password: this.formBuilder.control('')
+    email: this.formBuilder.control('', [Validators.required, Validators.email]),
+    password: this.formBuilder.control('', [Validators.required])
   });
 
   PASSWORD: string = Login.PASSWORD_LABEL;
   EMAIL: string = Login.EMAIL_LABEl;
   LOGIN_BUTTON_TEXT: string = Login.LOGIN_BUTTON_TEXT;
   LOGIN_TITLE: string = Login.LOGIN_TITLE;
+  VALIDATION_MESSAGES = ErrorMessages;
 
   LOGO_PATH = "https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.jpg";
 
@@ -49,9 +50,16 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getEmailErrorMessage(): string {
+    if (this.loginForm.controls['email'].hasError('email')) {
+      return this.VALIDATION_MESSAGES.EMAIL;
+    }
+    return this.VALIDATION_MESSAGES.required(this.EMAIL);
+  }
+
   onSubmit() {
     this.spinner.show().then(() => {
-      if (this.loginForm.valid){
+      if (this.loginForm.valid) {
         this.isLoading = true;
         this.authenticationService.SignIn(this.loginForm.value.email, this.loginForm.value.password).then(result => {
           if (!result.status) {
