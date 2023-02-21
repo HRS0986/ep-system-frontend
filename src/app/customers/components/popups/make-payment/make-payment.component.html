@@ -1,11 +1,11 @@
-<h2 mat-dialog-title>{{MAKE_PAYMENT_TITLE}}</h2>
+<h2 mat-dialog-title>{{PAYMENT_MESSAGES.MAKE_PAYMENT_TITLE}}</h2>
 <mat-dialog-content style="max-height: fit-content">
 
   <div class="d-flex flex-wrap my-3">
     <div class="flex-fill mx-3">
       <div class="d-flex justify-content-center">
         <div class="">
-          <p>{{INSTALLMENT}}&nbsp;:&nbsp;</p>
+          <p>{{PAYMENT_MESSAGES.INSTALLMENT_LABEL}}&nbsp;:&nbsp;</p>
         </div>
         <div class="">
           <p style="font-weight: bolder">{{installment | mask: 'separator.2':','}}</p>
@@ -16,7 +16,7 @@
     <div class="flex-fill mx-3">
       <div class="d-flex justify-content-center">
         <div class="">
-          <p>{{TOTAL_PAYABLE}}&nbsp;:&nbsp;</p>
+          <p>{{PAYMENT_MESSAGES.TOTAL_PAYABLE_LABEL}}&nbsp;:&nbsp;</p>
         </div>
         <div class="">
           <p style="font-weight: bolder">{{totalPayable | mask: 'separator.2':','}}</p>
@@ -27,7 +27,7 @@
     <div class="flex-fill mx-3">
       <div class="d-flex  justify-content-center">
         <div class="">
-          <p>{{ARREARS}}&nbsp;:&nbsp;</p>
+          <p>{{PAYMENT_MESSAGES.ARREARS_LABEL}}&nbsp;:&nbsp;</p>
         </div>
         <div class="">
           <p style="font-weight: bolder">
@@ -41,25 +41,25 @@
   </div>
   <form [formGroup]="paymentForm" (submit)="onClickPay()">
     <mat-form-field appearance="fill" class="w-100 mb-1">
-      <mat-label>{{AMOUNT}}</mat-label>
+      <mat-label>{{PAYMENT_MESSAGES.AMOUNT_LABEL}}</mat-label>
       <input mask="separator" thousandSeparator="," matInput formControlName="amount">
       <mat-error *ngIf="paymentForm.controls['amount'].invalid">{{getAmountErrorMessage()}}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="w-100 mb-1">
-      <mat-label>{{REMARKS}}</mat-label>
+      <mat-label>{{PAYMENT_MESSAGES.REMARKS_LABEL}}</mat-label>
       <input matInput formControlName="remarks">
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="w-100 mb-1">
-      <mat-label>{{PAYMENT_DATE}}</mat-label>
+      <mat-label>{{PAYMENT_MESSAGES.PAYMENT_DATE}}</mat-label>
       <input matInput [matDatepicker]="pickerPaymentDate" formControlName="paymentDate">
       <mat-datepicker-toggle matSuffix [for]="pickerPaymentDate"></mat-datepicker-toggle>
       <mat-datepicker #pickerPaymentDate></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="w-100 mb-1">
-      <mat-label>{{PARTICULARS}}</mat-label>
+      <mat-label>{{PAYMENT_MESSAGES.PARTICULARS_LABEL}}</mat-label>
       <mat-select formControlName="particulars">
         <mat-option *ngFor="let item of ParticularsList" [value]="item.value" [hidden]="!item.display">
           {{item.value}}
@@ -68,7 +68,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="w-100 mb-1">
-      <mat-label>{{REFERENCE_NO}}</mat-label>
+      <mat-label>{{PAYMENT_MESSAGES.REFERENCE_NO_LABEL}}</mat-label>
       <input matInput formControlName="refNo">
       <mat-error *ngIf="paymentForm.controls['refNo'].invalid">
         {{VALIDATION_MESSAGES.NUMBERS_ONLY}}
@@ -76,17 +76,17 @@
     </mat-form-field>
 
     <mat-form-field *ngIf="paymentForm.value.particulars == 'Paid By Cheque'" appearance="fill" class="w-100" mb-1>
-      <mat-label>{{CHEQUE_NUMBER_TEXT}}</mat-label>
+      <mat-label>{{PAYMENT_MESSAGES.CHEQUE_NUMBER_TEXT}}</mat-label>
       <input matInput formControlName="chequeNumber">
     </mat-form-field>
 
     <mat-form-field *ngIf="paymentForm.value.particulars == 'Paid By Cheque'" appearance="fill" class="w-100 mb-1">
-      <mat-label>{{BANK}}</mat-label>
+      <mat-label>{{PAYMENT_MESSAGES.BANK_TEXT}}</mat-label>
       <input matInput formControlName="bank">
     </mat-form-field>
 
     <mat-form-field *ngIf="paymentForm.value.particulars == 'Paid By Cheque'" appearance="fill" class="w-100">
-      <mat-label>{{REALIZE_DATE}}</mat-label>
+      <mat-label>{{PAYMENT_MESSAGES.REALIZE_DATE}}</mat-label>
       <input matInput [matDatepicker]="pickerRealizeDate" formControlName="realizeDate">
       <mat-datepicker-toggle matSuffix [for]="pickerRealizeDate"></mat-datepicker-toggle>
       <mat-datepicker #pickerRealizeDate></mat-datepicker>
@@ -96,7 +96,7 @@
       <button class="btn-p" mat-raised-button type="submit" color="primary" cdkFocusInitial
               [disabled]="paymentForm.invalid">
         <mat-icon>done</mat-icon>
-        {{PAY}}
+        {{PAYMENT_MESSAGES.PAY_BUTTON_TEXT}}
       </button>
       <button mat-button type="button" mat-dialog-close [mat-dialog-close]="false">
         <mat-icon>close</mat-icon>

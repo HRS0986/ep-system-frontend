@@ -28,19 +28,7 @@ export class MakePaymentComponent implements OnInit {
   installment: string = '';
   arrears: string = '';
 
-  MAKE_PAYMENT_TITLE = MakePayment.MAKE_PAYMENT_TITLE;
-  CHEQUE_NUMBER_TEXT = MakePayment.CHEQUE_NUMBER_TEXT;
-  BANK = MakePayment.BANK_TEXT;
-  REALIZE_DATE = MakePayment.REALIZE_DATE;
-  PAYMENT_DATE = MakePayment.PAYMENT_DATE;
-  AMOUNT = MakePayment.AMOUNT_LABEL;
-  TOTAL_PAYABLE = MakePayment.TOTAL_PAYABLE_LABEL;
-  INSTALLMENT = MakePayment.INSTALLMENT_LABEL;
-  ARREARS = MakePayment.ARREARS_LABEL;
-  PAY = MakePayment.PAY_BUTTON_TEXT;
-  PARTICULARS = MakePayment.PARTICULARS_LABEL;
-  REMARKS = MakePayment.REMARKS_LABEL;
-  REFERENCE_NO = MakePayment.REFERENCE_NO_LABEL;
+  PAYMENT_MESSAGES = MakePayment;
   CANCEL_BUTTON_TEXT = Common.CANCEL_BUTTON_TEXT;
   ParticularsList = Object['values'](Particulars);
   VALIDATION_MESSAGES = ErrorMessages;
@@ -136,7 +124,7 @@ export class MakePaymentComponent implements OnInit {
 
   getAmountErrorMessage() {
     if (this.paymentForm.controls['amount'].hasError('required')) {
-      return this.VALIDATION_MESSAGES.required(this.AMOUNT);
+      return this.VALIDATION_MESSAGES.required(this.PAYMENT_MESSAGES.AMOUNT_LABEL);
     }
     return this.VALIDATION_MESSAGES.min(1);
   }

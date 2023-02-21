@@ -34,14 +34,13 @@ export class CustomerTablesComponent implements OnInit {
 
   VIEW = Reports.VIEW;
   ITEM_NUMBER = "#";
+  COMMON_MESSAGES = Common;
   TABLE_NAME = Customer.CUSTOMER_TYPE;
-  ACTIONS = Common.ACTION_COLUMN_TEXT;
-  NO_DATA = Common.NO_SEARCH_RESULT_TEXT;
 
   displayedColumns: string[] = [
     this.ITEM_NUMBER,
-    this.TABLE_NAME,
-    this.ACTIONS
+    Customer.CUSTOMER_TYPE,
+    Common.ACTION_COLUMN_TEXT
   ];
 
   datasource: MatTableDataSource<TypeLIstItem> = new MatTableDataSource<TypeLIstItem>();

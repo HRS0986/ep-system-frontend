@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Login, LoginStatus } from "../constants";
+import { AuthMessages, LoginStatus } from "../constants";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class TokenStorageService {
 
   // Get login status from Session Storage
   public getLoginStatus(): LoginStatus {
-    const status = !!sessionStorage.getItem(Login.LOGIN_TOKEN);
+    const status = !!sessionStorage.getItem(AuthMessages.LOGIN_TOKEN);
     if (status) {
       return LoginStatus.LOGGED_IN;
     } else {
@@ -21,9 +21,9 @@ export class TokenStorageService {
   // Save login status in Session Storage
   public setLoginStatus(status: LoginStatus) {
     if (status === LoginStatus.LOGGED_IN) {
-      sessionStorage.setItem(Login.LOGIN_TOKEN, 'true');
+      sessionStorage.setItem(AuthMessages.LOGIN_TOKEN, 'true');
     } else {
-      sessionStorage.removeItem(Login.LOGIN_TOKEN);
+      sessionStorage.removeItem(AuthMessages.LOGIN_TOKEN);
     }
   }
 }

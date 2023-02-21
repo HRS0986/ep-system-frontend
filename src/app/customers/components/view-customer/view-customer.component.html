@@ -13,39 +13,39 @@
       </div>
       <div class="col-10">
         <mat-tab-group [(selectedIndex)]="selectedTabIndex">
-          <mat-tab [label]="CUSTOMER_TAB_TITLE">
+          <mat-tab [label]="CUSTOMER_MESSAGES.BasicDetails.BASIC_CUSTOMER_TAB_TEXT">
             <form [formGroup]="basicCustomerForm" *ngIf="!isLoading" class="mt-2">
               <div class="row w-100">
                 <div class="col-12">
                   <mat-form-field class="w-100">
-                    <mat-label>{{NAME_LABEL}}</mat-label>
+                    <mat-label>{{CUSTOMER_MESSAGES.BasicDetails.NAME_LABEL}}</mat-label>
                     <input matInput placeholder="Customer Name" formControlName="name"/>
                     <mat-error *ngIf="basicCustomerForm.controls['name'].invalid">
-                      {{VALIDATION_MESSAGES.required(NAME_LABEL)}}
+                      {{VALIDATION_MESSAGES.required(CUSTOMER_MESSAGES.BasicDetails.NAME_LABEL)}}
                     </mat-error>
                   </mat-form-field>
                   <mat-form-field class="w-100">
-                    <mat-label>{{PROJECT_LABEL}}</mat-label>
+                    <mat-label>{{CUSTOMER_MESSAGES.BasicDetails.PROJECT_LABEL}}</mat-label>
                     <mat-select formControlName="project" name="food">
                       <mat-option *ngFor="let project of projects" [value]="project.ProjectName">
                         {{project.ProjectName}}
                       </mat-option>
                     </mat-select>
                     <mat-error *ngIf="basicCustomerForm.controls['project'].invalid">
-                      {{VALIDATION_MESSAGES.required(PROJECT_LABEL)}}
+                      {{VALIDATION_MESSAGES.required(CUSTOMER_MESSAGES.BasicDetails.PROJECT_LABEL)}}
                     </mat-error>
                   </mat-form-field>
 
                   <div class="row">
                     <div class="col-6">
                       <mat-form-field class="w-100 me-4">
-                        <mat-label>{{ID_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.BasicDetails.ID_LABEL}}</mat-label>
                         <input matInput [readonly]="true" placeholder="ID" formControlName="id"/>
                       </mat-form-field>
                     </div>
                     <div class="col-6">
                       <mat-form-field class="w-100">
-                        <mat-label>{{EMAIL_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.BasicDetails.EMAIL_LABEL}}</mat-label>
                         <input matInput placeholder="Email" formControlName="email"/>
                       </mat-form-field>
                     </div>
@@ -54,13 +54,13 @@
                   <div class="row">
                     <div class="col-6">
                       <mat-form-field class="w-100">
-                        <mat-label>{{ADDRESS_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.BasicDetails.ADDRESS_LABEL}}</mat-label>
                         <textarea matInput placeholder="Address" formControlName="address"></textarea>
                       </mat-form-field>
                     </div>
                     <div class="col-6 d-flex align-items-end">
                       <mat-form-field class="w-100">
-                        <mat-label>{{LOCATION}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.BasicDetails.LOCATION_COORDINATES}}</mat-label>
                         <input matInput placeholder="Location" formControlName="locationCoordinates"/>
                       </mat-form-field>
                     </div>
@@ -69,13 +69,13 @@
                   <div class="row">
                     <div class="col-4">
                       <mat-form-field class="w-100 me-4">
-                        <mat-label>{{NIC_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.BasicDetails.NIC_LABEL}}</mat-label>
                         <input matInput placeholder="NIC" formControlName="nic"/>
                       </mat-form-field>
                     </div>
                     <div class="col-4">
                       <mat-form-field class="w-100 me-4">
-                        <mat-label>{{DATE_OF_SALE_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.BasicDetails.DATE_OF_SALE_LABEL}}</mat-label>
                         <input matInput [matDatepicker]="pickerSale" formControlName="saleDate">
                         <mat-datepicker-toggle matSuffix [for]="pickerSale"></mat-datepicker-toggle>
                         <mat-datepicker #pickerSale></mat-datepicker>
@@ -84,7 +84,7 @@
                     </div>
                     <div class="col-4">
                       <mat-form-field class="w-100">
-                        <mat-label>{{BOND_NUMBER_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.BasicDetails.BOND_NUMBER_LABEL}}</mat-label>
                         <input matInput placeholder="Bond Number" formControlName="bondNo"/>
                       </mat-form-field>
                     </div>
@@ -93,7 +93,7 @@
                   <div class="row">
                     <div class="col-4">
                       <mat-form-field class="w-100">
-                        <mat-label>{{PHONE_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.BasicDetails.PHONE_LABEL}}</mat-label>
                         <input matInput placeholder="Contact Number" formControlName="contactNo"/>
                         <mat-error *ngIf="basicCustomerForm.controls['contactNo'].invalid">
                           {{getContactNumberErrorMessage()}}
@@ -102,13 +102,13 @@
                     </div>
                     <div class="col-4">
                       <mat-form-field class="w-100 me-4">
-                        <mat-label>{{PLAN_NUMBER_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.BasicDetails.PLAN_NUMBER_LABEL}}</mat-label>
                         <input matInput placeholder="Plan Number" formControlName="planNo"/>
                       </mat-form-field>
                     </div>
                     <div class="col-4">
                       <mat-form-field class="w-100">
-                        <mat-label>{{DEED_NUMBER_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.BasicDetails.DEED_NUMBER_LABEL}}</mat-label>
                         <input matInput placeholder="Deed Number" formControlName="deedNo"/>
                       </mat-form-field>
                     </div>
@@ -117,49 +117,49 @@
                   <div class="row">
                     <div class="col-4">
                       <mat-form-field class="w-100">
-                        <mat-label>{{WHATSAPP_NUMBER_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.BasicDetails.WHATSAPP}}</mat-label>
                         <input matInput placeholder="WhatsApp Number" formControlName="whatsappNo"/>
                       </mat-form-field>
                     </div>
                     <div class="col-4">
                       <mat-form-field class="w-100 me-4">
-                        <mat-label>{{VIBER_NUMBER_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.BasicDetails.VIBER}}</mat-label>
                         <input matInput placeholder="Viber Number" formControlName="viberNo"/>
                       </mat-form-field>
                     </div>
                     <div class="col-4">
                       <mat-form-field class="w-100">
-                        <mat-label>{{IMO_NUMBER_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.BasicDetails.IMO}}</mat-label>
                         <input matInput placeholder="Imo Number" formControlName="imoNo"/>
                       </mat-form-field>
                     </div>
                   </div>
 
                   <mat-form-field class="w-100">
-                    <mat-label>{{NOTE_LABEL}}</mat-label>
+                    <mat-label>{{CUSTOMER_MESSAGES.BasicDetails.NOTE_LABEL}}</mat-label>
                     <textarea matInput placeholder="Note" formControlName="note" rows="2"></textarea>
                   </mat-form-field>
                 </div>
               </div>
             </form>
           </mat-tab>
-          <mat-tab [label]="EP_TAB_TITLE">
+          <mat-tab [label]="CUSTOMER_MESSAGES.EpCalculation.EP_TAB_TITLE">
             <form [formGroup]="epForm" *ngIf="!isLoading" class="mt-2">
               <div class="row w-100">
                 <div class="col-12">
                   <div class="row">
                     <div class="col-6">
                       <mat-form-field class="w-100" style="width: 85%">
-                        <mat-label>{{BLOCK_NUMBER_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.BLOCK_NUMBER_LABEL}}</mat-label>
                         <input matInput placeholder="Block Number" formControlName="blockNo"/>
                         <mat-error *ngIf="epForm.controls['blockNo'].invalid">
-                          {{VALIDATION_MESSAGES.required(BLOCK_NUMBER_LABEL)}}
+                          {{VALIDATION_MESSAGES.required(CUSTOMER_MESSAGES.EpCalculation.BLOCK_NUMBER_LABEL)}}
                         </mat-error>
                       </mat-form-field>
                     </div>
                     <div class="col-6 d-flex align-items-end">
                       <mat-form-field class="w-100" style="width: 85%">
-                        <mat-label>{{INTEREST_RATE_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.INTEREST_RATE_LABEL}}</mat-label>
                         <input matInput [readonly]="true" placeholder="Interest Rate" formControlName="interestRate"/>
                       </mat-form-field>
                     </div>
@@ -168,7 +168,7 @@
                   <div class="row">
                     <div class="col">
                       <mat-form-field class="w-100" style="width: 85%">
-                        <mat-label>{{PERCHES_VALUE_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.PERCHES_VALUE_LABEL}}</mat-label>
                         <input mask="separator.2" thousandSeparator="," matInput [readonly]="true"
                                placeholder="Perches Value"
                                formControlName="perchesValue"/>
@@ -176,7 +176,7 @@
                     </div>
                     <div class="col-6 d-flex align-items-end" [hidden]="isAdvancedCustomer">
                       <mat-form-field class="w-100" style="width: 85%">
-                        <mat-label>{{INT_PLUS_EP_SALE_VALUE_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.INT_PLUS_EP_SALE_VALUE_LABEL}}</mat-label>
                         <input mask="separator.2" thousandSeparator="," matInput [readonly]="true"
                                placeholder="Int + E/P Sale Value" formControlName="intPlusEPSaleValue"/>
                       </mat-form-field>
@@ -186,13 +186,13 @@
                   <div class="row">
                     <div class="col-6">
                       <mat-form-field class="w-100" style="width: 85%">
-                        <mat-label>{{EXTENT_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.EXTENT_LABEL}}</mat-label>
                         <input matInput [readonly]="true" placeholder="Extent" formControlName="extent"/>
                       </mat-form-field>
                     </div>
                     <div class="col-6 d-flex align-items-end">
                       <mat-form-field class="w-100" style="width: 85%">
-                        <mat-label>{{DOCUMENT_FEE_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.DOCUMENT_FEE_LABEL}}</mat-label>
                         <input mask="separator.2" thousandSeparator="," matInput [readonly]="true"
                                placeholder="Document Fee"
                                formControlName="documentFee"/>
@@ -203,14 +203,14 @@
                   <div class="row">
                     <div class="col">
                       <mat-form-field class="w-100" style="width: 85%">
-                        <mat-label>{{TOTAL_BLOCK_VALUE_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.TOTAL_BLOCK_VALUE_LABEL}}</mat-label>
                         <input mask="separator.2" thousandSeparator="," matInput [readonly]="true"
                                placeholder="Total Block Value" formControlName="totalBlockValue"/>
                       </mat-form-field>
                     </div>
                     <div class="col-6 d-flex align-items-end" [hidden]="isAdvancedCustomer">
                       <mat-form-field class="w-100" style="width: 85%">
-                        <mat-label>{{WITHOUT_INTEREST_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.WITHOUT_INTEREST_LABEL}}</mat-label>
                         <input mask="separator.2" thousandSeparator="," matInput [readonly]="true"
                                placeholder="Without Interest E/P Payment" formControlName="withoutInterestEpPayment"/>
                       </mat-form-field>
@@ -220,7 +220,7 @@
                   <div class="row">
                     <div class="col-6">
                       <mat-form-field class="w-100" style="width: 85%">
-                        <mat-label>{{SALE_VALUE_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.SALE_VALUE_LABEL}}</mat-label>
                         <input mask="separator.2" thousandSeparator="," matInput [readonly]="true"
                                placeholder="Sale Value"
                                formControlName="saleValue"/>
@@ -228,7 +228,7 @@
                     </div>
                     <div class="col-6 d-flex align-items-end">
                       <mat-form-field class="w-100" style="width: 85%">
-                        <mat-label>{{TOTAL_RECEIVABLE_BALANCE_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.TOTAL_RECEIVABLE_BALANCE_LABEL}}</mat-label>
                         <input mask="separator.2" thousandSeparator="," matInput [readonly]="true"
                                placeholder="Total Receivable Balance" formControlName="totalReceivableBalance"/>
                       </mat-form-field>
@@ -238,7 +238,7 @@
                   <div class="row">
                     <div class="col-6">
                       <mat-form-field class="w-100" style="width: 85%">
-                        <mat-label>{{DISCOUNT_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.DISCOUNT_LABEL}}</mat-label>
                         <input mask="separator.2" thousandSeparator="," matInput [readonly]="true"
                                placeholder="Discount"
                                formControlName="discount"/>
@@ -246,7 +246,7 @@
                     </div>
                     <div class="col-6 d-flex align-items-end">
                       <mat-form-field class="w-100" style="width: 85%">
-                        <mat-label>{{NUMBER_OF_MONTH_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.NUMBER_OF_MONTH_LABEL}}</mat-label>
                         <input matInput [readonly]="true" placeholder="Number Of Month" formControlName="monthCount"/>
                       </mat-form-field>
                     </div>
@@ -255,20 +255,20 @@
                   <div class="row">
                     <div class="col-4">
                       <mat-form-field class="w-100">
-                        <mat-label>{{PAYMENT_EP_BALANCE_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.PAYMENT_EP_BALANCE_LABEL}}</mat-label>
                         <input mask="separator.2" thousandSeparator="," matInput [readonly]="true"
                                placeholder="Payment EP Balance" formControlName="paymentEPBalance"/>
                       </mat-form-field>
                     </div>
                     <div class="col-4">
                       <mat-form-field class="w-100">
-                        <mat-label>{{DUE_DATE_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.DUE_DATE_LABEL}}</mat-label>
                         <input matInput [readonly]="true" formControlName="dueDate">
                       </mat-form-field>
                     </div>
                     <div class="col-4">
                       <mat-form-field class="w-100">
-                        <mat-label>{{FIRST_RENTAL_DATE_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.FIRST_RENTAL_DATE_LABEL}}</mat-label>
                         <input matInput [readonly]="true" formControlName="firstRentalDate">
                       </mat-form-field>
                     </div>
@@ -277,21 +277,21 @@
                   <div class="row">
                     <div class="col-4">
                       <mat-form-field class="w-100">
-                        <mat-label>{{ADVANCE_PAYMENT_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.ADVANCE_PAYMENT_LABEL}}</mat-label>
                         <input mask="separator.2" thousandSeparator="," matInput [readonly]="true"
                                placeholder="Advance Payment" formControlName="advancePayment"/>
                       </mat-form-field>
                     </div>
                     <div class="col-4">
                       <mat-form-field class="w-100">
-                        <mat-label>{{MARKETING_SALE_VALUE_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.MARKETING_SALE_VALUE_LABEL}}</mat-label>
                         <input mask="separator.2" thousandSeparator="," matInput [readonly]="true"
                                placeholder="Marketing Sale Value" formControlName="marketingSaleValue"/>
                       </mat-form-field>
                     </div>
                     <div class="col-4">
                       <mat-form-field class="w-100">
-                        <mat-label>{{MONTHLY_RENTAL_AMOUNT_LABEL}}</mat-label>
+                        <mat-label>{{CUSTOMER_MESSAGES.EpCalculation.MONTHLY_RENTAL_AMOUNT_LABEL}}</mat-label>
                         <input mask="separator.2" thousandSeparator="," matInput [readonly]="true"
                                placeholder="M/Rental Amount" formControlName="monthRental"/>
                       </mat-form-field>

@@ -12,7 +12,7 @@ import { ViewOldCustomerComponent } from "../popups/view-old-customer/view-old-c
 import { Location } from "@angular/common";
 import { Store } from "@ngrx/store";
 import { CustomersState } from "../../store/customers.state";
-import { singleCustomerSelector, ledgerSelector } from "../../store/customers.selectors";
+import { ledgerSelector, singleCustomerSelector } from "../../store/customers.selectors";
 import { LedgerActions } from "../../store/customers.actions";
 
 @Component({
@@ -32,19 +32,10 @@ export class LedgerComponent implements OnInit {
   ) {
   }
 
-  MAKE_PAYMENT_BUTTON_TEXT = LedgerMessages.MAKE_PAYMENT_BUTTON_TEXT;
-  DATE_COLUMN_TEXT = LedgerMessages.DATE_COLUMN_TEXT;
-  REF_NO_COLUMN_TEXT = LedgerMessages.REF_NO_COLUMN_TEXT;
-  INST_NO_COLUMN_TEXT = LedgerMessages.INST_NO_COLUMN_TEXT;
-  PARTICULARS_COLUMN_TEXT = LedgerMessages.PARTICULARS_COLUMN_TEXT;
-  DEBIT_COLUMN_TEXT = LedgerMessages.DEBIT_COLUMN_TEXT;
-  CREDIT_COLUMN_TEXT = LedgerMessages.CREDIT_COLUMN_TEXT;
-  BALANCE_COLUMN_TEXT = LedgerMessages.BALANCE_COLUMN_TEXT;
-  ARREARS_COLUMN_TEXT = LedgerMessages.ARREARS_COLUMN_TEXT;
-  REMARKS_COLUMN_TEXT = LedgerMessages.REMARKS_COLUMN_TEXT;
-  NO_SEARCH_RESULT = Common.NO_SEARCH_RESULT_TEXT;
   SETTLEMENT_BUTTON_TEXT: string = Customer.SETTLEMENT_BUTTON_TEXT;
-  BACK = Customer.BACK;
+  LEDGER_MESSAGES = LedgerMessages;
+  COMMON_MESSAGES = Common;
+
   MONTHLY_RENTAL = Particulars['MONTHLY_RENTAL'].value;
   customerName!: string;
 
@@ -94,7 +85,7 @@ export class LedgerComponent implements OnInit {
           } else {
             let relatedLedger = data.find(l => l.customerId == this.customerId)!.Ledger
             relatedLedger = Array.from(relatedLedger!);
-            this.dataSource =new MatTableDataSource(relatedLedger);
+            this.dataSource = new MatTableDataSource(relatedLedger);
             this.isLoading = false;
           }
         })

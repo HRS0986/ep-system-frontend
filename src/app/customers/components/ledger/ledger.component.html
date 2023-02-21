@@ -6,9 +6,10 @@
 
     <div class="row w-100">
       <div class="col-12 d-flex justify-content-between mb-2">
-        <button *ngIf="!isLoading" mat-raised-button color="primary" class="btn-s ms-3" style="color: black; height: fit-content" (click)="onClickBack()">
+        <button *ngIf="!isLoading" mat-raised-button color="primary" class="btn-s ms-3"
+                style="color: black; height: fit-content" (click)="onClickBack()">
           <mat-icon style="font-size: 17px; margin-top: 3px">arrow_back_ios</mat-icon>
-          {{BACK}}
+          {{COMMON_MESSAGES.BACK}}
         </button>
         <button mat-stroked-button (click)="onClickCustomerName()" style="height: 45px !important; color: #0e8d8d">
           <h1 class="mt-1" *ngIf="!isLoading">
@@ -20,9 +21,10 @@
             <mat-icon>credit_card</mat-icon> &nbsp;
             {{SETTLEMENT_BUTTON_TEXT}}
           </button>
-          <button class="btn-p mb-3" mat-raised-button (click)="onClickMakePayment()" color="primary" *ngIf="!isOldCustomer && !isLoading">
+          <button class="btn-p mb-3" mat-raised-button (click)="onClickMakePayment()" color="primary"
+                  *ngIf="!isOldCustomer && !isLoading">
             <mat-icon>local_atm</mat-icon> &nbsp;
-            {{MAKE_PAYMENT_BUTTON_TEXT}}
+            {{LEDGER_MESSAGES.MAKE_PAYMENT_BUTTON_TEXT}}
           </button>
         </div>
       </div>
@@ -32,57 +34,59 @@
       <div *ngIf="!isLoading" class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource">
 
-          <ng-container matColumnDef="{{DATE_COLUMN_TEXT}}">
-            <th mat-header-cell *matHeaderCellDef> {{DATE_COLUMN_TEXT}} </th>
+          <ng-container matColumnDef="{{LEDGER_MESSAGES.DATE_COLUMN_TEXT}}">
+            <th mat-header-cell *matHeaderCellDef> {{LEDGER_MESSAGES.DATE_COLUMN_TEXT}} </th>
             <td mat-cell *matCellDef="let row"> {{row.Date.toDate() | date: 'dd/MM/yyyy HH:mm'}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="{{REF_NO_COLUMN_TEXT}}">
-            <th mat-header-cell *matHeaderCellDef> {{REF_NO_COLUMN_TEXT}} </th>
-            <td mat-cell *matCellDef="let row"> {{row.RefNo ?  row.RefNo : ''}} </td>
+          <ng-container matColumnDef="{{LEDGER_MESSAGES.REF_NO_COLUMN_TEXT}}">
+            <th mat-header-cell *matHeaderCellDef> {{LEDGER_MESSAGES.REF_NO_COLUMN_TEXT}} </th>
+            <td mat-cell *matCellDef="let row"> {{row.RefNo ? row.RefNo : ''}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="{{INST_NO_COLUMN_TEXT}}">
-            <th mat-header-cell *matHeaderCellDef> {{INST_NO_COLUMN_TEXT}} </th>
-            <td mat-cell *matCellDef="let row"> {{row.Particulars == MONTHLY_RENTAL ? row.InstallmentNo: ''}} </td>
+          <ng-container matColumnDef="{{LEDGER_MESSAGES.INST_NO_COLUMN_TEXT}}">
+            <th mat-header-cell *matHeaderCellDef> {{LEDGER_MESSAGES.INST_NO_COLUMN_TEXT}} </th>
+            <td mat-cell *matCellDef="let row"> {{row.Particulars == MONTHLY_RENTAL ? row.InstallmentNo : ''}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="{{PARTICULARS_COLUMN_TEXT}}">
-            <th mat-header-cell *matHeaderCellDef> {{PARTICULARS_COLUMN_TEXT}} </th>
+          <ng-container matColumnDef="{{LEDGER_MESSAGES.PARTICULARS_COLUMN_TEXT}}">
+            <th mat-header-cell *matHeaderCellDef> {{LEDGER_MESSAGES.PARTICULARS_COLUMN_TEXT}} </th>
             <td mat-cell *matCellDef="let row"> {{row.Particulars}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="{{DEBIT_COLUMN_TEXT}}">
-            <th mat-header-cell *matHeaderCellDef> {{DEBIT_COLUMN_TEXT}} </th>
-            <td mat-cell *matCellDef="let row">{{row.Particulars == MONTHLY_RENTAL ? row.Amount.toFixed(2): ''}}</td>
+          <ng-container matColumnDef="{{LEDGER_MESSAGES.DEBIT_COLUMN_TEXT}}">
+            <th mat-header-cell *matHeaderCellDef> {{LEDGER_MESSAGES.DEBIT_COLUMN_TEXT}} </th>
+            <td mat-cell *matCellDef="let row">{{row.Particulars == MONTHLY_RENTAL ? row.Amount.toFixed(2) : ''}}</td>
           </ng-container>
 
-          <ng-container matColumnDef="{{CREDIT_COLUMN_TEXT}}">
-            <th mat-header-cell *matHeaderCellDef> {{CREDIT_COLUMN_TEXT}} </th>
-            <td mat-cell *matCellDef="let row"> {{row.Particulars == MONTHLY_RENTAL ? '': row.Amount.toFixed(2)}} </td>
+          <ng-container matColumnDef="{{LEDGER_MESSAGES.CREDIT_COLUMN_TEXT}}">
+            <th mat-header-cell *matHeaderCellDef> {{LEDGER_MESSAGES.CREDIT_COLUMN_TEXT}} </th>
+            <td mat-cell *matCellDef="let row"> {{row.Particulars == MONTHLY_RENTAL ? '' : row.Amount.toFixed(2)}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="{{ARREARS_COLUMN_TEXT}}">
-            <th mat-header-cell *matHeaderCellDef> {{ARREARS_COLUMN_TEXT}} </th>
-            <td mat-cell *matCellDef="let row"> {{row.Arrears >= 0 ? row.Arrears.toFixed(2) : '(' + -row.Arrears.toFixed(2) + ')'}} </td>
+          <ng-container matColumnDef="{{LEDGER_MESSAGES.ARREARS_COLUMN_TEXT}}">
+            <th mat-header-cell *matHeaderCellDef> {{LEDGER_MESSAGES.ARREARS_COLUMN_TEXT}} </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.Arrears >= 0 ? row.Arrears.toFixed(2) : '(' + -row.Arrears.toFixed(2) + ')'}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="{{BALANCE_COLUMN_TEXT}}">
-            <th mat-header-cell *matHeaderCellDef> {{BALANCE_COLUMN_TEXT}} </th>
+          <ng-container matColumnDef="{{LEDGER_MESSAGES.BALANCE_COLUMN_TEXT}}">
+            <th mat-header-cell *matHeaderCellDef> {{LEDGER_MESSAGES.BALANCE_COLUMN_TEXT}} </th>
             <td mat-cell *matCellDef="let row"> {{row.Balance}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="{{REMARKS_COLUMN_TEXT}}">
-            <th mat-header-cell *matHeaderCellDef> {{REMARKS_COLUMN_TEXT}} </th>
+          <ng-container matColumnDef="{{LEDGER_MESSAGES.REMARKS_COLUMN_TEXT}}">
+            <th mat-header-cell *matHeaderCellDef> {{LEDGER_MESSAGES.REMARKS_COLUMN_TEXT}} </th>
             <td mat-cell *matCellDef="let row"> {{row.Remarks}} </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;" [style.background-color]="row.Arrears > 0 ? '#FFEFEA':''"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+              [style.background-color]="row.Arrears > 0 ? '#FFEFEA':''"></tr>
 
           <!-- Row shown when there is no matching data. -->
           <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4">{{NO_SEARCH_RESULT}}</td>
+            <td class="mat-cell" colspan="4">{{COMMON_MESSAGES.NO_SEARCH_RESULT_TEXT}}</td>
           </tr>
         </table>
 

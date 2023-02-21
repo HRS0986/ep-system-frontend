@@ -39,17 +39,10 @@ export class OldCustomersComponent implements OnInit {
   dataSource: MatTableDataSource<Customer> = new MatTableDataSource();
   isLoading = true;
 
-  NAME_LABEL = OldCustomer.NAME_LABEL;
-  PROJECT_LABEL = OldCustomer.PROJECT_LABEL;
-  ID_LABEL = OldCustomer.ID_LABEL;
   PAYMENT_EP_BALANCE = AllCustomers.PAYMENT_EP_BALANCE;
-  LOAN_AMOUNT_LABEL = OldCustomer.LOAN_AMOUNT_LABEL;
-  VIEW_BUTTON_TEXT = OldCustomer.VIEW_BUTTON_TEXT;
-  SETTLED_PAYMENT_LABEL = OldCustomer.SETTLED_PAYMENT_LABEL;
-  ACTIONS = Common.ACTION_COLUMN_TEXT;
-  NO_SEARCH_RESULTS = Common.NO_SEARCH_RESULT_TEXT;
-  SEARCH_PLACEHOLDER = Common.SEARCH_LABEL;
 
+  CUSTOMER_MESSAGES = OldCustomer;
+  COMMON_MESSAGES = Common;
 
   ngOnInit() {
     this.store.select(oldCustomerSelector)

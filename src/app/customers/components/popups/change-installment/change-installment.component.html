@@ -1,14 +1,14 @@
-<h2 mat-dialog-title>{{CHANGE_INSTALLMENT_TITLE}}</h2>
+<h2 mat-dialog-title>{{INSTALLMENT_MESSAGES.CHANGE_INSTALLMENT_TITLE}}</h2>
 <mat-dialog-content style="max-height: fit-content">
 
-    <div class="d-flex flex-wrap my-3">
-        <div class="flex-fill mx-3">
-            <div class="d-flex justify-content-center">
-                <div class="">
-                    <p>{{CURRENT_INSTALLMENT_LABEL}}&nbsp;:&nbsp;</p>
-                </div>
-                <div class="">
-                    <p style="font-weight: bolder">{{currentInstallment | mask: 'separator.2':','}}</p>
+  <div class="d-flex flex-wrap my-3">
+    <div class="flex-fill mx-3">
+      <div class="d-flex justify-content-center">
+        <div class="">
+          <p>{{INSTALLMENT_MESSAGES.CHANGE_INSTALLMENT_TITLE}}&nbsp;:&nbsp;</p>
+        </div>
+        <div class="">
+          <p style="font-weight: bolder">{{currentInstallment | mask: 'separator.2':','}}</p>
                 </div>
             </div>
         </div>
@@ -16,7 +16,7 @@
         <div class="flex-fill mx-3">
             <div class="d-flex justify-content-center">
               <div class="">
-                <p>{{BALANCE_LABEL}}&nbsp;:&nbsp;</p>
+                <p>{{INSTALLMENT_MESSAGES.BALANCE_LABEL}}&nbsp;:&nbsp;</p>
               </div>
               <div class="">
                 <p style="font-weight: bolder">{{currentBalance | mask: 'separator.2':','}}</p>
@@ -27,10 +27,10 @@
 
   <form [formGroup]="installmentForm" (submit)="onClickChange()">
     <mat-form-field appearance="fill" style="width: 85%">
-      <mat-label>{{NEW_INSTALLMENT_LABEL}}</mat-label>
+      <mat-label>{{INSTALLMENT_MESSAGES.NEW_INSTALLMENT_LABEL}}</mat-label>
       <input mask="separator.2" formControlName="newInstallment" thousandSeparator="," matInput>
       <mat-error *ngIf="installmentForm.controls['newInstallment'].invalid">
-        {{VALIDATION_MESSAGES.required(NEW_INSTALLMENT_LABEL)}}
+        {{VALIDATION_MESSAGES.required(INSTALLMENT_MESSAGES.NEW_INSTALLMENT_LABEL)}}
       </mat-error>
     </mat-form-field>
     <button type="button" mat-icon-button (click)="calculateInstallment()">
@@ -38,10 +38,10 @@
     </button>
 
     <mat-form-field appearance="fill" style="width: 85%">
-      <mat-label>{{NEW_MONTH_COUNT_LABEL}}</mat-label>
+      <mat-label>{{INSTALLMENT_MESSAGES.NEW_MONTH_COUNT_LABEL}}</mat-label>
       <input formControlName="newMonthCount" matInput>
       <mat-error *ngIf="installmentForm.controls['newMonthCount'].invalid">
-        {{VALIDATION_MESSAGES.required(NEW_MONTH_COUNT_LABEL)}}
+        {{VALIDATION_MESSAGES.required(INSTALLMENT_MESSAGES.NEW_MONTH_COUNT_LABEL)}}
       </mat-error>
     </mat-form-field>
     <button type="button" mat-icon-button (click)="calculateMonthCount()">
@@ -69,7 +69,7 @@
       <button class="btn-p" mat-raised-button type="submit" color="primary" cdkFocusInitial
               [disabled]="installmentForm.invalid">
         <mat-icon>done</mat-icon>
-        {{CHANGE_BUTTON_TEXT}}
+        {{INSTALLMENT_MESSAGES.CHANGE_BUTTON_TEXT}}
       </button>
       <button mat-button type="button" mat-dialog-close [mat-dialog-close]="false">
         <mat-icon>close</mat-icon>

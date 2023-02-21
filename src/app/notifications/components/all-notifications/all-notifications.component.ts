@@ -4,7 +4,7 @@ import {
   Notifications,
   NotificationTypes,
   SnackBarStatus,
-  UserManagement
+  UserManagementMessages
 } from "../../../constants";
 import { MatDialog } from "@angular/material/dialog";
 import { HelperService } from "../../../services/helper.service";
@@ -37,7 +37,7 @@ export class AllNotificationsComponent implements OnInit {
   MARK_ALL_AS_READ = Notifications.MARK_ALL_AS_READ_BUTTON_TEXT;
   DELETE_ALL = Notifications.DELETE_ALL;
   MARK_AS_UNREAD = Notifications.MARK_AS_UNREAD_BUTTON_TEXT;
-  DELETE = UserManagement.DELETE;
+  DELETE = UserManagementMessages.DELETE;
   NO_NOTIFICATIONS = Notifications.NO_NOTIFICATIONS_MESSAGE_TEXT;
 
   ERROR = NotificationTypes.ERROR;

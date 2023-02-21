@@ -1,11 +1,11 @@
-<h2 mat-dialog-title>{{SETTLE_PAYMENT_TITLE}}</h2>
+<h2 mat-dialog-title>{{SETTLEMENT_MESSAGES.SETTLEMENT_TITLE}}</h2>
 <mat-dialog-content style="max-height: fit-content">
 
   <div class="d-flex flex-wrap my-3">
     <div class="flex-fill mx-3">
       <div class="d-flex justify-content-start">
         <div class="">
-          <p>{{TOTAL_RECEIVABLE_BALANCE_LABEL}}&nbsp;:&nbsp;</p>
+          <p>{{SETTLEMENT_MESSAGES.TOTAL_RECEIVABLE_BALANCE_LABEL}}&nbsp;:&nbsp;</p>
         </div>
         <div class="">
           <p style="font-weight: bolder">{{totalReceivableBalance | mask: 'separator.2':','}}</p>
@@ -16,7 +16,7 @@
     <div class="flex-fill mx-3">
       <div class="d-flex justify-content-start">
         <div class="">
-          <p>{{PAID_AMOUNT_LABEL}}&nbsp;:&nbsp;</p>
+          <p>{{SETTLEMENT_MESSAGES.PAID_AMOUNT_LABEL}}&nbsp;:&nbsp;</p>
         </div>
         <div class="">
           <p style="font-weight: bolder">{{paidAmount | mask: 'separator.2':','}}</p>
@@ -29,7 +29,7 @@
     <div class="flex-fill mx-3">
       <div class="d-flex justify-content-start">
         <div class="">
-          <p>{{REDUCED_INTEREST_LABEL}}&nbsp;:&nbsp;</p>
+          <p>{{SETTLEMENT_MESSAGES.REDUCED_INTEREST_LABEL}}&nbsp;:&nbsp;</p>
         </div>
         <div class="">
           <p style="font-weight: bolder">{{reducedInterest | mask: 'separator.2':','}}</p>
@@ -40,7 +40,7 @@
     <div class="flex-fill mx-3">
       <div class="d-flex  justify-content-center">
         <div class="">
-          <p>{{BALANCE_LABEL}}&nbsp;:&nbsp;</p>
+          <p>{{SETTLEMENT_MESSAGES.BALANCE_LABEL}}&nbsp;:&nbsp;</p>
         </div>
         <div class="">
           <p style="font-weight: bolder">{{settlementBalance | mask: 'separator.2':','}}</p>
@@ -51,12 +51,12 @@
 
   <form [formGroup]="settlementForm" (submit)="onClickSettle()">
     <mat-form-field appearance="fill" class="w-100 mb-1">
-      <mat-label>{{REMARKS}}</mat-label>
+      <mat-label>{{SETTLEMENT_MESSAGES.REMARKS_LABEL}}</mat-label>
       <input matInput formControlName="remarks"/>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="w-100 mb-1">
-      <mat-label>{{REFERENCE_NO}}</mat-label>
+      <mat-label>{{SETTLEMENT_MESSAGES.REFERENCE_NO_LABEL}}</mat-label>
       <input matInput formControlName="referenceNo"/>
       <mat-error *ngIf="settlementForm.controls['referenceNo'].invalid">
         {{VALIDATION_MESSAGES.NUMBERS_ONLY}}
@@ -64,7 +64,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="w-100 mb-1">
-      <mat-label>{{PARTICULARS_LABEL}}</mat-label>
+      <mat-label>{{SETTLEMENT_MESSAGES.PARTICULARS_LABEL}}</mat-label>
       <input matInput formControlName="particulars"/>
     </mat-form-field>
 
@@ -76,9 +76,10 @@
     </mat-form-field>
 
     <div class="text-end">
-      <button class="btn-p" type="submit" mat-raised-button color="primary" cdkFocusInitial [disabled]="settlementForm.invalid">
+      <button class="btn-p" type="submit" mat-raised-button color="primary" cdkFocusInitial
+              [disabled]="settlementForm.invalid">
         <mat-icon>done</mat-icon>
-        {{SETTLE_BUTTON_TEXT}}
+        {{SETTLEMENT_MESSAGES.SETTLE_BUTTON_TEXT}}
       </button>
       <button mat-button mat-dialog-close type="button" [mat-dialog-close]="false">
         <mat-icon>close</mat-icon>

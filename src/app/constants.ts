@@ -44,11 +44,11 @@ export class Common {
   public static readonly PAGE_NOT_FOUND = 'Page Not Found';
   public static readonly EDIT = 'Edit';
   public static readonly DELETE = 'Delete';
+  public static readonly BACK = 'Back';
 
 }
 
-export class Login {
-  public static readonly LOGIN_FAILED_MESSAGE_TEXT = 'Login failed. Please try again.';
+export class AuthMessages {
   public static readonly LOGIN_TOKEN = 'brLoginToken';
   public static readonly LOGIN_BUTTON_TEXT = 'Login';
   public static readonly PASSWORD_LABEL = 'Password';
@@ -56,15 +56,6 @@ export class Login {
   public static readonly LOGIN_TITLE = 'Login';
   public static readonly WRONG_CREDENTIALS_MESSAGE_TEXT = 'Incorrect email or password.';
   public static readonly WRONG_PASSWORD_MESSAGE_TEXT = 'Incorrect old password.';
-}
-
-export class Letter {
-  public static readonly OK_BUTTON_TEXT = "Ok";
-  public static readonly REMINDER_POPUP_TITLE = "Reminder Letter Details";
-  public static readonly AUTO_FILL_ADDRESS = "Auto Fill Address In Letter";
-}
-
-export class SignUp {
   public static readonly SIGN_UP_TITLE = 'Setup Your Account';
   public static readonly CURRENT_PASSWORD_LABEL = 'Current Password';
   public static readonly FIRST_NAME_LABEL = 'First Name';
@@ -74,21 +65,21 @@ export class SignUp {
   public static readonly CONFIRM_PASSWORD_LABEL = 'Confirm Password';
   public static readonly SIGN_UP_BUTTON_TEXT = 'Sign Up';
   public static readonly STRONG_PASSWORD_REGEX = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&]).{8,}'
-  public static readonly PASSWORD_MISMATCH_MESSAGE_TEXT = 'Passwords do not match.';
-  public static readonly INCORRECT_OLD_PASSWORD = 'Incorrect old password.';
-  public static readonly STRONG_PASSWORD_MESSAGE_TEXT = 'Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number and one special character.';
   public static readonly CHANGE_PASSWORD_TITLE = 'Change Password';
   public static readonly SIGNUP_FIRST_STEP_TITLE = 'Name & Contact';
   public static readonly SIGNUP_SECOND_STEP_TITLE = 'Set Password';
+}
+
+export class Letter {
+  public static readonly OK_BUTTON_TEXT = "Ok";
+  public static readonly REMINDER_POPUP_TITLE = "Reminder Letter Details";
+  public static readonly AUTO_FILL_ADDRESS = "Auto Fill Address In Letter";
 }
 
 export class Customer {
   public static readonly SAVE_BUTTON_TEXT = 'Save Details';
   public static readonly SETTLEMENT_BUTTON_TEXT = 'Settle Payment';
   public static readonly CHANGE_INSTALLMENT_BUTTON_TEXT = 'Change Installment';
-  public static readonly INVALID_INSTALLMENT_VALUE_MESSAGE_TEXT = 'Invalid installment value';
-  public static readonly INVALID_MONTH_COUNT_VALUE_MESSAGE_TEXT = 'Invalid month count';
-  public static readonly VIEW_CUSTOMER_DETAILS_TITLE = 'View Customer Details';
   public static readonly BACK = 'Back';
   public static readonly DELETE_CUSTOMER_TEXT = 'Customer Deleted Successfully';
   public static readonly DELETE_CUSTOMER_TITLE = 'Delete Customer';
@@ -99,15 +90,11 @@ export class Customer {
 export class UserMessages {
   public static readonly BASIC_DETAILS_TAB_TEXT = 'Basic Details';
   public static readonly CHANGE_PASSWORD_TAB_TEXT = 'Change Password';
-  public static readonly CHANGE_PASSWORD_BUTTON_TEXT = 'Change Password';
   public static readonly PHONE_NUMBER_REGEX = '^[0-9]{10}$';
-  public static readonly INVALID_PHONE_NUMBER_MESSAGE_TEXT = 'Invalid phone number';
   public static readonly FIRST_NAME_LABEL = 'First Name';
   public static readonly LAST_NAME_LABEL = 'Last Name';
   public static readonly PHONE_NUMBER_LABEL = 'Phone Number';
   public static readonly EDIT_USER_PROFILE_TITLE = "Edit User Profile"
-  public static readonly INVALID_EMAIL_MESSAGE_TEXT = 'Invalid email';
-  public static readonly INVALID_CONTACT_NUMBER_MESSAGE_TEXT = 'Invalid contact number';
 }
 
 export class NewCustomer {
@@ -120,6 +107,7 @@ export class NewCustomer {
     public static readonly BASIC_CUSTOMER_TAB_TEXT = 'Customer Details';
     public static readonly SECONDARY_CONTACT_LABEL = 'Secondary Contact Numbers';
     public static readonly NAME_LABEL = 'Customer Name';
+    public static readonly EMAIL_LABEL = 'Email';
     public static readonly ADDRESS_LABEL = 'Address';
     public static readonly PHONE_LABEL = 'Phone Number';
     public static readonly PROJECT_LABEL = 'Project';
@@ -137,25 +125,13 @@ export class NewCustomer {
   }
 
   public static readonly EpCalculation = class EpCalculation {
-    public static readonly INVALID_RATE_MESSAGE_TEXT = 'Invalid interest rate.';
-    public static readonly INVALID_EP_MESSAGE_TEXT = 'Invalid EP Balance value';
-    public static readonly INVALID_DOCUMENT_CHARGE = 'Invalid Document Charge value';
-    public static readonly INVALID_MONTH_RENTAL = 'Invalid Monthly Rental value';
-    public static readonly INVALID_TOTAL_RECEIVABLE_BALANCE = 'Invalid Total Receivable Balance value';
-    public static readonly INVALID_MONTH_COUNT = 'Invalid Month Count value';
-    public static readonly INVALID_MARKETING_SALE_VALUE = 'Invalid Marketing Sale value';
-    public static readonly INVALID_SALE_VALUE = 'Invalid Sale value';
-    public static readonly INVALID_ADVANCE = 'Invalid Advance Payment';
-    public static readonly INVALID_DISCOUNT = 'Invalid Discount';
     public static readonly EP_TAB_TITLE = 'EP Calculation';
-    public static readonly INVALID_EP_INTEREST = 'Invalid Interest value';
     public static readonly BLOCK_NUMBER_LABEL = 'Block Number';
     public static readonly PAYMENT_EP_BALANCE_LABEL = 'Payment EP Balance';
     public static readonly PAYMENT_BALANCE_LABEL = 'Payment Balance';
     public static readonly PERCHES_VALUE_LABEL = 'Perches Value';
     public static readonly INTEREST_RATE_LABEL = 'Annual Interest Rate';
     public static readonly EXTENT_LABEL = 'Extent';
-    public static readonly INTEREST_LABEL = 'Interest';
     public static readonly TOTAL_BLOCK_VALUE_LABEL = 'Total Block Value';
     public static readonly WITHOUT_INTEREST_LABEL = 'Without Interest E/P Payment';
     public static readonly SALE_VALUE_LABEL = 'Sale Value';
@@ -173,7 +149,6 @@ export class NewCustomer {
 }
 
 export class AllCustomers {
-  public static readonly CUSTOMER_LIST_TITLE = 'Customers';
   public static readonly ADD_CUSTOMER_BUTTON_TEXT = 'Add Customer';
   public static readonly ID_COLUMN_TEXT = 'ID';
   public static readonly NAME_COLUMN_TEXT = 'Name';
@@ -183,8 +158,6 @@ export class AllCustomers {
   public static readonly PAYMENT_EP_BALANCE = 'Payment EP Balance';
   public static readonly VIEW_BUTTON_TEXT = 'View';
   public static readonly DELETE_BUTTON_TEXT = 'Delete';
-  public static readonly DELETE_POPUP_TITLE = 'Delete Customer';
-  public static readonly DELETE_POPUP_TEXT = 'Do you want to delete this customer?';
   public static readonly LEDGER_BUTTON_TEXT = 'Ledger';
   public static readonly SETTLE_PAYMENT_BUTTON_TEXT = 'Settle Payment';
   public static readonly CHANGE_INSTALLMENT_BUTTON_TEXT = 'Change Installment';
@@ -218,16 +191,10 @@ export class ChangeInstallment {
   public static readonly NEW_INSTALLMENT_LABEL = 'New Installment';
   public static readonly NEW_MONTH_COUNT_LABEL = 'New Month Count';
   public static readonly BALANCE_LABEL = 'Balance';
-  public static readonly INVALID_INSTALLMENT_VALUE_MESSAGE_TEXT = 'Invalid installment value';
-  public static readonly INVALID_MONTH_COUNT_VALUE_MESSAGE_TEXT = 'Invalid month count';
-  public static readonly INSTALLMENT_IS_REQUIRED = 'Installment is required';
-  public static readonly MONTH_COUNT_IS_REQUIRED = 'Month Count is required';
 }
 
 export class MakePayment {
   public static readonly MAKE_PAYMENT_TITLE = 'Make Payment';
-  public static readonly PAYMENT_AMOUNT_IS_REQUIRED = 'Payment Amount is required';
-  public static readonly PAYMENT_AMOUNT_RANGE_ERROR = 'Payment Amount should be greater than zero';
   public static readonly PAY_BUTTON_TEXT = 'Pay';
   public static readonly AMOUNT_LABEL = 'Amount';
   public static readonly ARREARS_LABEL = 'Arrears';
@@ -236,7 +203,6 @@ export class MakePayment {
   public static readonly PARTICULARS_LABEL = 'Particulars';
   public static readonly REMARKS_LABEL = 'Remarks';
   public static readonly REFERENCE_NO_LABEL = 'Reference No';
-  public static readonly ONLY_NUMBER_ALLOWED_MESSAGE_TEXT = 'Only numbers allowed';
   public static readonly CHEQUE_NUMBER_TEXT = 'Cheque Number';
   public static readonly BANK_TEXT = 'Bank';
   public static readonly REALIZE_DATE = 'Realize Date';
@@ -261,7 +227,6 @@ export class OldCustomer {
   public static readonly NAME_LABEL = 'Name';
   public static readonly PROJECT_LABEL = 'Project';
   public static readonly ID_LABEL = 'ID';
-  public static readonly INSTALLMENT_LABEL = 'Installment';
   public static readonly LOAN_AMOUNT_LABEL = 'Loan Amount';
   public static readonly VIEW_BUTTON_TEXT = 'View';
   public static readonly SETTLED_PAYMENT_LABEL = 'Settled';
@@ -282,7 +247,7 @@ export class NavigationMenu {
   public static readonly PROJECTS = 'Projects';
 }
 
-export class UserManagement {
+export class UserManagementMessages {
   public static readonly FIRSTNAME_LABEL = 'First Name';
   public static readonly LASTNAME_LABEL = 'Last Name';
   public static readonly EMAIL_LABEL = 'Email';
@@ -293,7 +258,6 @@ export class UserManagement {
   public static readonly DELETE = 'Delete';
   public static readonly DELETE_USER_TITLE = 'Delete User';
   public static readonly DELETE_USER_MESSAGE = 'Are you sure you want to delete this user?';
-  public static readonly USERS = "Users";
   public static readonly USER_ADDED_SUCCESSFULLY_MESSAGE_TEXT = 'User added successfully';
 }
 
@@ -317,12 +281,6 @@ export class Projects {
   public static readonly PROJECT_ADDED_SUCCESS = "Project Created Successfully";
   public static readonly PROJECT_UPDATED_SUCCESS = "Project Updated Successfully";
   public static readonly PROJECT_DELETED_SUCCESS = "Project Deleted Successfully";
-  public static readonly PRICE_RANGE_ERROR = 'Purchasing Price should be greater than zero';
-
-}
-
-export class RegexPatterns {
-  public static readonly NO_ZERO_REGEX = '([0-9]{2,}|[1-9])';
 }
 
 export class ErrorMessages {
@@ -332,6 +290,7 @@ export class ErrorMessages {
   public static readonly PASSWORDS_NOT_MATCHING = `Passwords are not matching`;
   public static readonly INCORRECT_OLD_PASSWORD = `Incorrect old password`;
   public static readonly NUMBERS_ONLY = `Numbers only allowed`;
+  public static readonly STRONG_PASSWORD_MESSAGE_TEXT = 'Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number and one special character.';
 
   public static required(filedName: string) {
     return `${filedName} is required`;
@@ -385,10 +344,6 @@ export class Reports {
   public static readonly DOC_CHARGE = 'Document Charge';
   public static readonly BLOCK_NO_LABEL = 'Block No';
   public static readonly NOTE = 'Note';
-  public static readonly ARREARS_LABEL = 'Arrears';
-  public static readonly RENTAL_LABEL = 'Rental';
-  public static readonly TOTAL_LABEL = 'Total';
-  public static readonly CODE_LABEL = 'Code';
   public static readonly NAME_LABEL = 'Customer Name';
   public static readonly EP_VALUE = 'EP Value';
   public static readonly NO_DATA = 'No data';
@@ -402,7 +357,6 @@ export class Reports {
 }
 
 export class Notifications {
-  public static readonly NOTIFICATION_TITLE = 'Notifications';
   public static readonly DELETE_ALL = 'Delete All';
   public static readonly NO_NOTIFICATIONS_MESSAGE_TEXT = 'There Are No Notifications';
   public static readonly MARK_AS_READ_BUTTON_TEXT = 'Mark as read';

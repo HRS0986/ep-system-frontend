@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Common, ErrorMessages, SignUp, SnackBarStatus, UserMessages } from "../../../../constants";
+import { AuthMessages, Common, ErrorMessages, SnackBarStatus, UserMessages } from "../../../../constants";
 import { FormBuilder, Validators } from "@angular/forms";
 import { User } from "../../../../types";
 import { UserService } from "../../../../services/user.service";
@@ -33,9 +33,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   selectedTabIndex = 0;
-  BASIC_DATA_TAB = UserMessages.BASIC_DETAILS_TAB_TEXT;
-  PASSWORD_TAB = UserMessages.CHANGE_PASSWORD_TAB_TEXT;
-  CHANGE_PASSWORD_BUTTON_TEXT = SignUp.CHANGE_PASSWORD_TITLE;
 
   isSubmitted: boolean = false;
   isSubmittedBasicDataForm: boolean = false;
@@ -44,22 +41,16 @@ export class UserProfileComponent implements OnInit {
   hideConfirmPassword: boolean = true;
   isIncorrectOldPassword: boolean = false;
   user!: User
+  title: string = UserMessages.EDIT_USER_PROFILE_TITLE;
 
-  TITLE: string = UserMessages.EDIT_USER_PROFILE_TITLE;
-  CURRENT_PASSWORD: string = SignUp.CURRENT_PASSWORD_LABEL;
-  NEW_PASSWORD: string = SignUp.NEW_PASSWORD_LABEL;
-  CONFIRM_PASSWORD: string = SignUp.CONFIRM_PASSWORD_LABEL;
-  STRONG_PASSWORD_ERROR: string = SignUp.STRONG_PASSWORD_MESSAGE_TEXT;
-  CANCEL_BUTTON_TEXT = Common.CANCEL_BUTTON_TEXT;
-  FIRST_NAME: string = UserMessages.FIRST_NAME_LABEL;
-  LAST_NAME: string = UserMessages.LAST_NAME_LABEL;
-  PHONE_NUMBER: string = UserMessages.PHONE_NUMBER_LABEL;
-  SAVE_BUTTON_TEXT = Common.SAVE_BUTTON_TEXT;
   VALIDATION_MESSAGES = ErrorMessages;
+  AUTH_MESSAGES = AuthMessages;
+  COMMON_MESSAGES = Common;
+  USER_MESSAGES = UserMessages;
 
   passwordForm = this.formBuilder.group({
     oldPassword: this.formBuilder.control('', [Validators.required]),
-    newPassword: this.formBuilder.control('', [Validators.required, Validators.pattern(SignUp.STRONG_PASSWORD_REGEX)]),
+    newPassword: this.formBuilder.control('', [Validators.required, Validators.pattern(AuthMessages.STRONG_PASSWORD_REGEX)]),
     confirmPassword: this.formBuilder.control('', [Validators.required])
   }, { validators: CustomValidators.matchTwoFields('newPassword', 'confirmPassword') });
 
@@ -87,10 +78,10 @@ export class UserProfileComponent implements OnInit {
   changeTitle(index: number) {
     if (index === 0) {
       this.selectedTabIndex = 0;
-      this.TITLE = UserMessages.EDIT_USER_PROFILE_TITLE;
+      this.title = UserMessages.EDIT_USER_PROFILE_TITLE;
     } else {
       this.selectedTabIndex = 1;
-      this.TITLE = this.CHANGE_PASSWORD_BUTTON_TEXT;
+      this.title = this.AUTH_MESSAGES.CHANGE_PASSWORD_TITLE;
     }
   }
 
@@ -123,14 +114,14 @@ export class UserProfileComponent implements OnInit {
     if (this.passwordForm.controls['newPassword'].hasError('notMatch')) {
       return ErrorMessages.PASSWORDS_NOT_MATCHING;
     }
-    return ErrorMessages.required(this.NEW_PASSWORD);
+    return ErrorMessages.required(this.AUTH_MESSAGES.NEW_PASSWORD_LABEL);
   }
 
   getConfirmPasswordErrorMessage() {
     if (this.passwordForm.controls['confirmPassword'].hasError('notMatch')) {
       return ErrorMessages.PASSWORDS_NOT_MATCHING;
     }
-    return ErrorMessages.required(this.CONFIRM_PASSWORD);
+    return ErrorMessages.required(this.AUTH_MESSAGES.CONFIRM_PASSWORD_LABEL);
   }
 
   onChangePassword() {
