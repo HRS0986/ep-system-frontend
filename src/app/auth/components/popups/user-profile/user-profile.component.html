@@ -1,53 +1,53 @@
-<h2 mat-dialog-title>{{TITLE}}</h2>
+<h2 mat-dialog-title>{{title}}</h2>
 <mat-dialog-content style="max-height: fit-content">
-    <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedIndexChange)="changeTitle($event)">
-        <mat-tab [label]="BASIC_DATA_TAB">
-            <form [formGroup]="basicDataForm">
-                <mat-form-field appearance="fill" class="w-100 mt-4">
-                  <mat-label>{{FIRST_NAME}}</mat-label>
-                  <input matInput [placeholder]="FIRST_NAME" formControlName="firstName">
-                  <mat-error *ngIf="basicDataForm.controls['firstName'].invalid">
-                    {{VALIDATION_MESSAGES.required(FIRST_NAME)}}
-                  </mat-error>
-                </mat-form-field>
-              <mat-form-field appearance="fill" class="w-100 mt-2">
-                <mat-label>{{LAST_NAME}}</mat-label>
-                <input matInput [placeholder]="LAST_NAME" formControlName="lastName">
-                <mat-error *ngIf="basicDataForm.controls['lastName'].invalid">
-                  {{VALIDATION_MESSAGES.required(LAST_NAME)}}
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="w-100 mt-2">
-                <mat-label>{{PHONE_NUMBER}}</mat-label>
-                <input matInput [placeholder]="PHONE_NUMBER" formControlName="phone">
-                <mat-error *ngIf="basicDataForm.controls['phone'].invalid">
-                  {{VALIDATION_MESSAGES.TELEPHONE}}
-                </mat-error>
-              </mat-form-field>
+  <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedIndexChange)="changeTitle($event)">
+    <mat-tab [label]="USER_MESSAGES.BASIC_DETAILS_TAB_TEXT">
+      <form [formGroup]="basicDataForm">
+        <mat-form-field appearance="fill" class="w-100 mt-4">
+          <mat-label>{{USER_MESSAGES.FIRST_NAME_LABEL}}</mat-label>
+          <input matInput [placeholder]="USER_MESSAGES.FIRST_NAME_LABEL" formControlName="firstName">
+          <mat-error *ngIf="basicDataForm.controls['firstName'].invalid">
+            {{VALIDATION_MESSAGES.required(USER_MESSAGES.FIRST_NAME_LABEL)}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-100 mt-2">
+          <mat-label>{{USER_MESSAGES.LAST_NAME_LABEL}}</mat-label>
+          <input matInput [placeholder]="USER_MESSAGES.LAST_NAME_LABEL" formControlName="lastName">
+          <mat-error *ngIf="basicDataForm.controls['lastName'].invalid">
+            {{VALIDATION_MESSAGES.required(USER_MESSAGES.LAST_NAME_LABEL)}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-100 mt-2">
+          <mat-label>{{USER_MESSAGES.PHONE_NUMBER_LABEL}}</mat-label>
+          <input matInput [placeholder]="USER_MESSAGES.PHONE_NUMBER_LABEL" formControlName="phone">
+          <mat-error *ngIf="basicDataForm.controls['phone'].invalid">
+            {{VALIDATION_MESSAGES.TELEPHONE}}
+          </mat-error>
+        </mat-form-field>
             </form>
         </mat-tab>
 
-        <mat-tab [label]="PASSWORD_TAB">
-            <form [formGroup]="passwordForm">
-              <mat-form-field appearance="fill" class="w-100 mt-4">
-                <mat-label>{{CURRENT_PASSWORD}}</mat-label>
-                <input matInput [placeholder]="CURRENT_PASSWORD" formControlName="oldPassword"
-                       [type]="hideCurrentPassword ? 'password' : 'text'">
-                <button mat-icon-button matSuffix type="button" (click)="hideCurrentPassword = !hideCurrentPassword">
-                  <mat-icon>{{hideCurrentPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-                <mat-error *ngIf="isSubmitted && isIncorrectOldPassword">
-                  {{VALIDATION_MESSAGES.INCORRECT_OLD_PASSWORD}}
-                </mat-error>
-              </mat-form-field>
+    <mat-tab [label]="USER_MESSAGES.CHANGE_PASSWORD_TAB_TEXT">
+      <form [formGroup]="passwordForm">
+        <mat-form-field appearance="fill" class="w-100 mt-4">
+          <mat-label>{{AUTH_MESSAGES.CURRENT_PASSWORD_LABEL}}</mat-label>
+          <input matInput [placeholder]="AUTH_MESSAGES.CURRENT_PASSWORD_LABEL" formControlName="oldPassword"
+                 [type]="hideCurrentPassword ? 'password' : 'text'">
+          <button mat-icon-button matSuffix type="button" (click)="hideCurrentPassword = !hideCurrentPassword">
+            <mat-icon>{{hideCurrentPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="isSubmitted && isIncorrectOldPassword">
+            {{VALIDATION_MESSAGES.INCORRECT_OLD_PASSWORD}}
+          </mat-error>
+        </mat-form-field>
 
               <mat-form-field appearance="fill" class="mt-2 w-100">
-                <mat-label>{{NEW_PASSWORD}}</mat-label>
+                <mat-label>{{AUTH_MESSAGES.NEW_PASSWORD_LABEL}}</mat-label>
                 <input matInput
-                       [placeholder]="NEW_PASSWORD"
+                       [placeholder]="AUTH_MESSAGES.NEW_PASSWORD_LABEL"
                        formControlName="newPassword"
                        [type]="hideNewPassword ? 'password' : 'text'"
-                       [matTooltip]="STRONG_PASSWORD_ERROR"
+                       [matTooltip]="VALIDATION_MESSAGES.STRONG_PASSWORD_MESSAGE_TEXT"
                        matTooltipPosition="right"
                        matTooltipHideDelay="500"
                 >
@@ -60,9 +60,9 @@
               </mat-form-field>
 
               <mat-form-field appearance="fill" class="mt-2 w-100">
-                <mat-label>{{CONFIRM_PASSWORD}}</mat-label>
+                <mat-label>{{AUTH_MESSAGES.CONFIRM_PASSWORD_LABEL}}</mat-label>
                 <input matInput
-                       [placeholder]="CONFIRM_PASSWORD"
+                       [placeholder]="AUTH_MESSAGES.CONFIRM_PASSWORD_LABEL"
                        formControlName="confirmPassword"
                        [type]="hideConfirmPassword ? 'password' : 'text'">
                 <button mat-icon-button matSuffix type="button" (click)="hideConfirmPassword = !hideConfirmPassword">
@@ -78,28 +78,28 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button
-            *ngIf="selectedTabIndex == 1"
-            mat-flat-button
-            class="btn-p"
-            color="primary"
-            (click)="onChangePassword()"
-            cdkFocusInitial>
-        <mat-icon>done</mat-icon>
-        {{CHANGE_PASSWORD_BUTTON_TEXT}}
-    </button>
-    <button
-            *ngIf="selectedTabIndex == 0"
-            mat-flat-button
-            color="primary"
-            class="btn-p"
-            (click)="onSaveClick()"
-            cdkFocusInitial>
-        <mat-icon>done</mat-icon>
-        {{SAVE_BUTTON_TEXT}}
-    </button>
-    <button mat-button [mat-dialog-close]="false">
-        <mat-icon>close</mat-icon>
-        {{CANCEL_BUTTON_TEXT}}
-    </button>
+  <button
+    *ngIf="selectedTabIndex == 1"
+    mat-flat-button
+    class="btn-p"
+    color="primary"
+    (click)="onChangePassword()"
+    cdkFocusInitial>
+    <mat-icon>done</mat-icon>
+    {{AUTH_MESSAGES.CHANGE_PASSWORD_TITLE}}
+  </button>
+  <button
+    *ngIf="selectedTabIndex == 0"
+    mat-flat-button
+    color="primary"
+    class="btn-p"
+    (click)="onSaveClick()"
+    cdkFocusInitial>
+    <mat-icon>done</mat-icon>
+    {{COMMON_MESSAGES.SAVE_BUTTON_TEXT}}
+  </button>
+  <button mat-button [mat-dialog-close]="false">
+    <mat-icon>close</mat-icon>
+    {{COMMON_MESSAGES.CANCEL_BUTTON_TEXT}}
+  </button>
 </mat-dialog-actions>

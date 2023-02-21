@@ -36,6 +36,7 @@ export class CashCollectionReportComponent implements OnInit {
 
   isLoading = false;
   isDateRangeNotSelected = true;
+
   displayedColumns: string[] = [
     Reports.DATE,
     Reports.BILL_NO,
@@ -50,23 +51,8 @@ export class CashCollectionReportComponent implements OnInit {
 
   dataSource: MatTableDataSource<CashCollectionReport> = new MatTableDataSource<CashCollectionReport>();
 
-  DATE = Reports.DATE;
-  BILL_NO = Reports.BILL_NO;
-  LOT_NO = Reports.LOT_NO;
-  PROJECT = Reports.PROJECT_LABEL;
-  SALE = Reports.SALE;
-  EP = Reports.EP;
-  ADVANCE = Reports.ADVANCE;
-  FULL_PAYMENT = Reports.FULL_PAYMENT;
-  DEED_AND_PLAN = Reports.DEED_AND_PLAN;
-  NO_DATA = Reports.NO_DATA;
-  VIEW_REPORTS = Reports.VIEW_REPORTS;
-  SELECT_DATE_RANGE = Reports.SELECT_DATE_RANGE_TEXT;
-  NO_REPORTS = Reports.NO_REPORTS;
-  EXPORT_TO_PDF = Reports.EXPORT_TO_PDF;
-  EXPORT_TO_EXCEL = Reports.EXPORT_TO_EXCEL;
-  BACK = Reports.BACK_TO_REPORTS;
   REPORTS_URL = `/${ReportRoutes.Root}`;
+  REPORT_MESSAGES = Reports;
   VALIDATION_MESSAGES = ErrorMessages;
 
   dateForm = this.formBuilder.group({
@@ -139,7 +125,17 @@ export class CashCollectionReportComponent implements OnInit {
         lineColor: 200
       },
       head: [
-        [this.DATE, this.BILL_NO, this.LOT_NO, this.PROJECT, this.SALE, this.EP, this.ADVANCE, this.FULL_PAYMENT, this.DEED_AND_PLAN]
+        [
+          this.REPORT_MESSAGES.DATE,
+          this.REPORT_MESSAGES.BILL_NO,
+          this.REPORT_MESSAGES.LOT_NO,
+          this.REPORT_MESSAGES.PROJECT_LABEL,
+          this.REPORT_MESSAGES.SALE,
+          this.REPORT_MESSAGES.EP,
+          this.REPORT_MESSAGES.ADVANCE,
+          this.REPORT_MESSAGES.FULL_PAYMENT,
+          this.REPORT_MESSAGES.DEED_AND_PLAN
+        ]
       ],
       body: this.dataSource.data.map(
         row => {

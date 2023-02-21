@@ -2,22 +2,25 @@
     <mat-card-content>
         <div class="col-12 d-flex justify-content-between align-items-center mb-2">
             <a mat-raised-button color="primary" class="btn-p me-3" style="color: black" [routerLink]="REPORTS_URL">
-                <mat-icon style="font-size: 17px; margin-top: 3px">arrow_back_ios</mat-icon>
-                {{BACK}}
+              <mat-icon style="font-size: 17px; margin-top: 3px">arrow_back_ios</mat-icon>
+              {{REPORT_MESSAGES.BACK_TO_REPORTS}}
             </a>
             <div>
-                <button mat-raised-button color="primary" class="btn-p me-3" style="color: black" (click)="openPDF()" *ngIf="(!isLoading && !isDateRangeNotSelected && dataSource.data.length != 0)">
-                    <mat-icon>picture_as_pdf</mat-icon>
-                    {{EXPORT_TO_PDF}}
-                </button>
-                <button mat-raised-button color="primary" class="btn-p me-3" style="color: black" (click)="exporter.exportTable('xlsx')" *ngIf="!isLoading && dataSource.data.length != 0">
-                    <mat-icon>table_view</mat-icon>
-                    {{EXPORT_TO_EXCEL}}
-                </button>
-                <button mat-raised-button color="primary" class="btn-p me-3" style="color: black" (click)="onClickViewReports()">
-                    <mat-icon>visibility</mat-icon>
-                    {{VIEW_REPORTS}}
-                </button>
+              <button mat-raised-button color="primary" class="btn-p me-3" style="color: black" (click)="openPDF()"
+                      *ngIf="(!isLoading && !isDateRangeNotSelected && dataSource.data.length != 0)">
+                <mat-icon>picture_as_pdf</mat-icon>
+                {{REPORT_MESSAGES.EXPORT_TO_PDF}}
+              </button>
+              <button mat-raised-button color="primary" class="btn-p me-3" style="color: black"
+                      (click)="exporter.exportTable('xlsx')" *ngIf="!isLoading && dataSource.data.length != 0">
+                <mat-icon>table_view</mat-icon>
+                {{REPORT_MESSAGES.EXPORT_TO_EXCEL}}
+              </button>
+              <button mat-raised-button color="primary" class="btn-p me-3" style="color: black"
+                      (click)="onClickViewReports()">
+                <mat-icon>visibility</mat-icon>
+                {{REPORT_MESSAGES.VIEW_REPORTS}}
+              </button>
 
                 <mat-form-field appearance="fill" style="width: fit-content">
                   <mat-label>Enter a date range</mat-label>
@@ -28,74 +31,74 @@
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-date-range-picker #picker></mat-date-range-picker>
                   <mat-error *ngIf="isDateRangeNotSelected">
-                    {{SELECT_DATE_RANGE}}
+                    {{REPORT_MESSAGES.SELECT_DATE_RANGE_TEXT}}
                   </mat-error>
                 </mat-form-field>
             </div>
         </div>
         <div class="d-flex justify-content-center flex-column align-items-center" *ngIf="!isLoading && dataSource.data.length == 0">
             <img src="assets/img/no_reports.svg" alt="no_reports" width="400">
-            <span class="mat-headline mt-5">{{NO_REPORTS}}</span>
+          <span class="mat-headline mt-5">{{REPORT_MESSAGES.NO_REPORTS}}</span>
         </div>
         <div class="d-flex justify-content-center flex-column align-items-center">
             <mat-spinner *ngIf="isLoading"></mat-spinner>
         </div>
         <div>
             <div [hidden]="isLoading || (!isDateRangeNotSelected && dataSource.data.length == 0)" class="mat-elevation-z8" id="report-data">
-                <table mat-table [dataSource]="dataSource" matSort matTableExporter #exporter="matTableExporter">
+              <table mat-table [dataSource]="dataSource" matSort matTableExporter #exporter="matTableExporter">
 
-                    <ng-container matColumnDef="{{DATE}}">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{DATE}} </th>
-                        <td mat-cell *matCellDef="let row"> {{row.Date.toDate() | date: 'dd/MM/yyyy' }} </td>
-                    </ng-container>
+                <ng-container matColumnDef="{{REPORT_MESSAGES.DATE}}">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.DATE}} </th>
+                  <td mat-cell *matCellDef="let row"> {{row.Date.toDate() | date: 'dd/MM/yyyy' }} </td>
+                </ng-container>
 
-                    <ng-container matColumnDef="{{BILL_NO}}">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{BILL_NO}} </th>
-                        <td mat-cell *matCellDef="let row"> {{row.BillNo}} </td>
-                    </ng-container>
+                <ng-container matColumnDef="{{REPORT_MESSAGES.BILL_NO}}">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.BILL_NO}} </th>
+                  <td mat-cell *matCellDef="let row"> {{row.BillNo}} </td>
+                </ng-container>
 
-                    <ng-container matColumnDef="{{LOT_NO}}">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{LOT_NO}} </th>
-                        <td mat-cell *matCellDef="let row"> {{row.LotNo}} </td>
-                    </ng-container>
+                <ng-container matColumnDef="{{REPORT_MESSAGES.LOT_NO}}">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.LOT_NO}} </th>
+                  <td mat-cell *matCellDef="let row"> {{row.LotNo}} </td>
+                </ng-container>
 
-                    <ng-container matColumnDef="{{PROJECT}}">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT}} </th>
-                        <td mat-cell *matCellDef="let row">{{row.Project}}</td>
-                    </ng-container>
+                <ng-container matColumnDef="{{REPORT_MESSAGES.PROJECT_LABEL}}">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.PROJECT_LABEL}} </th>
+                  <td mat-cell *matCellDef="let row">{{row.Project}}</td>
+                </ng-container>
 
-                    <ng-container matColumnDef="{{SALE}}">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{SALE}} </th>
-                        <td mat-cell *matCellDef="let row">{{row.Sale}}</td>
-                    </ng-container>
+                <ng-container matColumnDef="{{REPORT_MESSAGES.SALE}}">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.SALE}} </th>
+                  <td mat-cell *matCellDef="let row">{{row.Sale}}</td>
+                </ng-container>
 
-                    <ng-container matColumnDef="{{EP}}">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{EP}} </th>
-                        <td mat-cell *matCellDef="let row">{{row.EP}}</td>
-                    </ng-container>
+                <ng-container matColumnDef="{{REPORT_MESSAGES.EP}}">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.EP}} </th>
+                  <td mat-cell *matCellDef="let row">{{row.EP}}</td>
+                </ng-container>
 
-                    <ng-container matColumnDef="{{ADVANCE}}">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ADVANCE}} </th>
-                        <td mat-cell *matCellDef="let row">{{row.Advance}}</td>
-                    </ng-container>
+                <ng-container matColumnDef="{{REPORT_MESSAGES.ADVANCE}}">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.ADVANCE}} </th>
+                  <td mat-cell *matCellDef="let row">{{row.Advance}}</td>
+                </ng-container>
 
-                    <ng-container matColumnDef="{{FULL_PAYMENT}}">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{FULL_PAYMENT}} </th>
-                        <td mat-cell *matCellDef="let row">{{row.FullPayment}}</td>
-                    </ng-container>
+                <ng-container matColumnDef="{{REPORT_MESSAGES.FULL_PAYMENT}}">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.FULL_PAYMENT}} </th>
+                  <td mat-cell *matCellDef="let row">{{row.FullPayment}}</td>
+                </ng-container>
 
-                    <ng-container matColumnDef="{{DEED_AND_PLAN}}">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{DEED_AND_PLAN}} </th>
-                        <td mat-cell *matCellDef="let row">{{row.DeedAndPlan}}</td>
-                    </ng-container>
+                <ng-container matColumnDef="{{REPORT_MESSAGES.DEED_AND_PLAN}}">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.DEED_AND_PLAN}} </th>
+                  <td mat-cell *matCellDef="let row">{{row.DeedAndPlan}}</td>
+                </ng-container>
 
-                    <ng-container matColumnDef="empty">
-                        <td mat-footer-cell *matFooterCellDef colspan="4" style="text-align: end; margin-left: 250px">
+                <ng-container matColumnDef="empty">
+                  <td mat-footer-cell *matFooterCellDef colspan="4" style="text-align: end; margin-left: 250px">
 
-                        </td>
-                    </ng-container>
+                  </td>
+                </ng-container>
 
-                    <ng-container matColumnDef="saleTotal">
+                <ng-container matColumnDef="saleTotal">
                         <td mat-footer-cell *matFooterCellDef style="text-align: start; margin-left: 250px; font-weight: bold">
                             {{getTotalSale()}}
                         </td>
@@ -130,7 +133,7 @@
 
                     <!-- Row shown when there is no matching data. -->
                     <tr class="mat-row" *matNoDataRow>
-                        <td class="mat-cell" colspan="4">{{NO_DATA}}</td>
+                      <td class="mat-cell" colspan="4">{{REPORT_MESSAGES.NO_DATA}}</td>
                     </tr>
 
                     <tr mat-footer-row *matFooterRowDef="['empty', 'saleTotal', 'epTotal', 'advanceTotal', 'fullPaymentTotal', 'deedAndPlanTotal']"></tr>

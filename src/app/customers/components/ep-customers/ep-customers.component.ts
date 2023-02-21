@@ -42,16 +42,8 @@ export class EpCustomersComponent implements OnInit {
   dataSource: MatTableDataSource<Customer> = new MatTableDataSource<Customer>();
   isLoading = true;
 
-  ADD_CUSTOMER_BUTTON_TEXT = AllCustomers.ADD_CUSTOMER_BUTTON_TEXT;
-  ID_COLUMN = AllCustomers.ID_COLUMN_TEXT;
-  NAME_COLUMN = AllCustomers.NAME_COLUMN_TEXT;
-  PROJECT_COLUMN = AllCustomers.PROJECT_COLUMN_TEXT;
-  BALANCE_COLUMN = AllCustomers.BALANCE_COLUMN_TEXT;
-  ARREARS_COLUMN = AllCustomers.ARREARS_COLUMN_TEXT;
-  PAYMENT_EP_BALANCE = AllCustomers.PAYMENT_EP_BALANCE;
-  ACTIONS_COLUMN = Common.ACTION_COLUMN_TEXT;
-  SEARCH_PLACEHOLDER = Common.SEARCH_LABEL;
-  NO_SEARCH_RESULT_TEXT = Common.NO_SEARCH_RESULT_TEXT;
+  CUSTOMER_MESSAGES = AllCustomers;
+  COMMON_MESSAGES = Common;
 
   ngOnInit() {
     this.store.select(epCustomerSelector)

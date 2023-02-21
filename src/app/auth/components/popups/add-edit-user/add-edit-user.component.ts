@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Common, ErrorMessages, SignUp, SnackBarStatus, UserManagement } from "../../../../constants";
+import { AuthMessages, Common, ErrorMessages, SnackBarStatus, UserManagementMessages } from "../../../../constants";
 import { MatDialogRef } from "@angular/material/dialog";
 import { FormBuilder, Validators } from "@angular/forms";
 import { HelperService } from "../../../../services/helper.service";
@@ -13,20 +13,17 @@ import { CustomValidators } from "../../../../helpers/custom-validators";
 })
 export class AddEditUserComponent implements OnInit {
   constructor(
-      private authService: AuthService,
-      private dialogRef: MatDialogRef<AddEditUserComponent>,
-      private formBuilder: FormBuilder,
-      private helperService: HelperService
+    private authService: AuthService,
+    private dialogRef: MatDialogRef<AddEditUserComponent>,
+    private formBuilder: FormBuilder,
+    private helperService: HelperService
   ) {
   }
 
-  ADD_NEW_USER = UserManagement.ADD_NEW_USER;
-  PASSWORD = UserManagement.PASSWORD_LABEL;
-  CONFIRM_PASSWORD = SignUp.CONFIRM_PASSWORD_LABEL;
-  EMAIL = UserManagement.EMAIL_LABEL;
-  CANCEL_BUTTON_TEXT = Common.CANCEL_BUTTON_TEXT;
-  SAVE_BUTTON_TEXT = Common.SAVE_BUTTON_TEXT;
   VALIDATION_MESSAGES = ErrorMessages;
+  USER_MESSAGES = UserManagementMessages;
+  AUTH_MESSAGES = AuthMessages;
+  COMMON_MESSAGES = Common;
 
   hideNewPassword: boolean = true;
   hideConfirmPassword: boolean = true;
@@ -51,7 +48,7 @@ export class AddEditUserComponent implements OnInit {
       this.authService.SignUp(this.userForm.controls['email'].value, this.userForm.controls['newPassword'].value).then(() => {
         this.dialogRef.close();
         this.helperService.openSnackBar({
-          text: UserManagement.USER_ADDED_SUCCESSFULLY_MESSAGE_TEXT,
+          text: UserManagementMessages.USER_ADDED_SUCCESSFULLY_MESSAGE_TEXT,
           status: SnackBarStatus.SUCCESS
         });
       }).catch(err => {
@@ -69,14 +66,14 @@ export class AddEditUserComponent implements OnInit {
     if (this.userForm.controls['newPassword'].hasError('notMatch')) {
       return ErrorMessages.PASSWORDS_NOT_MATCHING;
     }
-    return ErrorMessages.required(this.PASSWORD);
+    return ErrorMessages.required(this.USER_MESSAGES.PASSWORD_LABEL);
   }
 
   getConfirmPasswordErrorMessage() {
     if (this.userForm.controls['confirmPassword'].hasError('notMatch')) {
       return ErrorMessages.PASSWORDS_NOT_MATCHING;
     }
-    return ErrorMessages.required(this.CONFIRM_PASSWORD);
+    return ErrorMessages.required(this.AUTH_MESSAGES.CONFIRM_PASSWORD_LABEL);
   }
 
 }

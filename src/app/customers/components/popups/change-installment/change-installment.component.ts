@@ -26,14 +26,9 @@ export class ChangeInstallmentComponent implements OnInit {
   currentBalance: string = '';
 
   CANCEL_BUTTON_TEXT: string = Common.CANCEL_BUTTON_TEXT;
-  CHANGE_BUTTON_TEXT: string = ChangeInstallment.CHANGE_BUTTON_TEXT;
-  NEW_INSTALLMENT_LABEL: string = ChangeInstallment.NEW_INSTALLMENT_LABEL;
-  NEW_MONTH_COUNT_LABEL: string = ChangeInstallment.NEW_MONTH_COUNT_LABEL;
-  CURRENT_INSTALLMENT_LABEL: string = ChangeInstallment.CURRENT_INSTALLMENT_LABEL;
-  BALANCE_LABEL: string = ChangeInstallment.BALANCE_LABEL;
-  CHANGE_INSTALLMENT_TITLE: string = ChangeInstallment.CHANGE_INSTALLMENT_TITLE;
   REMARKS_LABEL: string = MakePayment.REMARKS_LABEL;
   PARTICULARS_LABEL: string = MakePayment.PARTICULARS_LABEL;
+  INSTALLMENT_MESSAGES = ChangeInstallment;
   DATE: string = Reports.DATE;
   VALIDATION_MESSAGES = ErrorMessages;
 

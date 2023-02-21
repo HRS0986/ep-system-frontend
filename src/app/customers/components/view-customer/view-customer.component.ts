@@ -7,7 +7,6 @@ import {
   LedgerMessages,
   NewCustomer,
   SnackBarStatus,
-  UserManagement,
   UserMessages
 } from "../../../constants";
 import { HelperService } from "../../../services/helper.service";
@@ -58,50 +57,18 @@ export class ViewCustomerComponent implements OnInit {
   isLoading: boolean = true;
   selectedTabIndex = 0;
 
-  EP_TAB_TITLE = NewCustomer.EpCalculation.EP_TAB_TITLE;
-  CUSTOMER_TAB_TITLE = NewCustomer.BasicDetails.BASIC_CUSTOMER_TAB_TEXT;
-  MAKE_PAYMENT_BUTTON_TEXT = LedgerMessages.MAKE_PAYMENT_BUTTON_TEXT;
-  SAVE_BUTTON_TEXT: string = Customer.SAVE_BUTTON_TEXT;
   DELETE_BUTTON_TEXT: string = AllCustomers.DELETE_BUTTON_TEXT;
-  CHANGE_INSTALLMENT_BUTTON_TEXT: string = Customer.CHANGE_INSTALLMENT_BUTTON_TEXT;
-  SETTLEMENT_BUTTON_TEXT: string = Customer.SETTLEMENT_BUTTON_TEXT;
-  NAME_LABEL = NewCustomer.BasicDetails.NAME_LABEL;
-  ADDRESS_LABEL = NewCustomer.BasicDetails.ADDRESS_LABEL;
-  PHONE_LABEL = NewCustomer.BasicDetails.PHONE_LABEL;
-  PROJECT_LABEL = NewCustomer.BasicDetails.PROJECT_LABEL;
-  NIC_LABEL = NewCustomer.BasicDetails.NIC_LABEL;
-  BOND_NUMBER_LABEL = NewCustomer.BasicDetails.BOND_NUMBER_LABEL;
-  PLAN_NUMBER_LABEL = NewCustomer.BasicDetails.PLAN_NUMBER_LABEL;
-  DEED_NUMBER_LABEL = NewCustomer.BasicDetails.DEED_NUMBER_LABEL;
-  NOTE_LABEL = NewCustomer.BasicDetails.NOTE_LABEL;
-  EMAIL_LABEL = UserManagement.EMAIL_LABEL;
-  ID_LABEL = NewCustomer.BasicDetails.ID_LABEL;
-  DATE_OF_SALE_LABEL = NewCustomer.BasicDetails.DATE_OF_SALE_LABEL;
-  BLOCK_NUMBER_LABEL = NewCustomer.EpCalculation.BLOCK_NUMBER_LABEL;
-  PAYMENT_EP_BALANCE_LABEL = NewCustomer.EpCalculation.PAYMENT_EP_BALANCE_LABEL;
-  PERCHES_VALUE_LABEL = NewCustomer.EpCalculation.PERCHES_VALUE_LABEL;
-  INTEREST_RATE_LABEL = NewCustomer.EpCalculation.INTEREST_RATE_LABEL;
-  EXTENT_LABEL = NewCustomer.EpCalculation.EXTENT_LABEL;
-  TOTAL_BLOCK_VALUE_LABEL = NewCustomer.EpCalculation.TOTAL_BLOCK_VALUE_LABEL;
-  WITHOUT_INTEREST_LABEL = NewCustomer.EpCalculation.WITHOUT_INTEREST_LABEL;
-  SALE_VALUE_LABEL = NewCustomer.EpCalculation.SALE_VALUE_LABEL;
-  TOTAL_RECEIVABLE_BALANCE_LABEL = NewCustomer.EpCalculation.TOTAL_RECEIVABLE_BALANCE_LABEL;
-  DISCOUNT_LABEL = NewCustomer.EpCalculation.DISCOUNT_LABEL;
-  FIRST_RENTAL_DATE_LABEL = NewCustomer.EpCalculation.FIRST_RENTAL_DATE_LABEL;
-  WHATSAPP_NUMBER_LABEL = NewCustomer.BasicDetails.WHATSAPP;
-  VIBER_NUMBER_LABEL = NewCustomer.BasicDetails.VIBER;
-  IMO_NUMBER_LABEL = NewCustomer.BasicDetails.IMO;
-  DOCUMENT_FEE_LABEL = NewCustomer.EpCalculation.DOCUMENT_FEE_LABEL;
-  INT_PLUS_EP_SALE_VALUE_LABEL = NewCustomer.EpCalculation.INT_PLUS_EP_SALE_VALUE_LABEL;
-  DUE_DATE_LABEL = NewCustomer.EpCalculation.DUE_DATE_LABEL;
-  NUMBER_OF_MONTH_LABEL = NewCustomer.EpCalculation.NUMBER_OF_MONTH_LABEL;
-  ADVANCE_PAYMENT_LABEL = NewCustomer.EpCalculation.ADVANCE_PAYMENT_LABEL;
-  MARKETING_SALE_VALUE_LABEL = NewCustomer.EpCalculation.MARKETING_SALE_VALUE_LABEL;
-  MONTHLY_RENTAL_AMOUNT_LABEL = NewCustomer.EpCalculation.MONTHLY_RENTAL_AMOUNT_LABEL;
   LEDGER_LABEL = AllCustomers.LEDGER_BUTTON_TEXT;
-  LOCATION = NewCustomer.BasicDetails.LOCATION_COORDINATES;
-  BACK = Customer.BACK;
+
+  MAKE_PAYMENT_BUTTON_TEXT = LedgerMessages.MAKE_PAYMENT_BUTTON_TEXT;
+
+  SAVE_BUTTON_TEXT: string = Customer.SAVE_BUTTON_TEXT;
+  SETTLEMENT_BUTTON_TEXT: string = Customer.SETTLEMENT_BUTTON_TEXT;
+  CHANGE_INSTALLMENT_BUTTON_TEXT: string = Customer.CHANGE_INSTALLMENT_BUTTON_TEXT;
+
+  BACK = Common.BACK;
   VALIDATION_MESSAGES = ErrorMessages;
+  CUSTOMER_MESSAGES = NewCustomer;
 
   isFormChanged: boolean = false;
   isAdvancedCustomer: boolean = true;
@@ -336,7 +303,7 @@ export class ViewCustomerComponent implements OnInit {
     if (this.basicCustomerForm.controls['contactNo'].hasError('pattern')) {
       return this.VALIDATION_MESSAGES.TELEPHONE;
     }
-    return this.VALIDATION_MESSAGES.required(this.PHONE_LABEL);
+    return this.VALIDATION_MESSAGES.required(this.CUSTOMER_MESSAGES.BasicDetails.PHONE_LABEL);
   }
 
   onClickDelete() {

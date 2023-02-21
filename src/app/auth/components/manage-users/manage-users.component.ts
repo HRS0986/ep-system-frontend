@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Common, SnackBarStatus, UserManagement } from "../../../constants";
+import { Common, SnackBarStatus, UserManagementMessages } from "../../../constants";
 import { User } from "../../../types";
 import { UserService } from "../../../services/user.service";
 import { HelperService } from "../../../services/helper.service";
@@ -37,24 +37,17 @@ export class ManageUsersComponent implements OnInit {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     displayedColumns: string[] = [
-        UserManagement.FIRSTNAME_LABEL,
-        UserManagement.LASTNAME_LABEL,
-        UserManagement.EMAIL_LABEL,
-        UserManagement.CONTACT_NUMBER_LABEL,
-        UserManagement.DELETE,
-        UserManagement.IS_DISABLE_LABEL
+      UserManagementMessages.FIRSTNAME_LABEL,
+      UserManagementMessages.LASTNAME_LABEL,
+      UserManagementMessages.EMAIL_LABEL,
+      UserManagementMessages.CONTACT_NUMBER_LABEL,
+      UserManagementMessages.DELETE,
+      UserManagementMessages.IS_DISABLE_LABEL
     ];
 
     dataSource: MatTableDataSource<User> = new MatTableDataSource();
-    isLoading = true;
-
-    FIRSTNAME = UserManagement.FIRSTNAME_LABEL;
-    LASTNAME = UserManagement.LASTNAME_LABEL;
-    EMAIL = UserManagement.EMAIL_LABEL;
-    DISABLE = UserManagement.IS_DISABLE_LABEL;
-    DELETE = UserManagement.DELETE;
-    CONTACT_NUMBER = UserManagement.CONTACT_NUMBER_LABEL;
-    ADD_NEW_USER = UserManagement.ADD_NEW_USER;
+  isLoading = true;
+  USERS_MESSAGES = UserManagementMessages;
 
     ngOnInit() {
       this.store.select(authUsersSelector)
@@ -94,9 +87,9 @@ export class ManageUsersComponent implements OnInit {
         const dialogRef = this.matDialog.open(DeleteConfirmPopupComponent, {
             width: '400px',
             data: {
-                title: UserManagement.DELETE_USER_TITLE,
-                body: UserManagement.DELETE_USER_MESSAGE,
-                entityName: userName
+              title: UserManagementMessages.DELETE_USER_TITLE,
+              body: UserManagementMessages.DELETE_USER_MESSAGE,
+              entityName: userName
             }
         });
         dialogRef.afterClosed().subscribe(result => {

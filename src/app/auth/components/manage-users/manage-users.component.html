@@ -1,61 +1,63 @@
 <mat-card class="mx-3" style="margin-bottom: 70px; min-width: fit-content">
     <mat-card-content>
         <div class="col-12 d-flex justify-content-end mb-3">
-            <button *ngIf="!isLoading" class="btn-p me-3" mat-raised-button color="primary" (click)="onClickAddNewUser()">
-                <mat-icon>person_add_alt</mat-icon> &nbsp;
-                {{ADD_NEW_USER}}
+            <button *ngIf="!isLoading" class="btn-p me-3" mat-raised-button color="primary"
+                    (click)="onClickAddNewUser()">
+              <mat-icon>person_add_alt</mat-icon> &nbsp;
+              {{USERS_MESSAGES.ADD_NEW_USER}}
             </button>
         </div>
         <div class="d-flex justify-content-center flex-column align-items-center">
             <mat-spinner *ngIf="isLoading"></mat-spinner>
         </div>
         <div [hidden]="isLoading" class="mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource" matSort>
+          <table mat-table [dataSource]="dataSource" matSort>
 
-                <!-- Progress Column -->
-                <ng-container matColumnDef="{{FIRSTNAME}}">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{FIRSTNAME}} </th>
-                    <td mat-cell *matCellDef="let row"> {{row.FirstName}} </td>
-                </ng-container>
+            <!-- Progress Column -->
+            <ng-container matColumnDef="{{USERS_MESSAGES.FIRSTNAME_LABEL}}">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> {{USERS_MESSAGES.FIRSTNAME_LABEL}} </th>
+              <td mat-cell *matCellDef="let row"> {{row.FirstName}} </td>
+            </ng-container>
 
-                <!-- Name Column -->
-                <ng-container matColumnDef="{{LASTNAME}}">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{LASTNAME}} </th>
-                    <td mat-cell *matCellDef="let row"> {{row.LastName}} </td>
-                </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="{{USERS_MESSAGES.LASTNAME_LABEL}}">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> {{USERS_MESSAGES.LASTNAME_LABEL}} </th>
+              <td mat-cell *matCellDef="let row"> {{row.LastName}} </td>
+            </ng-container>
 
-                <!-- Fruit Column -->
-                <ng-container matColumnDef="{{EMAIL}}">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{EMAIL}} </th>
-                    <td mat-cell *matCellDef="let row"> {{row.Email}} </td>
-                </ng-container>
+            <!-- Fruit Column -->
+            <ng-container matColumnDef="{{USERS_MESSAGES.EMAIL_LABEL}}">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> {{USERS_MESSAGES.EMAIL_LABEL}} </th>
+              <td mat-cell *matCellDef="let row"> {{row.Email}} </td>
+            </ng-container>
 
-                <ng-container matColumnDef="{{CONTACT_NUMBER}}">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{CONTACT_NUMBER}} </th>
-                    <td mat-cell *matCellDef="let row"> {{row.PhoneNumber}} </td>
-                </ng-container>
+            <ng-container matColumnDef="{{USERS_MESSAGES.CONTACT_NUMBER_LABEL}}">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> {{USERS_MESSAGES.CONTACT_NUMBER_LABEL}} </th>
+              <td mat-cell *matCellDef="let row"> {{row.PhoneNumber}} </td>
+            </ng-container>
 
-                <ng-container matColumnDef="{{DELETE}}">
-                    <th mat-header-cell *matHeaderCellDef> {{DELETE}} </th>
-                    <td mat-cell *matCellDef="let row">
-                        <button mat-raised-button color="warn" (click)="onClickDelete(row.UID)">
-                            <mat-icon>delete</mat-icon>&nbsp;
-                            Delete
-                        </button>
-                    </td>
+            <ng-container matColumnDef="{{USERS_MESSAGES.DELETE}}">
+              <th mat-header-cell *matHeaderCellDef> {{USERS_MESSAGES.DELETE}} </th>
+              <td mat-cell *matCellDef="let row">
+                <button mat-raised-button color="warn" (click)="onClickDelete(row.UID)">
+                  <mat-icon>delete</mat-icon>&nbsp;
+                  Delete
+                </button>
+              </td>
 
-                </ng-container>
-                <ng-container matColumnDef="{{DISABLE}}">
-                    <th mat-header-cell *matHeaderCellDef> {{DISABLE}} </th>
-                    <td mat-cell *matCellDef="let row">
-                        <mat-slide-toggle [(ngModel)]="row.Disabled" (toggleChange)="onUserActiveStatusChange(row)"></mat-slide-toggle>
-                    </td>
-                </ng-container>
+            </ng-container>
+            <ng-container matColumnDef="{{USERS_MESSAGES.IS_DISABLE_LABEL}}">
+              <th mat-header-cell *matHeaderCellDef> {{USERS_MESSAGES.IS_DISABLE_LABEL}} </th>
+              <td mat-cell *matCellDef="let row">
+                <mat-slide-toggle [(ngModel)]="row.Disabled"
+                                  (toggleChange)="onUserActiveStatusChange(row)"></mat-slide-toggle>
+              </td>
+            </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-            </table>
+          </table>
 
             <mat-paginator [pageSizeOptions]="[25, 5, 10, 100]"></mat-paginator>
 

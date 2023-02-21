@@ -5,7 +5,7 @@ import {
   ErrorMessages,
   NewCustomer,
   SnackBarStatus,
-  UserManagement,
+  UserManagementMessages,
   UserMessages
 } from "../../../../constants";
 import { FormBuilder, Validators } from "@angular/forms";
@@ -43,50 +43,12 @@ export class AddNewCustomerComponent implements OnInit {
 
   // TODO: Check all date field error messages in html file
 
-  EP_TAB_TITLE = NewCustomer.EpCalculation.EP_TAB_TITLE;
-  CUSTOMER_TAB_TITLE = NewCustomer.BasicDetails.BASIC_CUSTOMER_TAB_TEXT;
-  REQUIRED_FIELD_ERROR_TEXT = Common.REQUIRED_FIELD_MESSAGE_TEXT;
-  NAME_LABEL = NewCustomer.BasicDetails.NAME_LABEL;
-  EMAIL_LABEL = UserManagement.EMAIL_LABEL;
-  ADDRESS_LABEL = NewCustomer.BasicDetails.ADDRESS_LABEL;
-  PHONE_LABEL = NewCustomer.BasicDetails.PHONE_LABEL;
-  PROJECT_LABEL = NewCustomer.BasicDetails.PROJECT_LABEL;
-  NIC_LABEL = NewCustomer.BasicDetails.NIC_LABEL;
-  BOND_NUMBER_LABEL = NewCustomer.BasicDetails.BOND_NUMBER_LABEL;
-  PLAN_NUMBER_LABEL = NewCustomer.BasicDetails.PLAN_NUMBER_LABEL;
-  DEED_NUMBER_LABEL = NewCustomer.BasicDetails.DEED_NUMBER_LABEL;
-  NOTE_LABEL = NewCustomer.BasicDetails.NOTE_LABEL;
-  SECONDARY_CONTACT_LABEL = NewCustomer.BasicDetails.SECONDARY_CONTACT_LABEL;
+  EMAIL_LABEL = UserManagementMessages.EMAIL_LABEL;
+  COMMON_MESSAGES = Common;
   NEXT_BUTTON_TEXT = NewCustomer.NEXT_BUTTON_TEXT;
   PREVIOUS_BUTTON_TEXT = NewCustomer.PREVIOUS_BUTTON_TEXT;
-  ID_LABEL = NewCustomer.BasicDetails.ID_LABEL;
-  DATE_OF_SALE_LABEL = NewCustomer.BasicDetails.DATE_OF_SALE_LABEL;
-  CANCEL_BUTTON_TEXT = Common.CANCEL_BUTTON_TEXT;
-  SAVE_BUTTON_TEXT = Common.SAVE_BUTTON_TEXT;
-  BLOCK_NUMBER_LABEL = NewCustomer.EpCalculation.BLOCK_NUMBER_LABEL;
-  PAYMENT_EP_BALANCE_LABEL = NewCustomer.EpCalculation.PAYMENT_EP_BALANCE_LABEL;
-  PAYMENT_BALANCE_LABEL = NewCustomer.EpCalculation.PAYMENT_BALANCE_LABEL;
-  PERCHES_VALUE_LABEL = NewCustomer.EpCalculation.PERCHES_VALUE_LABEL;
-  INTEREST_RATE_LABEL = NewCustomer.EpCalculation.INTEREST_RATE_LABEL;
-  EXTENT_LABEL = NewCustomer.EpCalculation.EXTENT_LABEL;
-  WHATSAPP = NewCustomer.BasicDetails.WHATSAPP;
-  VIBER = NewCustomer.BasicDetails.VIBER;
-  IMO = NewCustomer.BasicDetails.IMO;
-  TOTAL_BLOCK_VALUE_LABEL = NewCustomer.EpCalculation.TOTAL_BLOCK_VALUE_LABEL;
-  WITHOUT_INTEREST_LABEL = NewCustomer.EpCalculation.WITHOUT_INTEREST_LABEL;
-  SALE_VALUE_LABEL = NewCustomer.EpCalculation.SALE_VALUE_LABEL;
-  TOTAL_RECEIVABLE_BALANCE_LABEL = NewCustomer.EpCalculation.TOTAL_RECEIVABLE_BALANCE_LABEL;
-  DISCOUNT_LABEL = NewCustomer.EpCalculation.DISCOUNT_LABEL;
-  FIRST_RENTAL_DATE_LABEL = NewCustomer.EpCalculation.FIRST_RENTAL_DATE_LABEL;
-  DOCUMENT_FEE_LABEL = NewCustomer.EpCalculation.DOCUMENT_FEE_LABEL;
-  INT_PLUS_EP_SALE_VALUE_LABEL = NewCustomer.EpCalculation.INT_PLUS_EP_SALE_VALUE_LABEL;
-  DUE_DATE_LABEL = NewCustomer.EpCalculation.DUE_DATE_LABEL;
-  NUMBER_OF_MONTH_LABEL = NewCustomer.EpCalculation.NUMBER_OF_MONTH_LABEL;
-  ADVANCE_PAYMENT_LABEL = NewCustomer.EpCalculation.ADVANCE_PAYMENT_LABEL;
-  MARKETING_SALE_VALUE_LABEL = NewCustomer.EpCalculation.MARKETING_SALE_VALUE_LABEL;
-  MONTHLY_RENTAL_AMOUNT_LABEL = NewCustomer.EpCalculation.MONTHLY_RENTAL_AMOUNT_LABEL;
-  LOCATION_LABEL = NewCustomer.BasicDetails.LOCATION_COORDINATES;
   VALIDATION_MESSAGES = ErrorMessages;
+  CUSTOMER_MESSAGES = NewCustomer;
 
   selectedTabIndex = 0;
   showErrorMessage = false;
@@ -304,35 +266,35 @@ export class AddNewCustomerComponent implements OnInit {
     if (this.epForm.controls['marketingSaleValue'].hasError('min')) {
       return ErrorMessages.min(0);
     }
-    return ErrorMessages.required(this.MARKETING_SALE_VALUE_LABEL);
+    return ErrorMessages.required(this.CUSTOMER_MESSAGES.EpCalculation.MARKETING_SALE_VALUE_LABEL);
   }
 
   getTotalReceivableBalanceErrorMessage(): string {
     if (this.epForm.controls['totalReceivableBalance'].hasError('min')) {
       return ErrorMessages.min(0);
     }
-    return ErrorMessages.required(this.TOTAL_RECEIVABLE_BALANCE_LABEL);
+    return ErrorMessages.required(this.CUSTOMER_MESSAGES.EpCalculation.TOTAL_RECEIVABLE_BALANCE_LABEL);
   }
 
   getPaymentEpBalanceErrorMessage(): string {
     if (this.epForm.controls['paymentEpBalance'].hasError('min')) {
       return ErrorMessages.min(0);
     }
-    return ErrorMessages.required(this.PAYMENT_BALANCE_LABEL);
+    return ErrorMessages.required(this.CUSTOMER_MESSAGES.EpCalculation.PAYMENT_BALANCE_LABEL);
   }
 
   getSaleValueErrorMessage(): string {
     if (this.epForm.controls['saleValue'].hasError('min')) {
       return ErrorMessages.min(0);
     }
-    return ErrorMessages.required(this.SALE_VALUE_LABEL);
+    return ErrorMessages.required(this.CUSTOMER_MESSAGES.EpCalculation.SALE_VALUE_LABEL);
   }
 
   getContactNumberErrorMessage(): string {
     if (this.basicCustomerForm.controls['contactNo'].hasError('pattern')) {
       return ErrorMessages.TELEPHONE;
     }
-    return ErrorMessages.required(this.PHONE_LABEL);
+    return ErrorMessages.required(this.CUSTOMER_MESSAGES.BasicDetails.PHONE_LABEL);
   }
 
   getMonthCountErrorMessage(): string {
@@ -342,7 +304,7 @@ export class AddNewCustomerComponent implements OnInit {
       // TODO: This 24 value should be in a configuration
       return ErrorMessages.max(24);
     }
-    return ErrorMessages.required(this.NUMBER_OF_MONTH_LABEL);
+    return ErrorMessages.required(this.CUSTOMER_MESSAGES.EpCalculation.NUMBER_OF_MONTH_LABEL);
   }
 
   ngOnSubmit() {

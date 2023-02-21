@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from "@angular/material/snack-bar";
 import { SnackBarConfig } from "../types";
-import { SignUp, SnackBarStatus } from "../constants";
+import { AuthMessages } from "../constants";
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,7 @@ export class HelperService {
 
   generateStrongPassword(): string {
     let password = '';
-    const strongPasswordRegex = new RegExp(SignUp.STRONG_PASSWORD_REGEX);
+    const strongPasswordRegex = new RegExp(AuthMessages.STRONG_PASSWORD_REGEX);
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*`()_+-={}[]:;<>,.?/';
     for (let i = 0; i < 10; i++) {
       password += possible.charAt(Math.floor(Math.random() * possible.length));

@@ -21,12 +21,8 @@ import Timestamp = firebase.firestore.Timestamp;
 })
 export class EpReportComponent implements OnInit {
 
-  constructor(private reportService: ReportService, private store: Store<ReportsState>) {
-  }
-
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   isLoading = true;
   displayedColumns: string[] = [
     Reports.PROJECT_LABEL,
@@ -41,20 +37,11 @@ export class EpReportComponent implements OnInit {
 
   dataSource: MatTableDataSource<EPReport> = new MatTableDataSource<EPReport>();
 
-  PROJECT = Reports.PROJECT_LABEL;
-  BLOCK_NO = Reports.BLOCK_NO_LABEL;
-  RENTAL_DATE = Reports.RENTAL_DATE;
-  NO_OF_MONTH = Reports.NO_OF_MONTH;
-  EP_VALUE = Reports.EP_VALUE;
-  CAPITAL = Reports.CAPITAL;
-  INTEREST = Reports.INTEREST;
-  DOC_CHARGE = Reports.DOC_CHARGE;
-  NO_DATA = Reports.NO_DATA;
-  NO_REPORTS = Reports.NO_REPORTS;
-  EXPORT_TO_PDF = Reports.EXPORT_TO_PDF;
+  REPORT_MESSAGES = Reports;
   REPORTS_URL = `/${ReportRoutes.Root}`;
-  BACK = Reports.BACK_TO_REPORTS;
-  EXPORT_TO_EXCEL = Reports.EXPORT_TO_EXCEL;
+
+  constructor(private reportService: ReportService, private store: Store<ReportsState>) {
+  }
 
   ngOnInit(): void {
     this.store.select(epReportSelector)
@@ -96,7 +83,16 @@ export class EpReportComponent implements OnInit {
         lineColor: 200
       },
       head: [
-        [this.PROJECT, this.BLOCK_NO, this.RENTAL_DATE, this.NO_OF_MONTH, this.EP_VALUE, this.CAPITAL, this.INTEREST, this.DOC_CHARGE]
+        [
+          Reports.PROJECT_LABEL,
+          Reports.BLOCK_NO_LABEL,
+          Reports.RENTAL_DATE,
+          Reports.NO_OF_MONTH,
+          Reports.EP_VALUE,
+          Reports.CAPITAL,
+          Reports.INTEREST,
+          Reports.DOC_CHARGE
+        ]
       ],
       body: this.dataSource.data.map(
         row => {
