@@ -15,35 +15,11 @@ import Timestamp = firebase.firestore.Timestamp;
 })
 export class AddEditProjectComponent implements OnInit {
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private helperService: HelperService,
-    private projectService: ProjectService,
-    private dialogRef: MatDialogRef<AddEditProjectComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: { project: Project, edit: number }
-  ) {
-  }
-
-  ADD_NEW_PROJECT = Projects.ADD_NEW_PROJECT;
-  CANCEL_BUTTON_TEXT = Common.CANCEL_BUTTON_TEXT;
-  SAVE_BUTTON_TEXT = Common.SAVE_BUTTON_TEXT;
   TITLE!: string;
-
-  EDIT_PROJECT = Projects.EDIT_PROJECT;
-  PURCHASING_DATE = Projects.PURCHASING_DATE;
-  PURCHASING_PRICE = Projects.PURCHASING_PRICE;
-  EXTEND = Projects.EXTEND;
-  ADDRESS = Projects.ADDRESS;
-  LAND_NAME = Projects.LAND_NAME;
-  PROJECT_NAME = Projects.PROJECT_NAME;
-  PREVIOUS_OWNER = Projects.PREVIOUS_OWNER;
-  PRESENT_OWNER = Projects.PRESENT_OWNER;
-  DEED_NO = Projects.DEED_NO;
-  REMARKS = Projects.REMARKS;
-  ID = Projects.ID;
+  COMMON_MESSAGES = Common;
+  PROJECT_MESSAGES = Projects;
   VALIDATION_MESSAGES = ErrorMessages;
 
-  isError = false;
   isSubmitted = false;
   showErrorMessage = false;
 
@@ -61,9 +37,18 @@ export class AddEditProjectComponent implements OnInit {
     ID: this.formBuilder.control('')
   });
 
+  constructor(
+    private formBuilder: FormBuilder,
+    private helperService: HelperService,
+    private projectService: ProjectService,
+    private dialogRef: MatDialogRef<AddEditProjectComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: { project: Project, edit: number }
+  ) {
+  }
+
   ngOnInit(): void {
     if (this.data.edit == 1) {
-      this.TITLE = this.EDIT_PROJECT;
+      this.TITLE = this.PROJECT_MESSAGES.EDIT_PROJECT;
       this.projectForm.controls['Address'].setValue(this.data.project.Address);
       this.projectForm.controls['DeedNo'].setValue(this.data.project.DeedNo);
       this.projectForm.controls['Extend'].setValue(this.data.project.Extend);
@@ -77,7 +62,7 @@ export class AddEditProjectComponent implements OnInit {
       this.projectForm.controls['PurchasingDate'].setValue(date.toDate());
       this.projectForm.controls['ID'].setValue(this.data.project.ID);
     } else {
-      this.TITLE = this.ADD_NEW_PROJECT;
+      this.TITLE = this.PROJECT_MESSAGES.ADD_NEW_PROJECT;
     }
   }
 
@@ -139,8 +124,8 @@ export class AddEditProjectComponent implements OnInit {
 
   getPriceError(): string {
     if (this.projectForm.controls["PurchasingPrice"].hasError("min")) {
-      return this.VALIDATION_MESSAGES.min(1, this.PURCHASING_PRICE);
+      return this.VALIDATION_MESSAGES.min(1, this.PROJECT_MESSAGES.PURCHASING_PRICE);
     }
-    return this.VALIDATION_MESSAGES.required(this.PURCHASING_PRICE);
+    return this.VALIDATION_MESSAGES.required(this.PROJECT_MESSAGES.PURCHASING_PRICE);
   }
 }

@@ -42,22 +42,7 @@ export class CustomerReportComponent implements OnInit {
 
   dataSource: MatTableDataSource<CustomerReport> = new MatTableDataSource<CustomerReport>();
 
-  NUMBER = Reports.NUMBER;
-  DATE_OF_SALE = Reports.DATE_OF_SALE;
-  PROJECT = Reports.PROJECT_LABEL;
-  BLOCK_NO = Reports.BLOCK_NO_LABEL;
-  CARD = Reports.CARD_NO;
-  NAME = Reports.NAME_LABEL;
-  ADDRESS = Reports.ADDRESS;
-  NIC = Reports.NIC;
-  CONTACT = Reports.CONTACT_NO;
-  NOTE = Reports.NOTE;
-  NO_DATA = Reports.NO_DATA;
-  TITLE = Reports.REPORT_TITLE;
-  NO_REPORTS = Reports.NO_REPORTS;
-  EXPORT_TO_PDF = Reports.EXPORT_TO_PDF;
-  EXPORT_TO_EXCEL = Reports.EXPORT_TO_EXCEL;
-  BACK = Reports.BACK_TO_REPORTS;
+  REPORT_MESSAGES = Reports;
   REPORTS_URL = `/${ReportRoutes.Root}`;
 
   ngOnInit(): void {
@@ -100,7 +85,18 @@ export class CustomerReportComponent implements OnInit {
         lineColor: 200
       },
       head: [
-        [this.NUMBER, this.DATE_OF_SALE, this.PROJECT, this.BLOCK_NO, this.CARD, this.NAME, this.ADDRESS, this.NIC, this.CONTACT, this.NOTE]
+        [
+          Reports.NUMBER,
+          Reports.DATE_OF_SALE,
+          Reports.PROJECT_LABEL,
+          Reports.BLOCK_NO_LABEL,
+          Reports.CARD_NO,
+          Reports.NAME_LABEL,
+          Reports.ADDRESS,
+          Reports.NIC,
+          Reports.CONTACT_NO,
+          Reports.NOTE
+        ]
       ],
       body: this.dataSource.data.map(
         row => {

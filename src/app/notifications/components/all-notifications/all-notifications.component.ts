@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  NotificationColors,
-  Notifications,
-  NotificationTypes,
-  SnackBarStatus,
-  UserManagementMessages
-} from "../../../constants";
+import { NotificationColors, Notifications, NotificationTypes, SnackBarStatus } from "../../../constants";
 import { MatDialog } from "@angular/material/dialog";
 import { HelperService } from "../../../services/helper.service";
 import { NotificationService } from "../../../services/notification.service";
@@ -24,6 +18,16 @@ import { CustomerRoutes } from "../../../route-data";
 })
 export class AllNotificationsComponent implements OnInit {
 
+  NOTIFICATION_TYPES = NotificationTypes;
+  NOTIFICATION_COLORS = NotificationColors;
+  NOTIFICATION_MESSAGES = Notifications;
+  VIEW_CUSTOMER_URL = `/${CustomerRoutes.Root}/${CustomerRoutes.View.url}`;
+
+  notifications: Notification[] = [];
+  isLoading = true;
+
+  selectedNotificationType = NotificationTypes.ALL;
+
   constructor(
     private notificationService: NotificationService,
     private helperService: HelperService,
@@ -31,27 +35,6 @@ export class AllNotificationsComponent implements OnInit {
     private store: Store<NotificationsState>
   ) {
   }
-
-  MARK_AS_READ = Notifications.MARK_AS_READ_BUTTON_TEXT;
-  DOWNLOAD_LETTER = Notifications.DOWNLOAD_LETTER;
-  MARK_ALL_AS_READ = Notifications.MARK_ALL_AS_READ_BUTTON_TEXT;
-  DELETE_ALL = Notifications.DELETE_ALL;
-  MARK_AS_UNREAD = Notifications.MARK_AS_UNREAD_BUTTON_TEXT;
-  DELETE = UserManagementMessages.DELETE;
-  NO_NOTIFICATIONS = Notifications.NO_NOTIFICATIONS_MESSAGE_TEXT;
-
-  ERROR = NotificationTypes.ERROR;
-  SUCCESS = NotificationTypes.SUCCESS;
-  WARNING = NotificationTypes.WARNING;
-  INFO = NotificationTypes.INFO;
-  ARREARS = NotificationTypes.ARREARS;
-  COLORS = NotificationColors;
-  VIEW_CUSTOMER_URL = `/${CustomerRoutes.Root}/${CustomerRoutes.View.url}`;
-
-  notifications: Notification[] = [];
-  isLoading = true;
-  NOTIFICATION_TYPES = NotificationTypes;
-  selectedNotificationType = NotificationTypes.ALL;
 
   ngOnInit(): void {
     this.store.dispatch(NotificationActions.get_all());
