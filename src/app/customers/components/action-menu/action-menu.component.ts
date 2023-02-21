@@ -55,7 +55,7 @@ export class ActionMenuComponent implements OnInit {
       action: "onClickChangeInstallment"
     },
     {
-      actionText: Common.DELETE,
+      actionText: Common.DELETE_BUTTON_TEXT,
       iconName: 'delete',
       action: "onClickDelete"
     },

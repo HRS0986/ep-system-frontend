@@ -13,8 +13,8 @@ import { ProjectsModule } from "./projects/projects.module";
 import { NotificationsModule } from './notifications/notifications.module';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { DeleteConfirmPopupComponent } from './delete-confirm-popup/delete-confirm-popup.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -23,44 +23,43 @@ import { HttpClientModule } from "@angular/common/http";
 import { AngularFireFunctionsModule, REGION } from "@angular/fire/compat/functions";
 import { getFunctions, provideFunctions } from "@angular/fire/functions";
 import { AngularFireModule } from "@angular/fire/compat";
-import { NgxSpinnerModule } from "ngx-spinner";
 import { MAT_DIALOG_DEFAULT_OPTIONS } from "@angular/material/dialog";
 import { NgxMaskModule } from "ngx-mask";
 
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NotFoundComponent,
-        DeleteConfirmPopupComponent
-    ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        CustomersModule,
-        ReportsModule,
-        AuthModule,
-        MaterialModule,
-        ProjectsModule,
-        NotificationsModule,
-        HttpClientModule,
-        StoreModule.forRoot({}, {}),
-        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-        EffectsModule.forRoot([]),
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireFunctionsModule,
-        provideFirebaseApp(() => initializeApp(environment.firebase)),
-        provideAuth(() => getAuth()),
-        provideFirestore(() => getFirestore()),
-        provideFunctions(() => getFunctions()),
-        NgxMaskModule.forRoot()
-    ],
-    providers: [
-        { provide: REGION, useValue: 'us-central1' },
-        { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true, disableClose: true} },
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    NotFoundComponent,
+    DeleteConfirmPopupComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    CustomersModule,
+    ReportsModule,
+    AuthModule,
+    MaterialModule,
+    ProjectsModule,
+    NotificationsModule,
+    HttpClientModule,
+    StoreModule.forRoot({}, {}),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([]),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireFunctionsModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+    provideFunctions(() => getFunctions()),
+    NgxMaskModule.forRoot()
+  ],
+  providers: [
+    { provide: REGION, useValue: 'us-central1' },
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: true, disableClose: true } },
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

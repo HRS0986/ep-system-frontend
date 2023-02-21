@@ -1,122 +1,122 @@
 <h2 mat-dialog-title>{{TITLE}}</h2>
 <mat-card-content style="max-height: fit-content">
-    <form [formGroup]="projectForm">
-        <div class="w-100">
-            <div class="row w-100 mx-0">
-                <div class="col-6">
-                    <mat-form-field appearance="fill" class="w-100">
-                      <mat-label>{{PROJECT_MESSAGES.PROJECT_NAME}}</mat-label>
-                      <input matInput formControlName="ProjectName">
-                      <mat-error *ngIf="projectForm.controls['ProjectName'].invalid">
-                        {{VALIDATION_MESSAGES.required(PROJECT_MESSAGES.PROJECT_NAME)}}
-                      </mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="col-6">
-                  <mat-form-field appearance="fill" class="w-100">
-                    <mat-label>{{PROJECT_MESSAGES.LAND_NAME}}</mat-label>
-                    <input matInput formControlName="LandName">
-                    <mat-error *ngIf="projectForm.controls['LandName'].invalid">
-                      {{VALIDATION_MESSAGES.required(PROJECT_MESSAGES.LAND_NAME)}}
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-            </div>
-            <div class="row w-100 mx-0">
-                <div class="col-6">
-                  <mat-form-field appearance="fill" class="w-100">
-                    <mat-label>{{PROJECT_MESSAGES.PURCHASING_DATE}}</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="PurchasingDate">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-error *ngIf="projectForm.controls['PurchasingDate'].invalid">
-                      {{VALIDATION_MESSAGES.required(PROJECT_MESSAGES.PURCHASING_DATE)}}
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-                <div class="col-6">
-                  <mat-form-field appearance="fill" class="w-100">
-                    <mat-label>{{PROJECT_MESSAGES.PURCHASING_PRICE}}</mat-label>
-                    <input matInput type="number" formControlName="PurchasingPrice">
-                    <mat-error *ngIf="projectForm.controls['PurchasingPrice'].invalid">
-                      {{getPriceError()}}
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-            </div>
-            <div class="row w-100 mx-0">
-                <div class="col-6">
-                  <mat-form-field appearance="fill" class="w-100">
-                    <mat-label>{{PROJECT_MESSAGES.EXTEND}}</mat-label>
-                    <input matInput formControlName="Extend">
-                    <mat-error *ngIf="projectForm.controls['Extend'].invalid">
-                      {{VALIDATION_MESSAGES.required(PROJECT_MESSAGES.EXTEND)}}
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-                <div class="col-6">
-                  <mat-form-field appearance="fill" class="w-100">
-                    <mat-label>{{PROJECT_MESSAGES.DEED_NO}}</mat-label>
-                    <input matInput formControlName="DeedNo">
-                    <mat-error *ngIf="projectForm.controls['DeedNo'].invalid">
-                      {{VALIDATION_MESSAGES.required(PROJECT_MESSAGES.DEED_NO)}}
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-            </div>
-            <div class="row w-100 mx-0">
-                <mat-form-field appearance="fill" class="w-100">
-                  <mat-label>{{PROJECT_MESSAGES.ID}}</mat-label>
-                  <input matInput formControlName="ID">
-                </mat-form-field>
-            </div>
-            <div class="row w-100 mx-0">
-              <mat-form-field appearance="fill" class="w-100">
-                <mat-label>{{PROJECT_MESSAGES.PREVIOUS_OWNER}}</mat-label>
-                <input matInput formControlName="PreviousOwner">
-                <mat-error *ngIf="projectForm.controls['PreviousOwner'].invalid">
-                  {{VALIDATION_MESSAGES.required(PROJECT_MESSAGES.PREVIOUS_OWNER)}}
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="row w-100 mx-0">
-              <mat-form-field appearance="fill" class="w-100">
-                <mat-label>{{PROJECT_MESSAGES.PRESENT_OWNER}}</mat-label>
-                <input matInput formControlName="PresentOwner">
-                <mat-error *ngIf="projectForm.controls['PresentOwner'].invalid">
-                  {{VALIDATION_MESSAGES.required(PROJECT_MESSAGES.PRESENT_OWNER)}}
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="row w-100 mx-0">
-              <mat-form-field appearance="fill" class="w-100">
-                <mat-label>{{PROJECT_MESSAGES.ADDRESS}}</mat-label>
-                <input matInput formControlName="Address">
-                <mat-error *ngIf="projectForm.controls['Address'].invalid">
-                  {{VALIDATION_MESSAGES.required(PROJECT_MESSAGES.ADDRESS)}}
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="row w-100 mx-0">
-                <mat-form-field appearance="fill" class="w-100">
-                  <mat-label>{{PROJECT_MESSAGES.REMARKS}}</mat-label>
-                  <input matInput formControlName="Remarks">
-                </mat-form-field>
-            </div>
+  <form [formGroup]="projectForm">
+    <div class="w-100">
+      <div class="row w-100 mx-0">
+        <div class="col-6">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>{{PROJECT_MESSAGES.PROJECT_NAME}}</mat-label>
+            <input matInput formControlName="ProjectName">
+            <mat-error *ngIf="projectForm.controls['ProjectName'].invalid">
+              {{VALIDATION_MESSAGES.required(PROJECT_MESSAGES.PROJECT_NAME)}}
+            </mat-error>
+          </mat-form-field>
         </div>
-    </form>
+        <div class="col-6">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>{{PROJECT_MESSAGES.LAND_NAME}}</mat-label>
+            <input matInput formControlName="LandName">
+            <mat-error *ngIf="projectForm.controls['LandName'].invalid">
+              {{VALIDATION_MESSAGES.required(PROJECT_MESSAGES.LAND_NAME)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row w-100 mx-0">
+        <div class="col-6">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>{{PROJECT_MESSAGES.PURCHASING_DATE}}</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="PurchasingDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="projectForm.controls['PurchasingDate'].invalid">
+              {{VALIDATION_MESSAGES.required(PROJECT_MESSAGES.PURCHASING_DATE)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>{{PROJECT_MESSAGES.PURCHASING_PRICE}}</mat-label>
+            <input matInput type="number" formControlName="PurchasingPrice">
+            <mat-error *ngIf="projectForm.controls['PurchasingPrice'].invalid">
+              {{getPriceError()}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row w-100 mx-0">
+        <div class="col-6">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>{{PROJECT_MESSAGES.EXTEND}}</mat-label>
+            <input matInput formControlName="Extend">
+            <mat-error *ngIf="projectForm.controls['Extend'].invalid">
+              {{VALIDATION_MESSAGES.required(PROJECT_MESSAGES.EXTEND)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>{{PROJECT_MESSAGES.DEED_NO}}</mat-label>
+            <input matInput formControlName="DeedNo">
+            <mat-error *ngIf="projectForm.controls['DeedNo'].invalid">
+              {{VALIDATION_MESSAGES.required(PROJECT_MESSAGES.DEED_NO)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row w-100 mx-0">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>{{PROJECT_MESSAGES.ID}}</mat-label>
+          <input matInput formControlName="ID">
+        </mat-form-field>
+      </div>
+      <div class="row w-100 mx-0">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>{{PROJECT_MESSAGES.PREVIOUS_OWNER}}</mat-label>
+          <input matInput formControlName="PreviousOwner">
+          <mat-error *ngIf="projectForm.controls['PreviousOwner'].invalid">
+            {{VALIDATION_MESSAGES.required(PROJECT_MESSAGES.PREVIOUS_OWNER)}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="row w-100 mx-0">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>{{PROJECT_MESSAGES.PRESENT_OWNER}}</mat-label>
+          <input matInput formControlName="PresentOwner">
+          <mat-error *ngIf="projectForm.controls['PresentOwner'].invalid">
+            {{VALIDATION_MESSAGES.required(PROJECT_MESSAGES.PRESENT_OWNER)}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="row w-100 mx-0">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>{{PROJECT_MESSAGES.ADDRESS}}</mat-label>
+          <input matInput formControlName="Address">
+          <mat-error *ngIf="projectForm.controls['Address'].invalid">
+            {{VALIDATION_MESSAGES.required(PROJECT_MESSAGES.ADDRESS)}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="row w-100 mx-0">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>{{PROJECT_MESSAGES.REMARKS}}</mat-label>
+          <input matInput formControlName="Remarks">
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
 </mat-card-content>
 <mat-dialog-actions>
-    <div class="row w-100 mx-0 align-items-center justify-content-end">
-        <div class="d-flex justify-content-end">
-          <button class="btn-p" mat-raised-button color="primary" cdkFocusInitial (click)="onClickSave()">
-            <mat-icon>done</mat-icon>
-            {{COMMON_MESSAGES.SAVE_BUTTON_TEXT}}
-          </button>
-          <button mat-button mat-dialog-close [mat-dialog-close]="false">
-            <mat-icon>close</mat-icon>
-            {{COMMON_MESSAGES.CANCEL_BUTTON_TEXT}}
-          </button>
-        </div>
+  <div class="row w-100 mx-0 align-items-center justify-content-end">
+    <div class="d-flex justify-content-end">
+      <button class="btn-p" mat-raised-button color="primary" cdkFocusInitial (click)="onClickSave()">
+        <mat-icon>done</mat-icon>
+        {{COMMON_MESSAGES.SAVE_BUTTON_TEXT}}
+      </button>
+      <button mat-button mat-dialog-close [mat-dialog-close]="false">
+        <mat-icon>close</mat-icon>
+        {{COMMON_MESSAGES.CANCEL_BUTTON_TEXT}}
+      </button>
     </div>
+  </div>
 </mat-dialog-actions>

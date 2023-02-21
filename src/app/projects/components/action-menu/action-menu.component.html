@@ -1,10 +1,10 @@
 <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>settings</mat-icon>
+  <mat-icon>settings</mat-icon>
 </button>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item *ngFor="let menuItem of ACTION_MENU_ITEMS" (click)="invokeAction(menuItem.action)">
-        <mat-icon>{{menuItem.iconName}}</mat-icon>
-        <span>{{menuItem.actionText}}</span>
-    </button>
+  <button mat-menu-item *ngFor="let menuItem of ACTION_MENU_ITEMS" (click)="invokeAction(menuItem.action)">
+    <mat-icon>{{menuItem.iconName}}</mat-icon>
+    <span>{{menuItem.actionText}}</span>
+  </button>
 </mat-menu>

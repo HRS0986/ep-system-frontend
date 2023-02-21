@@ -21,6 +21,7 @@ export class AllProjectsComponent implements OnInit {
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   displayedColumns: string[] = [
     Projects.ID,
     Projects.PROJECT_NAME,
@@ -33,7 +34,6 @@ export class AllProjectsComponent implements OnInit {
     Projects.PRESENT_OWNER,
     Projects.DEED_NO,
     Projects.REMARKS,
-
     Common.ACTION_COLUMN_TEXT
   ];
 

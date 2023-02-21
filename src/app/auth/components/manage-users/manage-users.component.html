@@ -36,8 +36,8 @@
               <td mat-cell *matCellDef="let row"> {{row.PhoneNumber}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="{{USERS_MESSAGES.DELETE}}">
-              <th mat-header-cell *matHeaderCellDef> {{USERS_MESSAGES.DELETE}} </th>
+            <ng-container matColumnDef="{{USERS_MESSAGES.DELETE_USER_TITLE}}">
+              <th mat-header-cell *matHeaderCellDef> {{USERS_MESSAGES.DELETE_USER_TITLE}} </th>
               <td mat-cell *matCellDef="let row">
                 <button mat-raised-button color="warn" (click)="onClickDelete(row.UID)">
                   <mat-icon>delete</mat-icon>&nbsp;

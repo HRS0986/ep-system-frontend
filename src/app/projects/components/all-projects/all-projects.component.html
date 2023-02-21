@@ -1,103 +1,103 @@
 <mat-card class="mx-3" style="margin-bottom: 70px; min-width: fit-content;">
-    <mat-card-content>
-        <div class="d-flex justify-content-center flex-column align-items-center">
-            <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <mat-card-content>
+    <div class="d-flex justify-content-center flex-column align-items-center">
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+    </div>
+    <div>
+      <div class="row w-100">
+        <div class="col-9 d-flex align-items-center">
+          <mat-form-field *ngIf="!isLoading" appearance="standard" class="w-25 left-0">
+            <mat-label>{{COMMON_MESSAGES.SEARCH_LABEL}}</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia">
+          </mat-form-field>
         </div>
-        <div>
-            <div class="row w-100">
-                <div class="col-9 d-flex align-items-center">
-                    <mat-form-field *ngIf="!isLoading" appearance="standard" class="w-25 left-0">
-                        <mat-label>{{COMMON_MESSAGES.SEARCH_LABEL}}</mat-label>
-                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia">
-                    </mat-form-field>
-                </div>
-                <div class="col-3 d-flex justify-content-end mb-2">
-                  <button *ngIf="!isLoading" class="btn-p" style="height: fit-content" mat-raised-button
-                          (click)="ngOnClickAdd()" color="primary">
-                    <mat-icon>domain_add</mat-icon> &nbsp;
-                    {{PROJECT_MESSAGES.ADD_NEW_PROJECT}}
-                  </button>
-                </div>
-            </div>
-
-            <div [hidden]="isLoading" class="mat-elevation-z8 w-100">
-              <table mat-table [dataSource]="dataSource" matSort>
-
-                <ng-container matColumnDef="{{PROJECT_MESSAGES.ID}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.ID}} </th>
-                  <td mat-cell *matCellDef="let row"> {{ row.ID }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="{{PROJECT_MESSAGES.PROJECT_NAME}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.PROJECT_NAME}} </th>
-                  <td mat-cell *matCellDef="let row"> {{ row.ProjectName }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="{{PROJECT_MESSAGES.LAND_NAME}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.LAND_NAME}} </th>
-                  <td mat-cell *matCellDef="let row"> {{ row.LandName }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="{{PROJECT_MESSAGES.ADDRESS}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.ADDRESS}} </th>
-                  <td mat-cell *matCellDef="let row"> {{ row.Address }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="{{PROJECT_MESSAGES.PURCHASING_DATE}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.PURCHASING_DATE}} </th>
-                  <td mat-cell *matCellDef="let row"> {{ row.PurchasingDate.toDate() | date: 'dd/MM/yyyy' }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="{{PROJECT_MESSAGES.PURCHASING_PRICE}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.PURCHASING_PRICE}} </th>
-                  <td mat-cell *matCellDef="let row">
-                    {{ row.PurchasingPrice }}
-                  </td>
-                </ng-container>
-
-                <ng-container matColumnDef="{{PROJECT_MESSAGES.EXTEND}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.EXTEND}} </th>
-                  <td mat-cell *matCellDef="let row"> {{ row.Extend }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="{{PROJECT_MESSAGES.PREVIOUS_OWNER}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.PREVIOUS_OWNER}}</th>
-                  <td mat-cell *matCellDef="let row"> {{ row.PreviousOwner }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="{{PROJECT_MESSAGES.PRESENT_OWNER}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.PRESENT_OWNER}}</th>
-                  <td mat-cell *matCellDef="let row"> {{ row.PresentOwner }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="{{PROJECT_MESSAGES.DEED_NO}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.DEED_NO}}</th>
-                  <td mat-cell *matCellDef="let row"> {{ row.DeedNo }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="{{PROJECT_MESSAGES.REMARKS}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.REMARKS}}</th>
-                  <td mat-cell *matCellDef="let row"> {{row.Remarks }} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="{{COMMON_MESSAGES.ACTION_COLUMN_TEXT}}">
-                  <th mat-header-cell *matHeaderCellDef> {{COMMON_MESSAGES.ACTION_COLUMN_TEXT}} </th>
-                  <td mat-cell *matCellDef="let row">
-                    <app-action-menu [data]="row"></app-action-menu>
-                  </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-                <tr class="mat-row" *matNoDataRow>
-                  <td class="mat-cell" colspan="4">{{COMMON_MESSAGES.NO_SEARCH_RESULT_TEXT}}</td>
-                    </tr>
-                </table>
-
-                <mat-paginator [pageSizeOptions]="[25, 5, 10, 100]"></mat-paginator>
-
-            </div>
+        <div class="col-3 d-flex justify-content-end mb-2">
+          <button *ngIf="!isLoading" class="btn-p" style="height: fit-content" mat-raised-button
+                  (click)="ngOnClickAdd()" color="primary">
+            <mat-icon>domain_add</mat-icon> &nbsp;
+            {{PROJECT_MESSAGES.ADD_NEW_PROJECT}}
+          </button>
         </div>
-    </mat-card-content>
+      </div>
+
+      <div [hidden]="isLoading" class="mat-elevation-z8 w-100">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="{{PROJECT_MESSAGES.ID}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.ID}} </th>
+            <td mat-cell *matCellDef="let row"> {{ row.ID }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="{{PROJECT_MESSAGES.PROJECT_NAME}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.PROJECT_NAME}} </th>
+            <td mat-cell *matCellDef="let row"> {{ row.ProjectName }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="{{PROJECT_MESSAGES.LAND_NAME}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.LAND_NAME}} </th>
+            <td mat-cell *matCellDef="let row"> {{ row.LandName }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="{{PROJECT_MESSAGES.ADDRESS}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.ADDRESS}} </th>
+            <td mat-cell *matCellDef="let row"> {{ row.Address }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="{{PROJECT_MESSAGES.PURCHASING_DATE}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.PURCHASING_DATE}} </th>
+            <td mat-cell *matCellDef="let row"> {{ row.PurchasingDate.toDate() | date: 'dd/MM/yyyy' }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="{{PROJECT_MESSAGES.PURCHASING_PRICE}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.PURCHASING_PRICE}} </th>
+            <td mat-cell *matCellDef="let row">
+              {{ row.PurchasingPrice }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="{{PROJECT_MESSAGES.EXTEND}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.EXTEND}} </th>
+            <td mat-cell *matCellDef="let row"> {{ row.Extend }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="{{PROJECT_MESSAGES.PREVIOUS_OWNER}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.PREVIOUS_OWNER}}</th>
+            <td mat-cell *matCellDef="let row"> {{ row.PreviousOwner }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="{{PROJECT_MESSAGES.PRESENT_OWNER}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.PRESENT_OWNER}}</th>
+            <td mat-cell *matCellDef="let row"> {{ row.PresentOwner }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="{{PROJECT_MESSAGES.DEED_NO}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.DEED_NO}}</th>
+            <td mat-cell *matCellDef="let row"> {{ row.DeedNo }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="{{PROJECT_MESSAGES.REMARKS}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{PROJECT_MESSAGES.REMARKS}}</th>
+            <td mat-cell *matCellDef="let row"> {{row.Remarks }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="{{COMMON_MESSAGES.ACTION_COLUMN_TEXT}}">
+            <th mat-header-cell *matHeaderCellDef> {{COMMON_MESSAGES.ACTION_COLUMN_TEXT}} </th>
+            <td mat-cell *matCellDef="let row">
+              <app-action-menu [data]="row"></app-action-menu>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">{{COMMON_MESSAGES.NO_SEARCH_RESULT_TEXT}}</td>
+          </tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[25, 5, 10, 100]"></mat-paginator>
+
+      </div>
+    </div>
+  </mat-card-content>
 </mat-card>

@@ -30,41 +30,41 @@ import { MatNativeDateModule } from "@angular/material/core";
 
 
 const materialModules = [
-    MatGridListModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatListModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatDialogModule,
-    MatBadgeModule,
-    MatProgressSpinnerModule,
-    MatTooltipModule,
-    MatInputModule,
-    MatSnackBarModule,
-    MatSidenavModule,
-    MatTabsModule,
-    MatDatepickerModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatMenuModule,
-    MatSlideToggleModule,
-    MatSelectModule,
-    MatExpansionModule,
-    MatCheckboxModule,
-    MatSortModule,
-    MatStepperModule,
-    MatNativeDateModule
+  MatGridListModule,
+  MatButtonModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatListModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatDialogModule,
+  MatBadgeModule,
+  MatProgressSpinnerModule,
+  MatTooltipModule,
+  MatInputModule,
+  MatSnackBarModule,
+  MatSidenavModule,
+  MatTabsModule,
+  MatDatepickerModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatMenuModule,
+  MatSlideToggleModule,
+  MatSelectModule,
+  MatExpansionModule,
+  MatCheckboxModule,
+  MatSortModule,
+  MatStepperModule,
+  MatNativeDateModule
 ];
 
 @NgModule({
-    declarations: [],
-    imports: [
-        CommonModule,
-        ...materialModules
-    ],
-    exports: materialModules
+  declarations: [],
+  imports: [
+    CommonModule,
+    ...materialModules
+  ],
+  exports: materialModules
 })
 
 export class MaterialModule {

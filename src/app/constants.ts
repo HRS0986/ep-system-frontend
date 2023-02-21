@@ -16,15 +16,11 @@ export enum Roles {
 
 export enum CustomerTypes {
   ADVANCED_CUSTOMER,
-  EP_CUSTOMER,
-  RESALE_CUSTOMER
+  EP_CUSTOMER
 }
 
 export enum NotificationTypes {
   SUCCESS,
-  ERROR,
-  WARNING,
-  INFO,
   ARREARS,
   ALL
 }
@@ -36,6 +32,7 @@ export class Common {
   public static readonly SAVE_BUTTON_TEXT = 'Save';
   public static readonly CANCEL_BUTTON_TEXT = 'Cancel';
   public static readonly CLOSE_BUTTON_TEXT = 'Close';
+  public static readonly BACK_BUTTON_TEXT = 'Back';
   public static readonly ACTION_COLUMN_TEXT = 'Action';
   public static readonly SEARCH_LABEL = 'Search';
   public static readonly NO_SEARCH_RESULT_TEXT = 'No search result found';
@@ -43,24 +40,22 @@ export class Common {
   public static readonly SAVING = 'Saving... Please wait';
   public static readonly PAGE_NOT_FOUND = 'Page Not Found';
   public static readonly EDIT = 'Edit';
-  public static readonly DELETE = 'Delete';
-  public static readonly BACK = 'Back';
+  public static readonly DELETE_BUTTON_TEXT = 'Delete';
 
 }
 
 export class AuthMessages {
   public static readonly LOGIN_TOKEN = 'brLoginToken';
   public static readonly LOGIN_BUTTON_TEXT = 'Login';
+  public static readonly LOGIN_TITLE = 'Login';
   public static readonly PASSWORD_LABEL = 'Password';
   public static readonly EMAIL_LABEl = 'Email';
-  public static readonly LOGIN_TITLE = 'Login';
   public static readonly WRONG_CREDENTIALS_MESSAGE_TEXT = 'Incorrect email or password.';
   public static readonly WRONG_PASSWORD_MESSAGE_TEXT = 'Incorrect old password.';
   public static readonly SIGN_UP_TITLE = 'Setup Your Account';
   public static readonly CURRENT_PASSWORD_LABEL = 'Current Password';
   public static readonly FIRST_NAME_LABEL = 'First Name';
   public static readonly LAST_NAME_LABEL = 'Last Name';
-  public static readonly EMAIL_LABEL = 'Email';
   public static readonly NEW_PASSWORD_LABEL = 'New Password';
   public static readonly CONFIRM_PASSWORD_LABEL = 'Confirm Password';
   public static readonly SIGN_UP_BUTTON_TEXT = 'Sign Up';
@@ -80,7 +75,6 @@ export class Customer {
   public static readonly SAVE_BUTTON_TEXT = 'Save Details';
   public static readonly SETTLEMENT_BUTTON_TEXT = 'Settle Payment';
   public static readonly CHANGE_INSTALLMENT_BUTTON_TEXT = 'Change Installment';
-  public static readonly BACK = 'Back';
   public static readonly DELETE_CUSTOMER_TEXT = 'Customer Deleted Successfully';
   public static readonly DELETE_CUSTOMER_TITLE = 'Delete Customer';
   public static readonly DELETE_CUSTOMER_MESSAGE = 'Are you sure you want to delete this customer?';
@@ -161,7 +155,6 @@ export class AllCustomers {
   public static readonly LEDGER_BUTTON_TEXT = 'Ledger';
   public static readonly SETTLE_PAYMENT_BUTTON_TEXT = 'Settle Payment';
   public static readonly CHANGE_INSTALLMENT_BUTTON_TEXT = 'Change Installment';
-
 }
 
 export class LedgerMessages {
@@ -186,7 +179,6 @@ export const Particulars: { [key: string]: { value: string, display: boolean } }
 
 export class ChangeInstallment {
   public static readonly CHANGE_INSTALLMENT_TITLE = 'Change Installment';
-  public static readonly CURRENT_INSTALLMENT_LABEL = 'Current Installment';
   public static readonly CHANGE_BUTTON_TEXT = 'Change';
   public static readonly NEW_INSTALLMENT_LABEL = 'New Installment';
   public static readonly NEW_MONTH_COUNT_LABEL = 'New Month Count';
@@ -211,7 +203,6 @@ export class MakePayment {
 
 export class Settlement {
   public static readonly SETTLEMENT_TITLE = 'Settle Payment';
-  public static readonly NAME_LABEL = 'Name';
   public static readonly TOTAL_RECEIVABLE_BALANCE_LABEL = 'Total Receivable Balance';
   public static readonly PAID_AMOUNT_LABEL = 'Paid Amount';
   public static readonly REDUCED_INTEREST_LABEL = 'Reduced Interest';
@@ -255,7 +246,6 @@ export class UserManagementMessages {
   public static readonly IS_DISABLE_LABEL = 'Disable';
   public static readonly ADD_NEW_USER = 'Add User';
   public static readonly PASSWORD_LABEL = 'Password';
-  public static readonly DELETE = 'Delete';
   public static readonly DELETE_USER_TITLE = 'Delete User';
   public static readonly DELETE_USER_MESSAGE = 'Are you sure you want to delete this user?';
   public static readonly USER_ADDED_SUCCESSFULLY_MESSAGE_TEXT = 'User added successfully';
@@ -263,7 +253,6 @@ export class UserManagementMessages {
 
 export class Projects {
   public static readonly ADD_NEW_PROJECT = "Add New Project";
-  public static readonly ADD_PROJECT_BUTTON_TEXT = "Add Project";
   public static readonly EDIT_PROJECT = "Edit Project";
   public static readonly PURCHASING_DATE = "Purchasing Date";
   public static readonly PURCHASING_PRICE = "Purchasing Price";
@@ -306,7 +295,6 @@ export class ErrorMessages {
 }
 
 export class Reports {
-  public static readonly REPORT_TITLE = 'Reports';
   public static readonly CASH_REPORT_TITLE = 'Cash Collection Report';
   public static readonly CUSTOMER_REPORT_TITLE = 'Customer Report';
   public static readonly ARREARS_REPORT_TITLE = 'Arrears Report';
