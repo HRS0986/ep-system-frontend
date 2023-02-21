@@ -32,7 +32,8 @@ export class ReportListComponent implements OnInit {
       itemNumber: 4,
       itemUrl: ReportRoutes.Ep.url
     }
-  ]
+  ];
+
   displayedColumns: string[] = [
     Reports.REPORT_NUMBER,
     Reports.REPORT_NAME,

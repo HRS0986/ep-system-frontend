@@ -1,7 +1,7 @@
-import { SnackBarStatus, NotificationTypes, CustomerTypes, Roles } from "./constants";
+import { CustomerTypes, NotificationTypes, Roles, SnackBarStatus } from "./constants";
 import firebase from "firebase/compat";
-import Timestamp = firebase.firestore.Timestamp;
 import { MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from "@angular/material/snack-bar";
+import Timestamp = firebase.firestore.Timestamp;
 
 export interface User {
   UID?: string;

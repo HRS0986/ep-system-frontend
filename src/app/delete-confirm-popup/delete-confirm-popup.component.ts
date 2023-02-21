@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AllCustomers, Common } from "../constants";
+import { Common } from "../constants";
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { DeleteConfig } from "../types";
 
@@ -12,9 +12,8 @@ export class DeleteConfirmPopupComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DeleteConfig) { }
 
-  DELETE = AllCustomers.DELETE_BUTTON_TEXT;
+  DELETE = Common.DELETE_BUTTON_TEXT;
   CANCEL = Common.CANCEL_BUTTON_TEXT;
-
 
   ngOnInit(): void {
   }

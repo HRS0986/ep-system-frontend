@@ -6,44 +6,44 @@ import { AuthRoutes, CustomerRoutes, NotificationRoutes, ProjectRoutes, ReportRo
 
 
 const routes: Routes = [
-    {
-        path: '',
-        redirectTo: `/${CustomerRoutes.Root}/${CustomerRoutes.Ep.url}`,
-        pathMatch: 'full'
-    },
-    {
-        path: CustomerRoutes.Root,
-        loadChildren: () => import("./customers/customers.module").then(m => m.CustomersModule),
-        canActivate: [LoginRequiredGuard]
-    },
-    {
-        path: ReportRoutes.Root,
-        loadChildren: () => import("./reports/reports.module").then(m => m.ReportsModule),
-        canActivate: [LoginRequiredGuard]
-    },
-    {
-        path: AuthRoutes.Root,
-        loadChildren: () => import("./auth/auth.module").then(m => m.AuthModule)
-    },
-    {
-        path: NotificationRoutes.Root,
-        loadChildren: () => import("./notifications/notifications.module").then(m => m.NotificationsModule),
-        canActivate: [LoginRequiredGuard]
-    },
-    {
-        path: ProjectRoutes.Root,
-        loadChildren: () => import("./projects/projects.module").then(m => m.ProjectsModule),
-        canActivate: [LoginRequiredGuard]
-    },
-    {
-        path: "**",
-        component: NotFoundComponent
-    }
+  {
+    path: '',
+    redirectTo: `/${CustomerRoutes.Root}/${CustomerRoutes.Ep.url}`,
+    pathMatch: 'full'
+  },
+  {
+    path: CustomerRoutes.Root,
+    loadChildren: () => import("./customers/customers.module").then(m => m.CustomersModule),
+    canActivate: [LoginRequiredGuard]
+  },
+  {
+    path: ReportRoutes.Root,
+    loadChildren: () => import("./reports/reports.module").then(m => m.ReportsModule),
+    canActivate: [LoginRequiredGuard]
+  },
+  {
+    path: AuthRoutes.Root,
+    loadChildren: () => import("./auth/auth.module").then(m => m.AuthModule)
+  },
+  {
+    path: NotificationRoutes.Root,
+    loadChildren: () => import("./notifications/notifications.module").then(m => m.NotificationsModule),
+    canActivate: [LoginRequiredGuard]
+  },
+  {
+    path: ProjectRoutes.Root,
+    loadChildren: () => import("./projects/projects.module").then(m => m.ProjectsModule),
+    canActivate: [LoginRequiredGuard]
+  },
+  {
+    path: "**",
+    component: NotFoundComponent
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
-    exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {
 }

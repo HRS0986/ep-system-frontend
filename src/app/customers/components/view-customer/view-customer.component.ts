@@ -66,7 +66,7 @@ export class ViewCustomerComponent implements OnInit {
   SETTLEMENT_BUTTON_TEXT: string = Customer.SETTLEMENT_BUTTON_TEXT;
   CHANGE_INSTALLMENT_BUTTON_TEXT: string = Customer.CHANGE_INSTALLMENT_BUTTON_TEXT;
 
-  BACK = Common.BACK;
+  BACK = Common.BACK_BUTTON_TEXT;
   VALIDATION_MESSAGES = ErrorMessages;
   CUSTOMER_MESSAGES = NewCustomer;
 

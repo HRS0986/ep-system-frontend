@@ -9,72 +9,73 @@ import { AddEditProjectComponent } from "../popups/add-edit-project/add-edit-pro
 import { DeleteConfirmPopupComponent } from "../../../delete-confirm-popup/delete-confirm-popup.component";
 
 @Component({
-    selector: 'app-action-menu',
-    templateUrl: './action-menu.component.html',
-    styleUrls: ['./action-menu.component.scss']
+  selector: 'app-action-menu',
+  templateUrl: './action-menu.component.html',
+  styleUrls: ['./action-menu.component.scss']
 })
 export class ActionMenuComponent implements OnInit {
 
-    constructor(
-        private router: Router,
-        private matDialog: MatDialog,
-        private projectsService: ProjectService,
-        private helperService: HelperService
-    ) {
+  constructor(
+    private router: Router,
+    private matDialog: MatDialog,
+    private projectsService: ProjectService,
+    private helperService: HelperService
+  ) {
+  }
+
+  @Input() data!: Project;
+
+  ACTION_MENU_ITEMS: ActionMenuItem<ActionMenuComponent>[] = [
+    {
+      actionText: Common.DELETE_BUTTON_TEXT,
+      iconName: 'delete',
+      action: "onClickDelete"
+    },
+    {
+      actionText: Common.EDIT,
+      iconName: 'edit',
+      action: "onClickEdit"
     }
+  ];
 
-    @Input() data!: Project;
+  ngOnInit(): void {
+  }
 
-    ACTION_MENU_ITEMS: ActionMenuItem<ActionMenuComponent>[] = [
-        {
-            actionText: Common.DELETE,
-            iconName: 'delete',
-            action: "onClickDelete"
-        },
-        {
-            actionText: Common.EDIT,
-            iconName: 'edit',
-            action: "onClickEdit"
-        }
-    ];
+  onClickEdit(): void {
+    const dialogRef = this.matDialog.open(AddEditProjectComponent, {
+      width: '800px',
+      data: { project: this.data, edit: 1 }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 
-    ngOnInit(): void { }
+  onClickDelete(): void {
+    debugger;
+    const dialogRef = this.matDialog.open(DeleteConfirmPopupComponent, {
+      width: '350px',
+      data: {
+        title: Projects.DELETE_TITLE,
+        body: Projects.DELETE_CONFIRM,
+        entityName: this.data.ProjectName
+      }
+    });
 
-    onClickEdit(): void {
-        const dialogRef = this.matDialog.open(AddEditProjectComponent, {
-            width: '800px',
-            data: { project: this.data, edit: 1 }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.projectsService.DeleteProject(this.data.ID).then(() => {
+          this.helperService.openSnackBar({
+            text: Projects.PROJECT_DELETED_SUCCESS,
+            status: SnackBarStatus.SUCCESS
+          });
         });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-        });
-    }
+      }
+    });
+  }
 
-    onClickDelete(): void {
-        debugger;
-        const dialogRef = this.matDialog.open(DeleteConfirmPopupComponent, {
-            width: '350px',
-            data: {
-                title: Projects.DELETE_TITLE,
-                body: Projects.DELETE_CONFIRM,
-                entityName: this.data.ProjectName
-            }
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.projectsService.DeleteProject(this.data.ID).then(() => {
-                    this.helperService.openSnackBar({
-                        text: Projects.PROJECT_DELETED_SUCCESS,
-                        status: SnackBarStatus.SUCCESS
-                    });
-                });
-            }
-        });
-    }
-
-    invokeAction(action: keyof ActionMenuComponent) {
-        (this[action] as (() => void))();
-    }
+  invokeAction(action: keyof ActionMenuComponent) {
+    (this[action] as (() => void))();
+  }
 
 }
