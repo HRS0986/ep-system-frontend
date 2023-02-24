@@ -2,13 +2,17 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from "@angular/material/snack-bar";
 import { SnackBarConfig } from "../types";
 import { AuthMessages } from "../constants";
+import { MatDialog } from "@angular/material/dialog";
+import { BackwardConfirmPopupComponent } from "../backward-confirm-popup/backward-confirm-popup.component";
+import { lastValueFrom } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HelperService {
 
-  constructor(private matSnackBar: MatSnackBar) { }
+  constructor(private matSnackBar: MatSnackBar, private matDialog: MatDialog) {
+  }
 
   openSnackBar(config: SnackBarConfig) {
     const action = config.action || 'x'
@@ -41,5 +45,10 @@ export class HelperService {
       this.generateStrongPassword();
     }
     return password;
+  }
+
+  canGoBack(): Promise<boolean> {
+    const dialogRef = this.matDialog.open(BackwardConfirmPopupComponent, { width: '400px' });
+    return lastValueFrom(dialogRef.afterClosed());
   }
 }

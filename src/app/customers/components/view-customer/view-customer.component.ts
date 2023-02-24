@@ -29,6 +29,7 @@ import { ProjectsState } from "../../../projects/store/projects.state";
 import { projectsSelector } from "../../../projects/store/projects.selectors";
 import { ProjectActions } from "../../../projects/store/projects.actions";
 import { singleCustomerSelector } from "../../store/customers.selectors";
+import { CanComponentDeactivate } from "../../../guards/save-data.guard";
 import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
@@ -36,7 +37,7 @@ import Timestamp = firebase.firestore.Timestamp;
   templateUrl: './view-customer.component.html',
   styleUrls: ['./view-customer.component.scss']
 })
-export class ViewCustomerComponent implements OnInit {
+export class ViewCustomerComponent implements OnInit, CanComponentDeactivate {
 
   constructor(
     private formBuilder: FormBuilder,
@@ -327,6 +328,16 @@ export class ViewCustomerComponent implements OnInit {
         });
       }
     });
+  }
+
+  canDeactivate(): Promise<boolean> | boolean {
+    if (this.isFormChanged) {
+      return this.helperService.canGoBack().then(result => {
+        return result;
+      });
+    } else {
+      return true;
+    }
   }
 
 }

@@ -25,13 +25,15 @@ import { getFunctions, provideFunctions } from "@angular/fire/functions";
 import { AngularFireModule } from "@angular/fire/compat";
 import { MAT_DIALOG_DEFAULT_OPTIONS } from "@angular/material/dialog";
 import { NgxMaskModule } from "ngx-mask";
+import { BackwardConfirmPopupComponent } from './backward-confirm-popup/backward-confirm-popup.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundComponent,
-    DeleteConfirmPopupComponent
+    DeleteConfirmPopupComponent,
+    BackwardConfirmPopupComponent
   ],
   imports: [
     BrowserModule,

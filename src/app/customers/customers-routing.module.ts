@@ -7,6 +7,7 @@ import { OldCustomersComponent } from "./components/old-customers/old-customers.
 import { ViewCustomerComponent } from "./components/view-customer/view-customer.component";
 import { LedgerComponent } from "./components/ledger/ledger.component";
 import { CustomerTablesComponent } from "./components/customer-tables/customer-tables.component";
+import { SaveDataGuard } from "../guards/save-data.guard";
 
 const routes: Routes = [
     {
@@ -34,11 +35,12 @@ const routes: Routes = [
         component: OldCustomersComponent,
         data: { title: CustomerRoutes.Old.title }
     },
-    {
-        path: CustomerRoutes.View.url,
-        component: ViewCustomerComponent,
-        data: { title: CustomerRoutes.View.title }
-    },
+  {
+    path: CustomerRoutes.View.url,
+    component: ViewCustomerComponent,
+    data: { title: CustomerRoutes.View.title },
+    canDeactivate: [SaveDataGuard]
+  },
     {
         path: CustomerRoutes.Ledger.url,
         component: LedgerComponent,
