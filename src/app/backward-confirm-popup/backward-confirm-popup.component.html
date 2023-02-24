@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>{{COMMON_MESSAGES.WARNING_TITLE}}</h2>
+<div mat-dialog-content>
+  You have unsaved changes. Do you want to exit without saving changes?
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="false">{{COMMON_MESSAGES.NO_BUTTON_TEXT}}</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="true">{{COMMON_MESSAGES.YES_BUTTON_TEXT}}</button>
+</div>
