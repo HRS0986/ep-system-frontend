@@ -14,9 +14,6 @@ import { Store } from "@ngrx/store";
 import { AuthState } from "../../store/auth.state";
 import { AuthActions } from "../../store/auth.actions";
 import { authUsersSelector } from "../../store/auth.selectors";
-import { filter } from "rxjs";
-import { isTypeMatched } from "../../../helpers/utils";
-import { KEYS_OF_USER } from "../../../types.keys";
 
 @Component({
   selector: 'app-manage-users',
@@ -51,12 +48,16 @@ export class ManageUsersComponent implements OnInit {
 
   ngOnInit() {
     this.store.select(authUsersSelector)
-      .pipe(filter(user => isTypeMatched(user[0], KEYS_OF_USER)))
       .subscribe(data => {
-        this.dataSource = new MatTableDataSource<User>(data);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-        this.isLoading = false;
+        if (data === undefined || data.length === 0) {
+          this.isLoading = true;
+        } else {
+          data = Array.from(data!);
+          this.dataSource = new MatTableDataSource(data);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+          this.isLoading = false;
+        }
       });
     this.store.dispatch(AuthActions.get_users());
   }

@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>{{TITLE}}</h2>
+<mat-card-content style="max-height: fit-content">
+  <form [formGroup]="tagForm">
+    <div class="w-100">
+      <div class="row w-100 mx-0">
+        <div class="col-6">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>{{TAG_MESSAGES.TAG_NAME}}</mat-label>
+            <input matInput formControlName="Name">
+            <mat-error *ngIf="tagForm.controls['Name'].invalid">
+              {{VALIDATION_MESSAGES.required(TAG_MESSAGES.TAG_NAME)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>{{TAG_MESSAGES.TAG_ID}}</mat-label>
+            <input matInput formControlName="ID">
+            <mat-error *ngIf="tagForm.controls['ID'].invalid">
+              {{VALIDATION_MESSAGES.required(TAG_MESSAGES.TAG_ID)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-card-content>
+<mat-dialog-actions>
+  <div class="row w-100 mx-0 align-items-center justify-content-end">
+    <div class="d-flex justify-content-end">
+      <button class="btn-p" mat-raised-button color="primary" cdkFocusInitial (click)="onClickSave()">
+        <mat-icon>done</mat-icon>
+        {{COMMON_MESSAGES.SAVE_BUTTON_TEXT}}
+      </button>
+      <button mat-button mat-dialog-close [mat-dialog-close]="false">
+        <mat-icon>close</mat-icon>
+        {{COMMON_MESSAGES.CANCEL_BUTTON_TEXT}}
+      </button>
+    </div>
+  </div>
+</mat-dialog-actions>
