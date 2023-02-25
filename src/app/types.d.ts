@@ -1,4 +1,4 @@
-import { CustomerTypes, NotificationTypes, Roles, SnackBarStatus } from "./constants";
+import { CustomerTypes, NotificationTypes, Roles, SnackBarStatus, TagTypes } from "./constants";
 import firebase from "firebase/compat";
 import { MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from "@angular/material/snack-bar";
 import Timestamp = firebase.firestore.Timestamp;
@@ -114,14 +114,6 @@ export interface Report {
   Balance: number;
 }
 
-export interface RouteObject {
-  [key: string]: { url: string, title: string };
-}
-
-export interface NotificationColors {
-  [key: string]: string
-}
-
 export interface CustomerReport {
   No: string,
   DateOfSale: Date | Timestamp,
@@ -220,4 +212,11 @@ export interface NavigationMenuItem {
   iconName: string;
   navigationLink: string;
   subMenuItems: NavigationMenuItem[];
+}
+
+export interface Tag {
+  Name: string;
+  Id: string;
+  Type: TagTypes;
+  IsActive: boolean;
 }

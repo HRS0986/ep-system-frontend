@@ -27,6 +27,11 @@ export class ProjectRoutes {
   public static readonly All = { url: 'all', title: 'Projects' };
 }
 
+export class TagRoutes {
+  public static readonly Root = 'tags';
+  public static readonly All = { url: 'all', title: 'Tags' };
+}
+
 export class AuthRoutes {
   public static readonly Root = 'auth'
   public static readonly Login = 'login'

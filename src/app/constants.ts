@@ -25,6 +25,10 @@ export enum NotificationTypes {
   ALL
 }
 
+export enum TagTypes {
+  CUSTOMER
+}
+
 export class Common {
   public static readonly COPYRIGHT_TEXT = '© 2022 Fusion8. All Rights Reserved.';
   public static readonly COMPANY_NAME = 'Mihil Property';
@@ -354,6 +358,18 @@ export class Notifications {
   public static readonly DOWNLOAD_LETTER = 'Download Letter';
   public static readonly MARK_ALL_AS_READ_BUTTON_TEXT = 'Mark all as read';
   public static readonly MARK_AS_UNREAD_BUTTON_TEXT = 'Mark as unread';
+}
+
+export class Tags {
+  public static readonly ADD_NEW_TAG = "Add New Tag";
+  public static readonly EDIT_TAG = "Add New Tag";
+  public static readonly TAG_NAME = "Tag Name";
+  public static readonly TAG_ID = "Tag Id";
+  public static readonly DELETE_CONFIRM = "Are you want to delete this tag?";
+  public static readonly DELETE_TITLE = "Delete Tag";
+  public static readonly TAG_ADDED_SUCCESS = "Tag Created Successfully";
+  public static readonly TAG_UPDATED_SUCCESS = "Tag Updated Successfully";
+  public static readonly TAG_DELETED_SUCCESS = "Tag Deleted Successfully";
 }
 
 export const NotificationColors: { [key: string]: string; } = {

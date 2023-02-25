@@ -10,9 +10,6 @@ import { Store } from "@ngrx/store";
 import { AuthState } from "../../../store/auth.state";
 import { AuthActions } from "../../../store/auth.actions";
 import { authCurrentUserSelector } from "../../../store/auth.selectors";
-import { filter } from "rxjs";
-import { isTypeMatched } from "../../../../helpers/utils";
-import { KEYS_OF_USER } from "../../../../types.keys";
 import { CustomValidators } from "../../../../helpers/custom-validators";
 
 @Component({
@@ -62,14 +59,15 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.select(authCurrentUserSelector)
-      .pipe(filter(user => isTypeMatched(user, KEYS_OF_USER)))
       .subscribe(userData => {
-        this.user = userData;
-        this.basicDataForm.patchValue({
-          firstName: userData.FirstName,
-          lastName: userData.LastName,
-          phone: userData.PhoneNumber
-        });
+        if (userData !== undefined) {
+          this.user = userData;
+          this.basicDataForm.patchValue({
+            firstName: userData.FirstName,
+            lastName: userData.LastName,
+            phone: userData.PhoneNumber
+          });
+        }
       });
     const loggedUserId = JSON.parse(localStorage.getItem('user')!)['uid'];
     this.store.dispatch(AuthActions.get_current_user({ id: loggedUserId }));
