@@ -1,0 +1,23 @@
+{
+  "targets": {
+    "bimrich-ep-system": {
+      "hosting": {
+        "bimrich-ep": [
+          "bimrich-ep"
+        ]
+      }
+    },
+    "mihil-ep-system": {
+        "hosting": {
+          "mihil-ep": [
+            "mihil-ep"
+          ]
+        }
+      }
+  },
+  "projects": {
+    "mihil-ep-system": "mihil-ep-system",
+    "bimrich-ep-system": "bimrich-ep-system",
+    "default": "bimrich-ep-system"
+  }
+}

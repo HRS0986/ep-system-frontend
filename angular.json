@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ep-system-frontend": {
+    "bimrich-ep": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ep-system-frontend",
+            "outputPath": "dist/bimrich-ep",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -44,7 +44,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -55,7 +55,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "with": "src/environments/environment.bimrich.prod.ts"
                 }
               ],
               "outputHashing": "all"
@@ -66,7 +66,13 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.bimrich.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -75,10 +81,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ep-system-frontend:build:production"
+              "browserTarget": "bimrich-ep:build:production"
             },
             "development": {
-              "browserTarget": "ep-system-frontend:build:development"
+              "browserTarget": "bimrich-ep:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -86,7 +92,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ep-system-frontend:build"
+            "browserTarget": "bimrich-ep:build"
           }
         },
         "test": {
@@ -109,9 +115,19 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "bimrich-ep:build:production",
+            "firebaseProject": "bimrich-ep-system",
+            "firebaseHostingSite": "bimrich-ep"
+          }
         }
       }
     }
   },
-  "defaultProject": "ep-system-frontend"
+  "defaultProject": "bimrich-ep"
 }
