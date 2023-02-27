@@ -6,12 +6,14 @@ import { CustomerTagsComponent } from './components/customer-tags/customer-tags.
 import { AddEditTagComponent } from './components/popups/add-edit-tag/add-edit-tag.component';
 import { MaterialModule } from "../app.material.module";
 import { ReactiveFormsModule } from "@angular/forms";
+import { ActionMenuComponent } from './components/action-menu/action-menu.component';
 
 
 @NgModule({
   declarations: [
     CustomerTagsComponent,
-    AddEditTagComponent
+    AddEditTagComponent,
+    ActionMenuComponent
   ],
   imports: [
     CommonModule,

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Common, Customer, LedgerMessages, Particulars } from "../../../constants";
 import { Customer as CustomerType, Ledger } from "../../../types";
 import { ActivatedRoute, Router } from "@angular/router";
+import jsPDF from "jspdf";
 import { MatTableDataSource } from "@angular/material/table";
 import { SettlementComponent } from "../popups/settlement/settlement.component";
 import { MatDialog } from "@angular/material/dialog";
@@ -121,10 +122,65 @@ export class LedgerComponent implements OnInit {
         console.log(`Dialog result: ${result}`);
       });
     } else {
-      this.router.navigate([CustomerRoutes.Root, CustomerRoutes.View.url], { queryParams: { id: this.customerId } }).then(() => {
-        window.location.reload();
-      });
+      this.router.navigate([CustomerRoutes.Root, CustomerRoutes.View.url], { queryParams: { id: this.customerId } })
+        .then(() => {
+        });
     }
+  }
+
+  public openPDF(): void {
+    // @ts-ignore
+    let pdf = new jsPDF("l", "pt", "a4");
+
+    pdf.setFontSize(25);
+    pdf.text(`Ledger - ${this.customerName}`, 325, 35);
+    pdf.setFontSize(12);
+    pdf.setTextColor(99);
+
+    (pdf as any).autoTable({
+      startY: 55,
+      showFoot: 'never',
+      margin: { top: 40, left: 15, right: 15, bottom: 40 },
+      styles: {
+        halign: 'center',
+        valign: 'top'
+      },
+      headStyles: {
+        fillColor: [253, 253, 253],
+        textColor: 0,
+        fontStyle: 'bold',
+        lineWidth: 0.3,
+        lineColor: 200
+      },
+      head: [[
+        LedgerMessages.DATE_COLUMN_TEXT,
+        LedgerMessages.REF_NO_COLUMN_TEXT,
+        LedgerMessages.INST_NO_COLUMN_TEXT,
+        LedgerMessages.PARTICULARS_COLUMN_TEXT,
+        LedgerMessages.DEBIT_COLUMN_TEXT,
+        LedgerMessages.CREDIT_COLUMN_TEXT,
+        LedgerMessages.ARREARS_COLUMN_TEXT,
+        LedgerMessages.BALANCE_COLUMN_TEXT,
+        LedgerMessages.REMARKS_COLUMN_TEXT
+      ]],
+      body: this.dataSource.data.map(
+        row => [
+          row.Date,
+          row.RefNo,
+          row.InstallmentNo,
+          row.Particulars,
+          row.Amount.toFixed(2),
+          row.Amount.toFixed(2),
+          row.Arrears.toFixed(2),
+          row.Balance.toFixed(2),
+          row.Remarks,
+        ]
+      ),
+      theme: 'grid'
+    });
+
+    // Open PDF document in browser's new tab
+    pdf.output('dataurlnewwindow')
   }
 
 }

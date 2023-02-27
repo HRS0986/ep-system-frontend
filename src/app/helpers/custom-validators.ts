@@ -26,8 +26,9 @@ export class CustomValidators {
 
   public static conditionalRequired(condition: boolean): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
+      debugger;
       const isValid = condition || control.value != null;
-      return isValid ? { conditionalRequired: { value: control.value } } : null;
+      return !isValid ? { conditionalRequired: { value: control.value } } : null;
     };
   }
 

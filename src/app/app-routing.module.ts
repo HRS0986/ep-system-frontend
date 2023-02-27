@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { LoginRequiredGuard } from "./guards/login-required.guard";
-import { AuthRoutes, CustomerRoutes, NotificationRoutes, ProjectRoutes, ReportRoutes } from "./route-data";
+import { AuthRoutes, CustomerRoutes, NotificationRoutes, ProjectRoutes, ReportRoutes, TagRoutes } from "./route-data";
 
 
 const routes: Routes = [
@@ -33,6 +33,11 @@ const routes: Routes = [
   {
     path: ProjectRoutes.Root,
     loadChildren: () => import("./projects/projects.module").then(m => m.ProjectsModule),
+    canActivate: [LoginRequiredGuard]
+  },
+  {
+    path: TagRoutes.Root,
+    loadChildren: () => import("./tags/tags.module").then(m => m.TagsModule),
     canActivate: [LoginRequiredGuard]
   },
   {

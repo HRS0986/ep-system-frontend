@@ -3,6 +3,7 @@ import { CustomersState } from "../customers/store/customers.state";
 import { NotificationsState } from "../notifications/store/notifications.state";
 import { ReportsState } from "../reports/store/reports.state";
 import { AuthState } from "../auth/store/auth.state";
+import { TagsState } from "../tags/store/tags.state";
 
 export interface AppState {
     ProjectsState: ProjectsState;
@@ -10,4 +11,5 @@ export interface AppState {
     NotificationsState: NotificationsState;
     ReportsState: ReportsState;
     AuthState: AuthState;
+  TagsState: TagsState
 }

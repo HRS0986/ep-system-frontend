@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Functions, httpsCallable } from "@angular/fire/functions";
 import {
-    ArrearsReport,
-    CashCollectionReport,
-    Customer,
-    CustomerReport,
-    EPReport,
-    FnResponse,
-    Ledger,
-    Report
+  ArrearsReport,
+  CashCollectionReport,
+  Customer,
+  CustomerReport,
+  EPReport,
+  FnResponse,
+  Ledger,
+  Report
 } from "../types";
 import { firstValueFrom, Observable } from "rxjs";
 import { collection, collectionData, Firestore, limit, orderBy, query, where } from "@angular/fire/firestore";
 import { Particulars } from "../constants";
 import { CollectionReference } from "@firebase/firestore";
 import firebase from "firebase/compat";
-import Timestamp = firebase.firestore.Timestamp;
 import { CustomerService } from "./customer.service";
+import Timestamp = firebase.firestore.Timestamp;
 
 @Injectable({
     providedIn: 'root'
@@ -37,6 +37,7 @@ export class ReportService {
     }
 
     public async GetCustomerReport(): Promise<FnResponse<CustomerReport[]>> {
+      debugger;
         const clients: Customer[] = await firstValueFrom(this.clientService.GetAllClientData());
         let no = 1;
         const data = clients.map((client: Customer): CustomerReport => {
@@ -53,6 +54,7 @@ export class ReportService {
                 Note: client.Note,
             }
         });
+      debugger;
         return {
             status: true,
             message: 'Customer Report',

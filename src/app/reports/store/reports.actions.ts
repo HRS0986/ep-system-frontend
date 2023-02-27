@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
-import { ArrearsReport, CashCollectionReport, CustomerReport, EPReport, Project } from "../../types";
+import { ArrearsReport, CashCollectionReport, CustomerReport, EPReport } from "../../types";
 
 const COMPONENT = "REPORT";
 

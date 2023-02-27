@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from "@angular/material/sort";
+import jsPDF from "jspdf";
 import { ReportService } from "../../../services/report.service";
 import { MatPaginator } from "@angular/material/paginator";
 import { Reports } from "../../../constants";

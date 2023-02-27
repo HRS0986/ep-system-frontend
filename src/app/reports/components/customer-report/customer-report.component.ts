@@ -46,6 +46,7 @@ export class CustomerReportComponent implements OnInit {
   REPORTS_URL = `/${ReportRoutes.Root}`;
 
   ngOnInit(): void {
+    this.store.dispatch(ReportActions.get_customer_report());
     this.store.select(customerReportSelector)
       .subscribe(data => {
         if (data == undefined) {
@@ -58,7 +59,6 @@ export class CustomerReportComponent implements OnInit {
           this.isLoading = false;
         }
       })
-    this.store.dispatch(ReportActions.get_customer_report());
   }
 
   public openPDF(): void {

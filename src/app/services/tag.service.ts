@@ -15,19 +15,22 @@ export class TagService {
     return of(tags);
   }
 
-  createNewTag(tag: Tag) {
+  createNewTag(tag: Tag): Promise<any> {
     let tags = new Array<Tag>();
-    return of(tags);
+    let p = Promise.resolve(tags);
+    return p;
   }
 
-  updateTag(tag: Tag) {
+  updateTag(tag: Tag): Promise<any> {
     let tags = new Array<Tag>();
-    return of(tags);
+    let p = Promise.resolve(tags);
+    return p;
   }
 
-  deleteTag(tagId: string) {
+  deleteTag(tagId: string): Promise<any> {
     let tags = new Array<Tag>();
-    return of(tags);
+    let p = Promise.resolve(tags);
+    return p;
   }
 
 }

@@ -175,6 +175,7 @@ export class LedgerMessages {
   public static readonly BALANCE_COLUMN_TEXT = 'Balance';
   public static readonly ARREARS_COLUMN_TEXT = 'Arrears';
   public static readonly REMARKS_COLUMN_TEXT = 'Remarks';
+  public static readonly EXPORT_TO_PDF = 'Export To PDF';
 }
 
 export const Particulars: { [key: string]: { value: string, display: boolean } } = {
@@ -243,6 +244,7 @@ export class NavigationMenu {
   public static readonly CUSTOMER_REPORTS = 'Customer Reports';
   public static readonly EP_REPORTS = 'EP Reports';
   public static readonly PROJECTS = 'Projects';
+  public static readonly TAGS = 'Tags';
 }
 
 export class UserManagementMessages {
@@ -364,6 +366,7 @@ export class Tags {
   public static readonly ADD_NEW_TAG = "Add New Tag";
   public static readonly EDIT_TAG = "Add New Tag";
   public static readonly TAG_NAME = "Tag Name";
+  public static readonly IS_ACTIVE = "Active";
   public static readonly TAG_ID = "Tag Id";
   public static readonly DELETE_CONFIRM = "Are you want to delete this tag?";
   public static readonly DELETE_TITLE = "Delete Tag";

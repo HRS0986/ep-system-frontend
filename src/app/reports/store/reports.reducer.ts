@@ -23,6 +23,7 @@ export const reportsReducer = createReducer(
     };
   }),
   on(ReportActions.get_customer_report_success, (state: ReportsState, data) => {
+    debugger;
     return {
       ...state,
       customerReport: data.reports

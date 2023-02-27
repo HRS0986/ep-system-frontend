@@ -17,7 +17,8 @@
           </h1>
         </button>
         <div>
-          <button mat-raised-button style="height: fit-content" (click)="onClickSettle()" color="accent" class="me-3 btn-p" *ngIf="!isOldCustomer && !isLoading">
+          <button mat-raised-button style="height: fit-content" (click)="onClickSettle()" color="accent"
+                  class="me-3 btn-p" *ngIf="!isOldCustomer && !isLoading">
             <mat-icon>credit_card</mat-icon> &nbsp;
             {{SETTLEMENT_BUTTON_TEXT}}
           </button>
@@ -26,12 +27,17 @@
             <mat-icon>local_atm</mat-icon> &nbsp;
             {{LEDGER_MESSAGES.MAKE_PAYMENT_BUTTON_TEXT}}
           </button>
+          <button mat-raised-button color="primary" class="btn-p ms-3" style="color: black" (click)="openPDF()"
+                  *ngIf="!isLoading && dataSource.data.length != 0">
+            <mat-icon>picture_as_pdf</mat-icon>
+            {{LEDGER_MESSAGES.EXPORT_TO_PDF}}
+          </button>
         </div>
       </div>
     </div>
 
     <div>
-      <div *ngIf="!isLoading" class="mat-elevation-z8">
+      <div *ngIf="!isLoading" class="mat-elevation-z8" #ledgerTable>
         <table mat-table [dataSource]="dataSource">
 
           <ng-container matColumnDef="{{LEDGER_MESSAGES.DATE_COLUMN_TEXT}}">

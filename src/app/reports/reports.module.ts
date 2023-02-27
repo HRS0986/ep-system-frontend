@@ -20,25 +20,25 @@ import { ReportEffects } from "./store/reports.effects";
 
 
 @NgModule({
-    declarations: [
-        CashCollectionReportComponent,
-        ArrearsReportComponent,
-        CustomerReportComponent,
-        ReportListComponent,
-        EpReportComponent
-    ],
-    imports: [
-        CommonModule,
-        ReportsRoutingModule,
-        MaterialModule,
-        FormsModule,
-        NgxMaskModule.forChild(),
-        HttpClientModule,
-        ReactiveFormsModule,
-        MatTableExporterModule,
-        StoreModule.forFeature(REPORTS_FEATURE_NAME, reportsReducer),
-        EffectsModule.forFeature([ReportEffects])
-    ]
+  declarations: [
+    CashCollectionReportComponent,
+    ArrearsReportComponent,
+    CustomerReportComponent,
+    ReportListComponent,
+    EpReportComponent
+  ],
+  imports: [
+    CommonModule,
+    ReportsRoutingModule,
+    MaterialModule,
+    FormsModule,
+    NgxMaskModule.forChild(),
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatTableExporterModule,
+    EffectsModule.forFeature([ReportEffects]),
+    StoreModule.forFeature(REPORTS_FEATURE_NAME, reportsReducer)
+  ]
 })
 export class ReportsModule {
 }

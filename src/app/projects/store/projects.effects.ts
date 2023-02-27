@@ -20,8 +20,11 @@ export class ProjectsEffects {
             if (projectsData == undefined) {
                 return this.projectService.GetAllProjects()
                     .pipe(
-                        map(projectsData => ProjectActions.get_all_success({ projects: projectsData })),
-                        catchError((error) => of(ProjectActions.get_all_failed({ error: error })))
+                      map(projectsData => {
+                        debugger;
+                        return ProjectActions.get_all_success({ projects: projectsData })
+                      }),
+                      catchError((error) => of(ProjectActions.get_all_failed({ error: error })))
                     )
             } else {
                 return of(ProjectActions.get_all_success({ projects: projectsData }))
