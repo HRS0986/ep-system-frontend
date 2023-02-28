@@ -8,9 +8,6 @@ import { Reports } from "../../../constants";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { ReportRoutes } from "../../../route-data";
-import { Store } from "@ngrx/store";
-import { customerReportSelector } from "../../store/reports.selectors";
-import { ReportActions } from "../../store/reports.actions";
 import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
@@ -20,7 +17,7 @@ import Timestamp = firebase.firestore.Timestamp;
 })
 export class CustomerReportComponent implements OnInit {
 
-  constructor(private reportService: ReportService, private store: Store<CustomerReport>) {
+  constructor(private reportService: ReportService) {
   }
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -46,19 +43,12 @@ export class CustomerReportComponent implements OnInit {
   REPORTS_URL = `/${ReportRoutes.Root}`;
 
   ngOnInit(): void {
-    this.store.dispatch(ReportActions.get_customer_report());
-    this.store.select(customerReportSelector)
-      .subscribe(data => {
-        if (data == undefined) {
-          this.isLoading = true;
-        } else {
-          data = Array.from(data!);
-          this.dataSource = new MatTableDataSource(data);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-          this.isLoading = false;
-        }
-      })
+    this.reportService.GetCustomerReport().then(response => {
+      this.dataSource = new MatTableDataSource<CustomerReport>(response.data);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.isLoading = false;
+    });
   }
 
   public openPDF(): void {

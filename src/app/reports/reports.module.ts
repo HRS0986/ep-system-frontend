@@ -12,11 +12,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgxMaskModule } from "ngx-mask";
 import { HttpClientModule } from "@angular/common/http";
 import { MatTableExporterModule } from "mat-table-exporter";
-import { StoreModule } from "@ngrx/store";
-import { REPORTS_FEATURE_NAME } from "./store/reports.selectors";
-import { reportsReducer } from "./store/reports.reducer";
-import { EffectsModule } from "@ngrx/effects";
-import { ReportEffects } from "./store/reports.effects";
 
 
 @NgModule({
@@ -35,9 +30,7 @@ import { ReportEffects } from "./store/reports.effects";
     NgxMaskModule.forChild(),
     HttpClientModule,
     ReactiveFormsModule,
-    MatTableExporterModule,
-    EffectsModule.forFeature([ReportEffects]),
-    StoreModule.forFeature(REPORTS_FEATURE_NAME, reportsReducer)
+    MatTableExporterModule
   ]
 })
 export class ReportsModule {

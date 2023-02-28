@@ -7,10 +7,6 @@ import { Reports } from "../../../constants";
 import { MatTableDataSource } from "@angular/material/table";
 import { ArrearsReport } from "../../../types";
 import { ReportRoutes } from "../../../route-data";
-import { Store } from "@ngrx/store";
-import { ReportsState } from "../../store/reports.state";
-import { arrearsReportSelector } from "../../store/reports.selectors";
-import { ReportActions } from "../../store/reports.actions";
 
 @Component({
   selector: 'app-arrears-report',
@@ -19,7 +15,7 @@ import { ReportActions } from "../../store/reports.actions";
 })
 export class ArrearsReportComponent implements OnInit {
 
-  constructor(private reportService: ReportService, private store: Store<ReportsState>) {
+  constructor(private reportService: ReportService) {
   }
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -48,19 +44,16 @@ export class ArrearsReportComponent implements OnInit {
   REPORTS_URL = `/${ReportRoutes.Root}/${ReportRoutes.Arrears}`;
 
   ngOnInit(): void {
-    this.store.select(arrearsReportSelector)
-      .subscribe(data => {
-        if (data == undefined) {
-          this.isLoading = true;
-        } else {
-          data = Array.from(data!);
-          this.dataSource = new MatTableDataSource(data);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-          this.isLoading = false;
-        }
-      })
-    this.store.dispatch(ReportActions.get_arrears_report());
+    this.reportService.GetArrearsReport().then(response => {
+      if (response.data == undefined) {
+        this.isLoading = true;
+      } else {
+        this.dataSource = new MatTableDataSource<ArrearsReport>(response.data);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.isLoading = false;
+      }
+    });
   }
 
   public openPDF(): void {

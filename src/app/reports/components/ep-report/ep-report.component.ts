@@ -8,10 +8,6 @@ import { MatPaginator } from "@angular/material/paginator";
 import firebase from "firebase/compat";
 import { MatTableDataSource } from "@angular/material/table";
 import { ReportRoutes } from "../../../route-data";
-import { Store } from "@ngrx/store";
-import { ReportsState } from "../../store/reports.state";
-import { epReportSelector } from "../../store/reports.selectors";
-import { ReportActions } from "../../store/reports.actions";
 import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
@@ -40,23 +36,16 @@ export class EpReportComponent implements OnInit {
   REPORT_MESSAGES = Reports;
   REPORTS_URL = `/${ReportRoutes.Root}`;
 
-  constructor(private reportService: ReportService, private store: Store<ReportsState>) {
+  constructor(private reportService: ReportService) {
   }
 
   ngOnInit(): void {
-    this.store.select(epReportSelector)
-      .subscribe(data => {
-        if (data == undefined) {
-          this.isLoading = true;
-        } else {
-          data = Array.from(data!);
-          this.dataSource = new MatTableDataSource(data);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-          this.isLoading = false;
-        }
-      })
-    this.store.dispatch(ReportActions.get_ep_report());
+    this.reportService.GetEPReport().then(response => {
+      this.dataSource = new MatTableDataSource<EPReport>(response.data);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.isLoading = false;
+    });
   }
 
   public openPDF(): void {
