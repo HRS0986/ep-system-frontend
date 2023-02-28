@@ -10,10 +10,6 @@ import { MatSort } from "@angular/material/sort";
 import { ReportService } from "../../../services/report.service";
 import { CashCollectionReport } from "../../../types";
 import { ReportRoutes } from "../../../route-data";
-import { Store } from "@ngrx/store";
-import { ReportsState } from "../../store/reports.state";
-import { cashCollectionReportSelector } from "../../store/reports.selectors";
-import { ReportActions } from "../../store/reports.actions";
 import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
@@ -27,7 +23,6 @@ export class CashCollectionReportComponent implements OnInit {
     private formBuilder: FormBuilder,
     private reportService: ReportService,
     private helperService: HelperService,
-    private store: Store<ReportsState>
   ) {
   }
 
@@ -61,18 +56,6 @@ export class CashCollectionReportComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.store.select(cashCollectionReportSelector)
-      .subscribe(data => {
-        if (data == undefined) {
-          this.isLoading = true;
-        } else {
-          data = Array.from(data!);
-          this.dataSource = new MatTableDataSource(data);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-          this.isLoading = false;
-        }
-      })
     const lastMonth = new Date().getMonth() - 1;
     const startDate = new Date(new Date().getFullYear(), lastMonth, 1);
     const endDate = new Date(new Date().getFullYear(), lastMonth, new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0).getDate());
@@ -85,10 +68,12 @@ export class CashCollectionReportComponent implements OnInit {
   onClickViewReports() {
     if (this.dateForm.valid) {
       this.isLoading = true;
-      this.store.dispatch(ReportActions.get_cash_collection_report({
-        start: this.dateForm.value.startDate,
-        end: this.dateForm.value.endDate
-      }));
+      this.reportService.GetCashCollectionReport(this.dateForm.value.startDate, this.dateForm.value.endDate).then(data => {
+        this.dataSource = new MatTableDataSource<CashCollectionReport>(data.data);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.isLoading = false;
+      });
     } else {
       this.helperService.openSnackBar({ text: Reports.INVALID_DATE_RANGE, status: SnackBarStatus.FAILED });
     }

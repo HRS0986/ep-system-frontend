@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve bim-rich-ep --port=4100",
+    "start": "ng serve --port=4100",
     "start-bimrich": "ng serve bim-rich-ep --port=4100",
     "start-mihil": "ng serve mihil-ep --port=4100",
     "build": "ng build",

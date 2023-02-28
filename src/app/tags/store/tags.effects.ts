@@ -17,7 +17,8 @@ export class TagsEffects {
     ofType(TagActions.get_all),
     withLatestFrom(this.store.select(tagsSelector)),
     mergeMap(([_, tagData]) => {
-      if (tagData == undefined) {
+      if (tagData === undefined) {
+        debugger;
         return this.tagService.getAllTags()
           .pipe(
             map(tagsData => TagActions.get_all_success({ tags: tagsData })),

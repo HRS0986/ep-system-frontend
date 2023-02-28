@@ -6,6 +6,7 @@ import { TagActions } from "./tags.actions";
 export const tagsReducer = createReducer(
   initialState,
   on(TagActions.get_all_success, (state: TagsState, data) => {
+    debugger;
     return {
       ...state,
       tags: data.tags

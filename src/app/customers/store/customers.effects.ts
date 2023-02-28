@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
-import { ReportsState } from "../../reports/store/reports.state";
 import { catchError, from, map, mergeMap, of, withLatestFrom } from "rxjs";
 import {
   advancedCustomerSelector,
@@ -12,11 +11,12 @@ import {
 import { AdvancedCustomerActions, EpCustomerActions, LedgerActions, OldCustomerActions } from "./customers.actions";
 import { CustomerService } from "../../services/customer.service";
 import { CustomerTypes } from "../../constants";
+import { CustomersState } from "./customers.state";
 
 
 @Injectable()
 export class CustomerEffects {
-  constructor(private actions$: Actions, private customerService: CustomerService, private store: Store<ReportsState>) {
+  constructor(private actions$: Actions, private customerService: CustomerService, private store: Store<CustomersState>) {
   }
 
   getEpCustomer$ = createEffect(() => this.actions$.pipe(

@@ -3,7 +3,6 @@
   <form [formGroup]="tagForm">
     <div class="w-100">
       <div class="row w-100 mx-0">
-        <div class="col-6">
           <mat-form-field appearance="fill" class="w-100">
             <mat-label>{{TAG_MESSAGES.TAG_NAME}}</mat-label>
             <input matInput formControlName="Name">
@@ -11,16 +10,6 @@
               {{VALIDATION_MESSAGES.required(TAG_MESSAGES.TAG_NAME)}}
             </mat-error>
           </mat-form-field>
-        </div>
-        <div class="col-6">
-          <mat-form-field appearance="fill" class="w-100">
-            <mat-label>{{TAG_MESSAGES.TAG_ID}}</mat-label>
-            <input matInput formControlName="ID">
-            <mat-error *ngIf="tagForm.controls['ID'].invalid">
-              {{VALIDATION_MESSAGES.required(TAG_MESSAGES.TAG_ID)}}
-            </mat-error>
-          </mat-form-field>
-        </div>
       </div>
     </div>
   </form>

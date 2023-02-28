@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TypeLIstItem } from "../../../types";
 import { Common, Customer, NavigationMenu, Reports } from "../../../constants";
-import { CustomerRoutes } from "../../../route-data";
 import { MatTableDataSource } from "@angular/material/table";
+import { NavigationMenuItems } from "../../../navigation-menu";
 
 @Component({
   selector: 'app-customer-tables',
@@ -13,24 +13,7 @@ export class CustomerTablesComponent implements OnInit {
 
   constructor() { }
 
-  CUSTOMER_TABLE_LIST: TypeLIstItem[] = [
-    {
-      itemTitle: NavigationMenu.EP_CUSTOMERS,
-      itemNumber: 1,
-      itemUrl: CustomerRoutes.Ep.url
-    },
-    {
-      itemTitle: NavigationMenu.ADVANCED_CUSTOMERS,
-      itemNumber: 2,
-      itemUrl: CustomerRoutes.Advanced.url
-    },
-    {
-      itemTitle: NavigationMenu.OLD_CUSTOMERS,
-      itemNumber: 3,
-      itemUrl: CustomerRoutes.Old.url
-    },
-  ]
-
+  CUSTOMER_TABLE_LIST: TypeLIstItem[] = []
 
   VIEW = Reports.VIEW;
   ITEM_NUMBER = "#";
@@ -46,6 +29,17 @@ export class CustomerTablesComponent implements OnInit {
   datasource: MatTableDataSource<TypeLIstItem> = new MatTableDataSource<TypeLIstItem>();
 
   ngOnInit(): void {
+    NavigationMenuItems.forEach(nav => {
+      if (nav.menuText === NavigationMenu.CUSTOMERS) {
+        nav.subMenuItems.forEach((cType, index) => {
+          this.CUSTOMER_TABLE_LIST.push({
+            itemTitle: cType.menuText,
+            itemUrl: cType.navigationLink,
+            itemNumber: index + 1
+          });
+        });
+      }
+    });
     this.datasource = new MatTableDataSource(this.CUSTOMER_TABLE_LIST);
   }
 

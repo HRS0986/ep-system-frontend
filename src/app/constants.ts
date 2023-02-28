@@ -237,6 +237,7 @@ export class NavigationMenu {
   public static readonly EP_CUSTOMERS = 'EP Customers';
   public static readonly OLD_CUSTOMERS = 'Old Customers';
   public static readonly ADVANCED_CUSTOMERS = 'Advanced Customers';
+  public static readonly RESALE_CUSTOMERS = 'Resale Customers';
   public static readonly MANAGE_USERS = 'Manage Users';
   public static readonly REPORTS = 'Reports';
   public static readonly ARREARS_REPORTS = 'Arrears Reports';

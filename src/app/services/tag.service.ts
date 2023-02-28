@@ -4,7 +4,8 @@ import { Observable } from "rxjs";
 import {
   addDoc,
   collection,
-  collectionData, deleteDoc,
+  collectionData,
+  deleteDoc,
   doc,
   docData,
   Firestore,
@@ -55,7 +56,7 @@ export class TagService {
   }
 
   updateTag(tag: Tag) {
-    const tagId = tag.ID;
+    const tagId = tag.Id;
     const _data: any = tag;
     delete _data.ID;
 

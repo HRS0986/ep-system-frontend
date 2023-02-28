@@ -7,6 +7,11 @@ import { AddEditTagComponent } from './components/popups/add-edit-tag/add-edit-t
 import { MaterialModule } from "../app.material.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { ActionMenuComponent } from './components/action-menu/action-menu.component';
+import { StoreModule } from "@ngrx/store";
+import { TAGS_FEATURE_NAME } from "./store/tags.selectors";
+import { tagsReducer } from "./store/tags.reducer";
+import { EffectsModule } from "@ngrx/effects";
+import { TagsEffects } from "./store/tags.effects";
 
 
 @NgModule({
@@ -19,7 +24,9 @@ import { ActionMenuComponent } from './components/action-menu/action-menu.compon
     CommonModule,
     TagsRoutingModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forFeature(TAGS_FEATURE_NAME, tagsReducer),
+    EffectsModule.forFeature([TagsEffects])
   ]
 })
 export class TagsModule {

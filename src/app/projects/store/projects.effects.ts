@@ -21,7 +21,6 @@ export class ProjectsEffects {
                 return this.projectService.GetAllProjects()
                     .pipe(
                       map(projectsData => {
-                        debugger;
                         return ProjectActions.get_all_success({ projects: projectsData })
                       }),
                       catchError((error) => of(ProjectActions.get_all_failed({ error: error })))
