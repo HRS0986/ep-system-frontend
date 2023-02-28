@@ -23,7 +23,6 @@ export class AddEditTagComponent implements OnInit {
 
   tagForm = this.formBuilder.group({
     Name: this.formBuilder.control('', [Validators.required]),
-    ID: this.formBuilder.control('', [Validators.required])
   });
 
   constructor(
@@ -51,7 +50,6 @@ export class AddEditTagComponent implements OnInit {
     if (this.tagForm.valid) {
       const tag: Tag = {
         Name: this.tagForm.value.Name,
-        Id: this.tagForm.value.ID,
         IsActive: true,
         Type: TagTypes.CUSTOMER
       };

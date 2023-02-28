@@ -64,7 +64,7 @@ export class ActionMenuComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.tagService.deleteTag(this.data.Id).then(() => {
+        this.tagService.deleteTag(this.data.Id!).then(() => {
           this.helperService.openSnackBar({
             text: Tags.TAG_DELETED_SUCCESS,
             status: SnackBarStatus.SUCCESS

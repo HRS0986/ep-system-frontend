@@ -216,7 +216,7 @@ export interface NavigationMenuItem {
 
 export interface Tag {
   Name: string;
-  Id: string;
+  Id?: string;
   Type: TagTypes;
   IsActive: boolean;
 }

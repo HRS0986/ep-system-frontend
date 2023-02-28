@@ -22,22 +22,24 @@ import { CUSTOMERS_FEATURE_NAME } from "./store/customers.selectors";
 import { customerReducer } from "./store/customers.reducer";
 import { EffectsModule } from "@ngrx/effects";
 import { CustomerEffects } from "./store/customers.effects";
+import { ResaleCustomersComponent } from './components/resale-customers/resale-customers.component';
 
 
 @NgModule({
     declarations: [
         OldCustomersComponent,
         EpCustomersComponent,
-        AdvancedCustomersComponent,
-        ViewOldCustomerComponent,
-        AddNewCustomerComponent,
-        MakePaymentComponent,
-        ChangeInstallmentComponent,
-        SettlementComponent,
-        LedgerComponent,
-        ViewCustomerComponent,
-        ActionMenuComponent,
-        CustomerTablesComponent,
+      AdvancedCustomersComponent,
+      ViewOldCustomerComponent,
+      AddNewCustomerComponent,
+      MakePaymentComponent,
+      ChangeInstallmentComponent,
+      SettlementComponent,
+      LedgerComponent,
+      ViewCustomerComponent,
+      ActionMenuComponent,
+      CustomerTablesComponent,
+      ResaleCustomersComponent,
     ],
     imports: [
         CommonModule,

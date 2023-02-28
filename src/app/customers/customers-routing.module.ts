@@ -8,49 +8,55 @@ import { ViewCustomerComponent } from "./components/view-customer/view-customer.
 import { LedgerComponent } from "./components/ledger/ledger.component";
 import { CustomerTablesComponent } from "./components/customer-tables/customer-tables.component";
 import { SaveDataGuard } from "../guards/save-data.guard";
+import { ResaleCustomersComponent } from "./components/resale-customers/resale-customers.component";
 
 const routes: Routes = [
-    {
-        path: '',
-        redirectTo: CustomerRoutes.All.url,
-        pathMatch: "full"
-    },
-    {
-        path: CustomerRoutes.All.url,
-        component: CustomerTablesComponent,
-        data: { title: CustomerRoutes.All.title }
-    },
-    {
-        path: CustomerRoutes.Ep.url,
-        component: EpCustomersComponent,
-        data: { title: CustomerRoutes.Ep.title }
-    },
-    {
-        path: CustomerRoutes.Advanced.url,
-        component: AdvancedCustomersComponent,
-        data: { title: CustomerRoutes.Advanced.title }
-    },
-    {
-        path: CustomerRoutes.Old.url,
-        component: OldCustomersComponent,
-        data: { title: CustomerRoutes.Old.title }
-    },
+  {
+    path: '',
+    redirectTo: CustomerRoutes.All.url,
+    pathMatch: "full"
+  },
+  {
+    path: CustomerRoutes.All.url,
+    component: CustomerTablesComponent,
+    data: { title: CustomerRoutes.All.title }
+  },
+  {
+    path: CustomerRoutes.Ep.url,
+    component: EpCustomersComponent,
+    data: { title: CustomerRoutes.Ep.title }
+  },
+  {
+    path: CustomerRoutes.Advanced.url,
+    component: AdvancedCustomersComponent,
+    data: { title: CustomerRoutes.Advanced.title }
+  },
+  {
+    path: CustomerRoutes.Old.url,
+    component: OldCustomersComponent,
+    data: { title: CustomerRoutes.Old.title }
+  },
   {
     path: CustomerRoutes.View.url,
     component: ViewCustomerComponent,
     data: { title: CustomerRoutes.View.title },
     canDeactivate: [SaveDataGuard]
   },
-    {
-        path: CustomerRoutes.Ledger.url,
-        component: LedgerComponent,
-        data: { title: CustomerRoutes.Ledger.title }
-    }
+  {
+    path: CustomerRoutes.Ledger.url,
+    component: LedgerComponent,
+    data: { title: CustomerRoutes.Ledger.title }
+  },
+  {
+    path: CustomerRoutes.Resale.url,
+    component: ResaleCustomersComponent,
+    data: { title: CustomerRoutes.Resale.title }
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class CustomersRoutingModule {
 }

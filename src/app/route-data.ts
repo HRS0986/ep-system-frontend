@@ -6,6 +6,7 @@ export class CustomerRoutes {
   public static readonly Advanced = { url: 'advanced', title: "Advanced Customers" };
   public static readonly View = { url: 'view', title: "View Customers" };
   public static readonly Ledger = { url: 'ledger', title: "View Ledger" };
+  public static readonly Resale = { url: 'resale', title: "Resale Customers" };
 }
 
 export class ReportRoutes {

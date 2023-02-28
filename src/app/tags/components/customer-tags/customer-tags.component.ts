@@ -7,10 +7,10 @@ import { Tag } from "../../../types";
 import { Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
 import { Store } from "@ngrx/store";
-import { ProjectActions } from "../../../projects/store/projects.actions";
 import { TagsState } from "../../store/tags.state";
 import { tagsSelector } from "../../store/tags.selectors";
 import { AddEditTagComponent } from "../popups/add-edit-tag/add-edit-tag.component";
+import { TagActions } from "../../store/tags.actions";
 
 @Component({
   selector: 'app-customer-tags',
@@ -42,7 +42,7 @@ export class CustomerTagsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(ProjectActions.get_all());
+    this.store.dispatch(TagActions.get_all());
     this.store.select(tagsSelector)
       .subscribe(data => {
         if (data == undefined) {
@@ -67,7 +67,7 @@ export class CustomerTagsComponent implements OnInit {
   }
 
   ngOnClickAdd() {
-    const dialogRef = this.matDialog.open(AddEditTagComponent, { width: '800px', data: { edit: 0 } });
+    const dialogRef = this.matDialog.open(AddEditTagComponent, { width: '400px', data: { edit: 0 } });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });

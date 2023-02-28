@@ -21,6 +21,12 @@ export const NavigationMenuItems: NavigationMenuItem[] = [
         subMenuItems: []
       },
       {
+        menuText: NavigationMenu.RESALE_CUSTOMERS,
+        iconName: "social_distance",
+        navigationLink: `/${CustomerRoutes.Root}/${CustomerRoutes.Resale.url}`,
+        subMenuItems: []
+      },
+      {
         menuText: NavigationMenu.OLD_CUSTOMERS,
         iconName: "3p",
         navigationLink: `/${CustomerRoutes.Root}/${CustomerRoutes.Old.url}`,
