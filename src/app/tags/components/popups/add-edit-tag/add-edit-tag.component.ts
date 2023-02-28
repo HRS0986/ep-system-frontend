@@ -39,7 +39,7 @@ export class AddEditTagComponent implements OnInit {
     if (this.data.edit == 1) {
       this.TITLE = this.TAG_MESSAGES.EDIT_TAG;
       this.tagForm.controls['Name'].setValue(this.data.tag.Name);
-      this.tagForm.controls['ID'].setValue(this.data.tag.ID);
+      this.tagForm.controls['ID'].setValue(this.data.tag.Id);
     } else {
       this.TITLE = this.TAG_MESSAGES.ADD_NEW_TAG;
     }
@@ -51,7 +51,7 @@ export class AddEditTagComponent implements OnInit {
     if (this.tagForm.valid) {
       const tag: Tag = {
         Name: this.tagForm.value.Name,
-        ID: this.tagForm.value.ID,
+        Id: this.tagForm.value.ID,
         IsActive: true,
         Type: TagTypes.CUSTOMER
       };

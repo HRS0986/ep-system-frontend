@@ -2,18 +2,18 @@ import { Injectable } from "@angular/core";
 import { NotificationService } from "../../services/notification.service";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
-import { ReportsState } from "../../reports/store/reports.state";
 import { catchError, from, map, mergeMap, of, withLatestFrom } from "rxjs";
 import { NotificationActions } from "./notifications.actions";
 import { notificationSelector } from "./notifications.selectors";
+import { NotificationsState } from "./notifications.state";
 
 @Injectable()
 export class NotificationEffects {
 
     constructor(
-        private notificationService: NotificationService,
-        private actions$: Actions,
-        private store: Store<ReportsState>
+      private notificationService: NotificationService,
+      private actions$: Actions,
+      private store: Store<NotificationsState>
     ) {
     }
 
