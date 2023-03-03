@@ -37,7 +37,6 @@ export class ReportService {
     }
 
     public async GetCustomerReport(): Promise<FnResponse<CustomerReport[]>> {
-      debugger;
         const clients: Customer[] = await firstValueFrom(this.clientService.GetAllClientData());
         let no = 1;
         const data = clients.map((client: Customer): CustomerReport => {
@@ -54,7 +53,6 @@ export class ReportService {
                 Note: client.Note,
             }
         });
-      debugger;
         return {
             status: true,
             message: 'Customer Report',
