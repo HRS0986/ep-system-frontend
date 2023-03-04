@@ -1,14 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {Router} from "@angular/router";
-import {AuthService} from "../../../services/auth.service";
-import {TokenStorageService} from "../../../services/token-storage.service";
-import {UserService} from "../../../services/user.service";
-import {HelperService} from "../../../services/helper.service";
-import {AuthMessages, ErrorMessages, SnackBarStatus} from "../../../constants";
-import {environment} from "../../../../environments/environment";
-import {AuthRoutes} from "../../../route-data";
-import {NgxSpinnerService} from "ngx-spinner";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from "@angular/router";
+import { AuthService } from "../../../services/auth.service";
+import { TokenStorageService } from "../../../services/token-storage.service";
+import { UserService } from "../../../services/user.service";
+import { HelperService } from "../../../services/helper.service";
+import { AuthMessages, ErrorMessages, SnackBarStatus } from "../../../constants";
+import { environment } from "../../../../environments/environment";
+import { AuthRoutes } from "../../../route-data";
+import { NgxSpinnerService } from "ngx-spinner";
 
 
 @Component({
@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
   logo: string = `${window.location.protocol}//${window.location.host}/${environment.config.loginLogo}`;
 
   ngOnInit(): void {
+    this.spinner.hide();
   }
 
   getEmailErrorMessage(): string {
