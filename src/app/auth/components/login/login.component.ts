@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from "@angular/router";
-import { AuthService } from "../../../services/auth.service";
-import { TokenStorageService } from "../../../services/token-storage.service";
-import { UserService } from "../../../services/user.service";
-import { HelperService } from "../../../services/helper.service";
-import { AuthMessages, ErrorMessages, SnackBarStatus } from "../../../constants";
-import { environment } from "../../../../environments/environment";
-import { AuthRoutes } from "../../../route-data";
-import { NgxSpinnerService } from "ngx-spinner";
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {Router} from "@angular/router";
+import {AuthService} from "../../../services/auth.service";
+import {TokenStorageService} from "../../../services/token-storage.service";
+import {UserService} from "../../../services/user.service";
+import {HelperService} from "../../../services/helper.service";
+import {AuthMessages, ErrorMessages, SnackBarStatus} from "../../../constants";
+import {environment} from "../../../../environments/environment";
+import {AuthRoutes} from "../../../route-data";
+import {NgxSpinnerService} from "ngx-spinner";
 
 
 @Component({
@@ -18,15 +18,18 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class LoginComponent implements OnInit {
 
+  @Input() isHidden: boolean = false;
+
   constructor(
-      private authenticationService: AuthService,
-      private formBuilder: FormBuilder,
-      private tokenStorageService: TokenStorageService,
-      private router: Router,
-      private helperService: HelperService,
-      private userService: UserService,
-      private spinner: NgxSpinnerService
-  ) { }
+    private authenticationService: AuthService,
+    private formBuilder: FormBuilder,
+    private tokenStorageService: TokenStorageService,
+    private router: Router,
+    private helperService: HelperService,
+    private userService: UserService,
+    private spinner: NgxSpinnerService
+  ) {
+  }
 
   loginForm = this.formBuilder.group({
     email: this.formBuilder.control('', [Validators.required, Validators.email]),
@@ -82,7 +85,6 @@ export class LoginComponent implements OnInit {
               this.isLoggedIn = true;
               this.isLoading = false;
               this.router.navigate([`${AuthRoutes.Root}/${AuthRoutes.SignUp}`]).then(() => {
-                window.location.reload();
               });
             });
           }

@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
-import { MatDialog } from "@angular/material/dialog";
-import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from "@angular/router";
-import { AuthService } from "./services/auth.service";
-import { NotificationService } from "./services/notification.service";
-import { Title } from "@angular/platform-browser";
-import { Common, LoginStatus } from "./constants";
-import { UserProfileComponent } from "./auth/components/popups/user-profile/user-profile.component";
-import { environment } from "../environments/environment";
-import { Notification } from "./types";
-import { AuthRoutes, NotificationRoutes } from "./route-data";
-import { NavigationMenuItems } from "./navigation-menu";
-import { filter, map, mergeMap } from "rxjs";
+import {Component} from '@angular/core';
+import {MatDialog} from "@angular/material/dialog";
+import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from "@angular/router";
+import {AuthService} from "./services/auth.service";
+import {NotificationService} from "./services/notification.service";
+import {Title} from "@angular/platform-browser";
+import {Common, LoginStatus} from "./constants";
+import {UserProfileComponent} from "./auth/components/popups/user-profile/user-profile.component";
+import {environment} from "../environments/environment";
+import {Notification} from "./types";
+import {AuthRoutes, CustomerRoutes, NotificationRoutes} from "./route-data";
+import {NavigationMenuItems} from "./navigation-menu";
+import {filter, map, mergeMap} from "rxjs";
+import {LoginComponent} from "./auth/components/login/login.component";
 
 @Component({
   selector: 'app-root',
@@ -35,9 +36,13 @@ export class AppComponent {
       this.notificationService.IsAlertsAvailable().then(result => {
         this.hideNotification = result;
       })
-
+      debugger;
       if (event instanceof NavigationStart) {
         this.isFirstLogin = event.url === `/${AuthRoutes.Root}/${AuthRoutes.SignUp}`;
+        if (event.url === `/${CustomerRoutes.Root}/${CustomerRoutes.Ep}`) {
+          debugger;
+          this.isCustomerUrl = true;
+        }
       }
     });
 
@@ -63,6 +68,8 @@ export class AppComponent {
   notificationCount = 0;
   hideNotification = true;
   notifications: Notification[] = [];
+
+  isCustomerUrl = false;
 
   logo: string = `${window.location.protocol}//${window.location.host}/${environment.config.toolbarLogo}`;
 
@@ -99,6 +106,10 @@ export class AppComponent {
       this.PageTitle = event['title'];
       this.titleService.setTitle(environment.config.appName);
     });
+  }
+
+  onLoadLogin(component: LoginComponent) {
+    component.isHidden = true;
   }
 
 }
