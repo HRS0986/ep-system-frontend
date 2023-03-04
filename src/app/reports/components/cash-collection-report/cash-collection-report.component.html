@@ -1,58 +1,77 @@
 <mat-card class="mx-3" style="margin-bottom: 70px; min-width: fit-content">
     <mat-card-content>
-        <div class="col-12 d-flex justify-content-between align-items-center mb-2">
-            <a mat-raised-button color="primary" class="btn-p me-3" style="color: black" [routerLink]="REPORTS_URL">
-              <mat-icon style="font-size: 17px; margin-top: 3px">arrow_back_ios</mat-icon>
-              {{REPORT_MESSAGES.BACK_TO_REPORTS}}
-            </a>
-            <div>
-              <mat-form-field appearance="fill" class="me-3" style="width: auto;"
-                              *ngIf="!isLoading && dataSource.data.length != 0">
-                <mat-label>Projects</mat-label>
-                <mat-select [formControl]="projectId" multiple>
-                  <mat-select-trigger>
-                    {{projectId.value || ''}}
-                    <span *ngIf="(projectId.value?.length || 0) > 1">
-                  (+{{(projectId.value?.length || 0) - 1}} {{projectId.value?.length === 2 ? 'other' : 'others'}})
-                </span>
-                  </mat-select-trigger>
-                  <mat-option *ngFor="let project of projects" [value]="project.ID">{{project.ProjectName}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <button mat-raised-button color="primary" class="btn-p me-3" style="color: black"
-                      (click)="filterReports()"
-                      *ngIf="!isLoading && dataSource.data.length != 0">
-                <mat-icon>filter_alt</mat-icon>
-                {{REPORT_MESSAGES.FILTER}}
-              </button>
-              <button mat-raised-button color="primary" class="btn-p me-3" style="color: black" (click)="openPDF()"
-                      *ngIf="(!isLoading && !isDateRangeNotSelected && dataSource.data.length != 0)">
-                <mat-icon>picture_as_pdf</mat-icon>
-                {{REPORT_MESSAGES.EXPORT_TO_PDF}}
-              </button>
-              <button mat-raised-button color="primary" class="btn-p me-3" style="color: black"
-                      (click)="exporter.exportTable('xlsx')" *ngIf="!isLoading && dataSource.data.length != 0">
-                <mat-icon>table_view</mat-icon>
-                {{REPORT_MESSAGES.EXPORT_TO_EXCEL}}
-              </button>
-              <button mat-raised-button color="primary" class="btn-p me-3" style="color: black"
-                      (click)="onClickViewReports()">
-                <mat-icon>visibility</mat-icon>
-                {{REPORT_MESSAGES.VIEW_REPORTS}}
-              </button>
+        <div class="col-12 d-flex flex-column mb-2">
+            <div class="col-12 d-flex justify-content-between align-items-center">
+                <a mat-raised-button color="primary" class="btn-p me-3" style="color: black" [routerLink]="REPORTS_URL">
+                    <mat-icon style="font-size: 17px; margin-top: 3px">arrow_back_ios</mat-icon>
+                    {{REPORT_MESSAGES.BACK_TO_REPORTS}}
+                </a>
+                <div>
+                    <mat-form-field appearance="fill" class="me-3" style="width: auto;"
+                                    *ngIf="!isLoading && dataSource.data.length != 0">
+                        <mat-label>Projects</mat-label>
+                        <mat-select [formControl]="projectId" multiple>
+                            <mat-select-trigger>
+                                {{projectId.value || ''}}
+                                <span *ngIf="(projectId.value?.length || 0) > 1">
+                      (+{{(projectId.value?.length || 0) - 1}} {{projectId.value?.length === 2 ? 'other' : 'others'}})
+                    </span>
+                            </mat-select-trigger>
+                            <mat-option *ngFor="let project of projects"
+                                        [value]="project.ID">{{project.ProjectName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" class="btn-p me-3" style="color: black"
+                            (click)="filterReports()"
+                            *ngIf="!isLoading && dataSource.data.length != 0">
+                        <mat-icon>filter_alt</mat-icon>
+                        {{REPORT_MESSAGES.FILTER}}
+                    </button>
+                    <button mat-raised-button color="primary" class="btn-p me-3" style="color: black"
+                            (click)="openPDF()"
+                            *ngIf="(!isLoading && !isDateRangeNotSelected && dataSource.data.length != 0)">
+                        <mat-icon>picture_as_pdf</mat-icon>
+                        {{REPORT_MESSAGES.EXPORT_TO_PDF}}
+                    </button>
+                    <button mat-raised-button color="primary" class="btn-p me-3" style="color: black"
+                            (click)="exporter.exportTable('xlsx')" *ngIf="!isLoading && dataSource.data.length != 0">
+                        <mat-icon>table_view</mat-icon>
+                        {{REPORT_MESSAGES.EXPORT_TO_EXCEL}}
+                    </button>
+                    <button mat-raised-button color="primary" class="btn-p me-3" style="color: black"
+                            (click)="onClickViewReports()">
+                        <mat-icon>visibility</mat-icon>
+                        {{REPORT_MESSAGES.VIEW_REPORTS}}
+                    </button>
 
-                <mat-form-field appearance="fill" style="width: fit-content">
-                  <mat-label>Enter a date range</mat-label>
-                  <mat-date-range-input [formGroup]="dateForm" [rangePicker]="picker">
-                    <input matStartDate formControlName="startDate" placeholder="Start date">
-                    <input matEndDate formControlName="endDate" placeholder="End date">
-                  </mat-date-range-input>
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-date-range-picker #picker></mat-date-range-picker>
-                  <mat-error *ngIf="isDateRangeNotSelected">
-                    {{REPORT_MESSAGES.SELECT_DATE_RANGE_TEXT}}
-                  </mat-error>
-                </mat-form-field>
+                    <mat-form-field appearance="fill" style="width: fit-content">
+                        <mat-label>Enter a date range</mat-label>
+                        <mat-date-range-input [formGroup]="dateForm" [rangePicker]="picker">
+                            <input matStartDate formControlName="startDate" placeholder="Start date">
+                            <input matEndDate formControlName="endDate" placeholder="End date">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                        <mat-error *ngIf="isDateRangeNotSelected">
+                            {{REPORT_MESSAGES.SELECT_DATE_RANGE_TEXT}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div>
+                <mat-accordion>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Self aware panel
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Currently I am
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <p>I'm visible because I am open</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
             </div>
         </div>
         <div class="d-flex justify-content-center flex-column align-items-center" *ngIf="!isLoading && dataSource.data.length == 0">

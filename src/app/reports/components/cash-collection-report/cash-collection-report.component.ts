@@ -52,6 +52,7 @@ export class CashCollectionReportComponent implements OnInit {
   ];
 
   dataSource: MatTableDataSource<CashCollectionReport> = new MatTableDataSource<CashCollectionReport>();
+  allReports: CashCollectionReport[] = [];
 
   REPORTS_URL = `/${ReportRoutes.Root}`;
   REPORT_MESSAGES = Reports;
@@ -84,8 +85,12 @@ export class CashCollectionReportComponent implements OnInit {
 
   filterReports() {
     if (this.projectId.value.length > 0) {
-      let projectIds = this.projectId.value;
+      let projectIds: string[] = this.projectId.value;
+      let projectNames: string[] = this.projects.filter(p => projectIds.includes(p.ID)).map(p => p.ProjectName);
+      this.dataSource.data = this.allReports.filter(p => projectNames.includes(p.Project));
       // TODO: Filter Reports
+    } else {
+      this.dataSource.data = this.allReports;
     }
   }
 
@@ -94,6 +99,7 @@ export class CashCollectionReportComponent implements OnInit {
       this.isLoading = true;
       this.reportService.GetCashCollectionReport(this.dateForm.value.startDate, this.dateForm.value.endDate).then(data => {
         this.dataSource = new MatTableDataSource<CashCollectionReport>(data.data);
+        this.allReports = data.data;
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.isLoading = false;
