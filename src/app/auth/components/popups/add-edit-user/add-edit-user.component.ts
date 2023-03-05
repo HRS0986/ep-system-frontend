@@ -47,6 +47,7 @@ export class AddEditUserComponent implements OnInit {
     if (this.userForm.valid) {
       this.authService.SignUp(this.userForm.controls['email'].value, this.userForm.controls['newPassword'].value).then(() => {
         this.dialogRef.close();
+        window.location.reload();
         this.helperService.openSnackBar({
           text: UserManagementMessages.USER_ADDED_SUCCESSFULLY_MESSAGE_TEXT,
           status: SnackBarStatus.SUCCESS

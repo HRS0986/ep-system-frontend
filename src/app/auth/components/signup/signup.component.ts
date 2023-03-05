@@ -130,6 +130,8 @@ export class SignupComponent implements OnInit {
   getNewPasswordErrorMessage() {
     if (this.passwordForm.controls['newPassword'].hasError('notMatch')) {
       return ErrorMessages.PASSWORDS_NOT_MATCHING;
+    } else if (this.passwordForm.controls['newPassword'].hasError('pattern')) {
+      return ErrorMessages.STRONG_PASSWORD_MESSAGE_TEXT;
     }
     return ErrorMessages.required(this.AUTH_MESSAGES.NEW_PASSWORD_LABEL);
   }
