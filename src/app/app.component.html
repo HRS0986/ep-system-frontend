@@ -6,6 +6,7 @@
       <div class="logo-card w-100 mb-3">
         <img src="{{logo}}" alt="logo">
       </div>
+
       <ng-container *ngFor="let menuItem of navigationMenuItems">
         <a mat-button class="menu-btn" [routerLink]="menuItem.navigationLink"
            *ngIf="menuItem.subMenuItems.length == 0">
@@ -52,7 +53,7 @@
           <span>{{name}}</span>
         </mat-toolbar>
         <!--  Toolbar-->
-        <router-outlet></router-outlet>
+        <router-outlet (activate)="onLoadLogin($event)"></router-outlet>
       </div>
       <footer class="footer footer-card row justify-content-center bg-light align-items-center"
               style="height: 5%;">

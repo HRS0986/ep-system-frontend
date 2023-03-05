@@ -1,14 +1,15 @@
-<div class="row justify-content-center align-items-center flex-column" style="margin-right: 0; height: 93%">
-    <img src="{{LOGO_PATH}}" alt="logo" style="width: fit-content; height: fit-content; margin-bottom: 20px;">
-    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#28B5B5" type="ball-spin" [fullScreen]="true">
-        <p style="color: white">
-            Loading Please Wait...
-        </p>
-    </ngx-spinner>
-    <mat-card *ngIf="!isLoading" style="width: 400px; height:auto" [class.mat-elevation-z8]="true" class="p-4">
+<div class="row justify-content-center align-items-center flex-column" style="margin-right: 0; height: 93%"
+     [hidden]="isHidden">
+  <img src="{{LOGO_PATH}}" alt="logo" style="width: fit-content; height: fit-content; margin-bottom: 20px;">
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#28B5B5" type="ball-spin" [fullScreen]="true">
+    <p style="color: white">
+      Loading Please Wait...
+    </p>
+  </ngx-spinner>
+  <mat-card *ngIf="!isLoading" style="width: 400px; height:auto" [class.mat-elevation-z8]="true" class="p-4">
 
-        <mat-card-header class="justify-content-center mb-3">
-            <mat-card-title>
+    <mat-card-header class="justify-content-center mb-3">
+      <mat-card-title>
                 <p class="h2">{{AUTH_MESSAGES.LOGIN_TITLE}}</p>
             </mat-card-title>
         </mat-card-header>

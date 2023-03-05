@@ -26,31 +26,31 @@ import { ResaleCustomersComponent } from './components/resale-customers/resale-c
 
 
 @NgModule({
-    declarations: [
-        OldCustomersComponent,
-        EpCustomersComponent,
-      AdvancedCustomersComponent,
-      ViewOldCustomerComponent,
-      AddNewCustomerComponent,
-      MakePaymentComponent,
-      ChangeInstallmentComponent,
-      SettlementComponent,
-      LedgerComponent,
-      ViewCustomerComponent,
-      ActionMenuComponent,
-      CustomerTablesComponent,
-      ResaleCustomersComponent,
-    ],
-    imports: [
-        CommonModule,
-        CustomersRoutingModule,
-        MaterialModule,
-        FormsModule,
-        NgxMaskModule.forChild(),
-        ReactiveFormsModule,
-        StoreModule.forFeature(CUSTOMERS_FEATURE_NAME, customerReducer),
-        EffectsModule.forFeature([CustomerEffects])
-    ]
+  declarations: [
+    OldCustomersComponent,
+    EpCustomersComponent,
+    AdvancedCustomersComponent,
+    ViewOldCustomerComponent,
+    AddNewCustomerComponent,
+    MakePaymentComponent,
+    ChangeInstallmentComponent,
+    SettlementComponent,
+    LedgerComponent,
+    ViewCustomerComponent,
+    ActionMenuComponent,
+    CustomerTablesComponent,
+    ResaleCustomersComponent,
+  ],
+  imports: [
+    CommonModule,
+    CustomersRoutingModule,
+    MaterialModule,
+    FormsModule,
+    NgxMaskModule.forChild(),
+    ReactiveFormsModule,
+    StoreModule.forFeature(CUSTOMERS_FEATURE_NAME, customerReducer),
+    EffectsModule.forFeature([CustomerEffects])
+  ]
 })
 export class CustomersModule {
 }

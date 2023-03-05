@@ -3,11 +3,16 @@ import jsPDF from "jspdf";
 import firebase from "firebase/compat";
 import { MatSort } from "@angular/material/sort";
 import { ReportService } from "../../../services/report.service";
-import { CustomerReport } from "../../../types";
+import { CustomerReport, Project, Report } from "../../../types";
 import { Reports } from "../../../constants";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { ReportRoutes } from "../../../route-data";
+import { FormBuilder } from "@angular/forms";
+import { Store } from "@ngrx/store";
+import { ProjectsState } from "../../../projects/store/projects.state";
+import { projectsSelector } from "../../../projects/store/projects.selectors";
+import { ProjectActions } from "../../../projects/store/projects.actions";
 import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
@@ -17,7 +22,7 @@ import Timestamp = firebase.firestore.Timestamp;
 })
 export class CustomerReportComponent implements OnInit {
 
-  constructor(private reportService: ReportService) {
+  constructor(private reportService: ReportService, private formBuilder: FormBuilder, private store: Store<ProjectsState>) {
   }
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -38,17 +43,34 @@ export class CustomerReportComponent implements OnInit {
   ];
 
   dataSource: MatTableDataSource<CustomerReport> = new MatTableDataSource<CustomerReport>();
+  projects: Project[] = [];
+  allReports: CustomerReport[] = [];
 
   REPORT_MESSAGES = Reports;
   REPORTS_URL = `/${ReportRoutes.Root}`;
 
   ngOnInit(): void {
+    this.store.dispatch(ProjectActions.get_all())
+    this.store.select(projectsSelector)
+      .subscribe(data => {
+        if (data == undefined) {
+          this.isLoading = true;
+        } else {
+          debugger;
+          this.projects = data;
+        }
+      });
     this.reportService.GetCustomerReport().then(response => {
       this.dataSource = new MatTableDataSource<CustomerReport>(response.data);
+      this.allReports = response.data;
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.isLoading = false;
     });
+  }
+
+  onEmitFilter($event: Report[]): void {
+    this.dataSource.data = $event as unknown as Array<CustomerReport>;
   }
 
   public openPDF(): void {

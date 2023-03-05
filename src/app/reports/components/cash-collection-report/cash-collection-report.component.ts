@@ -8,8 +8,12 @@ import firebase from "firebase/compat";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
 import { ReportService } from "../../../services/report.service";
-import { CashCollectionReport } from "../../../types";
+import { CashCollectionReport, Project, Report } from "../../../types";
 import { ReportRoutes } from "../../../route-data";
+import { ProjectActions } from "../../../projects/store/projects.actions";
+import { projectsSelector } from "../../../projects/store/projects.selectors";
+import { Store } from "@ngrx/store";
+import { ProjectsState } from "../../../projects/store/projects.state";
 import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
@@ -23,6 +27,7 @@ export class CashCollectionReportComponent implements OnInit {
     private formBuilder: FormBuilder,
     private reportService: ReportService,
     private helperService: HelperService,
+    private store: Store<ProjectsState>
   ) {
   }
 
@@ -31,6 +36,7 @@ export class CashCollectionReportComponent implements OnInit {
 
   isLoading = false;
   isDateRangeNotSelected = true;
+  projects: Project[] = [];
 
   displayedColumns: string[] = [
     Reports.DATE,
@@ -45,6 +51,7 @@ export class CashCollectionReportComponent implements OnInit {
   ];
 
   dataSource: MatTableDataSource<CashCollectionReport> = new MatTableDataSource<CashCollectionReport>();
+  allReports: CashCollectionReport[] = [];
 
   REPORTS_URL = `/${ReportRoutes.Root}`;
   REPORT_MESSAGES = Reports;
@@ -56,6 +63,16 @@ export class CashCollectionReportComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.store.dispatch(ProjectActions.get_all())
+    this.store.select(projectsSelector)
+      .subscribe(data => {
+        if (data == undefined) {
+          this.isLoading = true;
+        } else {
+          debugger;
+          this.projects = data;
+        }
+      });
     const lastMonth = new Date().getMonth() - 1;
     const startDate = new Date(new Date().getFullYear(), lastMonth, 1);
     const endDate = new Date(new Date().getFullYear(), lastMonth, new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0).getDate());
@@ -65,11 +82,16 @@ export class CashCollectionReportComponent implements OnInit {
     this.onClickViewReports();
   }
 
+  onEmitFilter($event: Report[]): void {
+    this.dataSource.data = $event as unknown as Array<CashCollectionReport>;
+  }
+
   onClickViewReports() {
     if (this.dateForm.valid) {
       this.isLoading = true;
       this.reportService.GetCashCollectionReport(this.dateForm.value.startDate, this.dateForm.value.endDate).then(data => {
         this.dataSource = new MatTableDataSource<CashCollectionReport>(data.data);
+        this.allReports = data.data;
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.isLoading = false;

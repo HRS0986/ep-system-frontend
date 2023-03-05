@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from "@angular/router";
 import { AuthService } from "../../../services/auth.service";
@@ -18,15 +18,18 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class LoginComponent implements OnInit {
 
+  @Input() isHidden: boolean = false;
+
   constructor(
-      private authenticationService: AuthService,
-      private formBuilder: FormBuilder,
-      private tokenStorageService: TokenStorageService,
-      private router: Router,
-      private helperService: HelperService,
-      private userService: UserService,
-      private spinner: NgxSpinnerService
-  ) { }
+    private authenticationService: AuthService,
+    private formBuilder: FormBuilder,
+    private tokenStorageService: TokenStorageService,
+    private router: Router,
+    private helperService: HelperService,
+    private userService: UserService,
+    private spinner: NgxSpinnerService
+  ) {
+  }
 
   loginForm = this.formBuilder.group({
     email: this.formBuilder.control('', [Validators.required, Validators.email]),
@@ -45,6 +48,7 @@ export class LoginComponent implements OnInit {
   logo: string = `${window.location.protocol}//${window.location.host}/${environment.config.loginLogo}`;
 
   ngOnInit(): void {
+    this.spinner.hide();
   }
 
   getEmailErrorMessage(): string {
@@ -82,7 +86,6 @@ export class LoginComponent implements OnInit {
               this.isLoggedIn = true;
               this.isLoading = false;
               this.router.navigate([`${AuthRoutes.Root}/${AuthRoutes.SignUp}`]).then(() => {
-                window.location.reload();
               });
             });
           }

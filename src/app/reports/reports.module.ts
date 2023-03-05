@@ -12,26 +12,28 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgxMaskModule } from "ngx-mask";
 import { HttpClientModule } from "@angular/common/http";
 import { MatTableExporterModule } from "mat-table-exporter";
+import { ReportFilterComponent } from './components/report-filter/report-filter.component';
 
 
 @NgModule({
-  declarations: [
-    CashCollectionReportComponent,
-    ArrearsReportComponent,
-    CustomerReportComponent,
-    ReportListComponent,
-    EpReportComponent
-  ],
-  imports: [
-    CommonModule,
-    ReportsRoutingModule,
-    MaterialModule,
-    FormsModule,
-    NgxMaskModule.forChild(),
-    HttpClientModule,
-    ReactiveFormsModule,
-    MatTableExporterModule
-  ]
+    declarations: [
+        CashCollectionReportComponent,
+        ArrearsReportComponent,
+        CustomerReportComponent,
+        ReportListComponent,
+        EpReportComponent,
+        ReportFilterComponent
+    ],
+    imports: [
+        CommonModule,
+        ReportsRoutingModule,
+        MaterialModule,
+        FormsModule,
+        NgxMaskModule.forChild(),
+        HttpClientModule,
+        ReactiveFormsModule,
+        MatTableExporterModule,
+    ]
 })
 export class ReportsModule {
 }

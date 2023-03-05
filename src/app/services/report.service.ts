@@ -1,15 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Functions, httpsCallable } from "@angular/fire/functions";
-import {
-  ArrearsReport,
-  CashCollectionReport,
-  Customer,
-  CustomerReport,
-  EPReport,
-  FnResponse,
-  Ledger,
-  Report
-} from "../types";
+import { Functions } from "@angular/fire/functions";
+import { ArrearsReport, CashCollectionReport, Customer, CustomerReport, EPReport, FnResponse, Ledger, } from "../types";
 import { firstValueFrom, Observable } from "rxjs";
 import { collection, collectionData, Firestore, limit, orderBy, query, where } from "@angular/fire/firestore";
 import { Particulars } from "../constants";
@@ -30,14 +21,7 @@ export class ReportService {
     ) {
     }
 
-    public async GetReport(startDate: string, endDate: string): Promise<FnResponse<Report[]>> {
-        const GetReport = httpsCallable<{ startDate: string, endDate: string }, FnResponse>(this.functions, 'getReport');
-        const res = await GetReport({ startDate, endDate });
-        return res.data;
-    }
-
     public async GetCustomerReport(): Promise<FnResponse<CustomerReport[]>> {
-      debugger;
         const clients: Customer[] = await firstValueFrom(this.clientService.GetAllClientData());
         let no = 1;
         const data = clients.map((client: Customer): CustomerReport => {
@@ -54,7 +38,6 @@ export class ReportService {
                 Note: client.Note,
             }
         });
-      debugger;
         return {
             status: true,
             message: 'Customer Report',

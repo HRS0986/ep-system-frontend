@@ -3,11 +3,16 @@ import jsPDF from "jspdf";
 import { MatSort } from "@angular/material/sort";
 import { ReportService } from "../../../services/report.service";
 import { Reports } from "../../../constants";
-import { EPReport } from "../../../types";
+import { EPReport, Project, Report } from "../../../types";
 import { MatPaginator } from "@angular/material/paginator";
 import firebase from "firebase/compat";
 import { MatTableDataSource } from "@angular/material/table";
 import { ReportRoutes } from "../../../route-data";
+import { FormBuilder } from "@angular/forms";
+import { Store } from "@ngrx/store";
+import { ProjectsState } from "../../../projects/store/projects.state";
+import { ProjectActions } from "../../../projects/store/projects.actions";
+import { projectsSelector } from "../../../projects/store/projects.selectors";
 import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
@@ -32,20 +37,37 @@ export class EpReportComponent implements OnInit {
   ];
 
   dataSource: MatTableDataSource<EPReport> = new MatTableDataSource<EPReport>();
+  projects: Project[] = [];
+  allReports: EPReport[] = [];
 
   REPORT_MESSAGES = Reports;
   REPORTS_URL = `/${ReportRoutes.Root}`;
 
-  constructor(private reportService: ReportService) {
+  constructor(private reportService: ReportService, private formBuilder: FormBuilder, private store: Store<ProjectsState>) {
   }
 
   ngOnInit(): void {
+    this.store.dispatch(ProjectActions.get_all())
+    this.store.select(projectsSelector)
+      .subscribe(data => {
+        if (data == undefined) {
+          this.isLoading = true;
+        } else {
+          debugger;
+          this.projects = data;
+        }
+      });
     this.reportService.GetEPReport().then(response => {
       this.dataSource = new MatTableDataSource<EPReport>(response.data);
+      this.allReports = response.data;
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.isLoading = false;
     });
+  }
+
+  onEmitFilter($event: Report[]): void {
+    this.dataSource.data = $event as unknown as Array<EPReport>;
   }
 
   public openPDF(): void {

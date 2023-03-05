@@ -5,8 +5,13 @@ import { ReportService } from "../../../services/report.service";
 import { MatPaginator } from "@angular/material/paginator";
 import { Reports } from "../../../constants";
 import { MatTableDataSource } from "@angular/material/table";
-import { ArrearsReport } from "../../../types";
+import { ArrearsReport, Project, Report } from "../../../types";
 import { ReportRoutes } from "../../../route-data";
+import { FormBuilder } from "@angular/forms";
+import { Store } from "@ngrx/store";
+import { ProjectsState } from "../../../projects/store/projects.state";
+import { ProjectActions } from "../../../projects/store/projects.actions";
+import { projectsSelector } from "../../../projects/store/projects.selectors";
 
 @Component({
   selector: 'app-arrears-report',
@@ -15,7 +20,7 @@ import { ReportRoutes } from "../../../route-data";
 })
 export class ArrearsReportComponent implements OnInit {
 
-  constructor(private reportService: ReportService) {
+  constructor(private reportService: ReportService, private formBuilder: FormBuilder, private store: Store<ProjectsState>) {
   }
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -39,21 +44,38 @@ export class ArrearsReportComponent implements OnInit {
   ];
 
   dataSource: MatTableDataSource<ArrearsReport> = new MatTableDataSource<ArrearsReport>();
+  projects: Project[] = [];
+  allReports: ArrearsReport[] = [];
 
   REPORT_MESSAGES = Reports;
-  REPORTS_URL = `/${ReportRoutes.Root}/${ReportRoutes.Arrears}`;
+  REPORTS_URL = `/${ReportRoutes.Root}`;
 
   ngOnInit(): void {
+    this.store.dispatch(ProjectActions.get_all())
+    this.store.select(projectsSelector)
+        .subscribe(data => {
+          if (data == undefined) {
+            this.isLoading = true;
+        } else {
+          debugger;
+          this.projects = data;
+        }
+      });
     this.reportService.GetArrearsReport().then(response => {
       if (response.data == undefined) {
         this.isLoading = true;
       } else {
         this.dataSource = new MatTableDataSource<ArrearsReport>(response.data);
+        this.allReports = response.data;
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.isLoading = false;
       }
     });
+  }
+
+  onEmitFilter($event: Report[]): void {
+    this.dataSource.data = $event as unknown as Array<ArrearsReport>;
   }
 
   public openPDF(): void {

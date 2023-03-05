@@ -27,6 +27,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSortModule } from "@angular/material/sort";
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatNativeDateModule } from "@angular/material/core";
+import { MatChipsModule } from "@angular/material/chips";
 
 
 const materialModules = [
@@ -55,7 +56,8 @@ const materialModules = [
   MatCheckboxModule,
   MatSortModule,
   MatStepperModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatChipsModule
 ];
 
 @NgModule({

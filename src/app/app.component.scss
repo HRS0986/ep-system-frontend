@@ -1,6 +1,8 @@
+@use 'theme' as theme;
+
 .sidenav {
   color: #eee;
-  background-color: #045762;
+  background-color: theme.$side-nav-background;
 }
 
 .spacer {

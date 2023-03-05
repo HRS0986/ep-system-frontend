@@ -1,0 +1,38 @@
+<mat-accordion>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <b>{{REPORT_MESSAGES.FILTER_TITLE}}</b>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="p-3 d-flex">
+            <mat-form-field appearance="fill" class="me-3" style="width: auto;">
+                <mat-label>{{REPORT_MESSAGES.PROJECT_LABEL}}</mat-label>
+                <mat-select [(ngModel)]="selectedProjects" multiple>
+                    <mat-option *ngFor="let project of allProjects" [value]="project">
+                        {{project.ProjectName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button (click)="filterReports()" class="btn-p me-3 filter-btn" color="primary" mat-raised-button>
+                <mat-icon>filter_alt</mat-icon>
+                {{REPORT_MESSAGES.FILTER}}
+            </button>
+
+            <button (click)="clearFilter()" class="btn-p me-3 filter-btn" color="primary" mat-raised-button>
+                <mat-icon>filter_alt_off</mat-icon>
+                {{REPORT_MESSAGES.CLEAR_FILTER}}
+            </button>
+
+            <div class="d-flex">
+                <mat-chip-list *ngFor="let project of selectedProjects">
+                    <mat-chip color="accent" class="me-2">
+                        {{project.ProjectName}}
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>

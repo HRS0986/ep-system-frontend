@@ -103,17 +103,6 @@ export interface Notification {
   Data: any;
 }
 
-export interface Report {
-  ClientID: string;
-  Name: string;
-  Project: string;
-  BlockNo: number
-  Rental: number;
-  Arrears: number;
-  Payment: number;
-  Balance: number;
-}
-
 export interface CustomerReport {
   No: string,
   DateOfSale: Date | Timestamp,
@@ -220,3 +209,5 @@ export interface Tag {
   Type: TagTypes;
   IsActive: boolean;
 }
+
+type Report = EPReport | CashCollectionReport | CustomerReport | ArrearsReport;

@@ -75,7 +75,7 @@ export class SignupComponent implements OnInit {
         if (result.status) {
           this.userService.UpdateUserData(this.user).then(result => {
             if (result.status) {
-              this.router.navigate([CustomerRoutes.Ep.url]).then(() => {
+              this.router.navigate([CustomerRoutes.Root, CustomerRoutes.Ep.url]).then(() => {
                 this.isLoading = false;
                 window.location.reload();
                 this.helperService.openSnackBar({
