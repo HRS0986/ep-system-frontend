@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgxMaskModule } from "ngx-mask";
 import { HttpClientModule } from "@angular/common/http";
 import { MatTableExporterModule } from "mat-table-exporter";
+import { ReportFilterComponent } from './components/report-filter/report-filter.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { MatTableExporterModule } from "mat-table-exporter";
         ArrearsReportComponent,
         CustomerReportComponent,
         ReportListComponent,
-        EpReportComponent
+        EpReportComponent,
+        ReportFilterComponent
     ],
     imports: [
         CommonModule,

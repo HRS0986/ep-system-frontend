@@ -8,7 +8,7 @@ import firebase from "firebase/compat";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
 import { ReportService } from "../../../services/report.service";
-import { CashCollectionReport, Project } from "../../../types";
+import { CashCollectionReport, Project, Report } from "../../../types";
 import { ReportRoutes } from "../../../route-data";
 import { ProjectActions } from "../../../projects/store/projects.actions";
 import { projectsSelector } from "../../../projects/store/projects.selectors";
@@ -37,7 +37,6 @@ export class CashCollectionReportComponent implements OnInit {
   isLoading = false;
   isDateRangeNotSelected = true;
   projects: Project[] = [];
-  selectedProjects: Project[] = [];
 
   displayedColumns: string[] = [
     Reports.DATE,
@@ -53,7 +52,6 @@ export class CashCollectionReportComponent implements OnInit {
 
   dataSource: MatTableDataSource<CashCollectionReport> = new MatTableDataSource<CashCollectionReport>();
   allReports: CashCollectionReport[] = [];
-  projectNames: string[] = [];
 
   REPORTS_URL = `/${ReportRoutes.Root}`;
   REPORT_MESSAGES = Reports;
@@ -84,18 +82,8 @@ export class CashCollectionReportComponent implements OnInit {
     this.onClickViewReports();
   }
 
-  filterReports(): void {
-    if (this.selectedProjects.length > 0) {
-      this.projectNames = this.selectedProjects.map(p => p.ProjectName);
-      this.dataSource.data = this.allReports.filter(p => this.projectNames.includes(p.Project));
-    } else {
-      this.dataSource.data = this.allReports;
-    }
-  }
-
-  clearFilter(): void {
-    this.selectedProjects = [];
-    this.dataSource.data = this.allReports;
+  onEmitFilter($event: Report[]): void {
+    this.dataSource.data = $event as unknown as Array<CashCollectionReport>;
   }
 
   onClickViewReports() {

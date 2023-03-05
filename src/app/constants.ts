@@ -354,6 +354,7 @@ export class Reports {
   public static readonly REPORT_NUMBER = "Report Number";
   public static readonly REPORT_NAME = "Report Name";
   public static readonly EXPORT_TO_EXCEL = "Export To Excel";
+  public static readonly FILTER_TITLE = "Filter Reports";
 }
 
 export class Notifications {

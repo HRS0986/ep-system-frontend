@@ -3,7 +3,7 @@ import jsPDF from "jspdf";
 import firebase from "firebase/compat";
 import { MatSort } from "@angular/material/sort";
 import { ReportService } from "../../../services/report.service";
-import { CustomerReport, Project } from "../../../types";
+import { CustomerReport, Project, Report } from "../../../types";
 import { Reports } from "../../../constants";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
@@ -44,7 +44,6 @@ export class CustomerReportComponent implements OnInit {
 
   dataSource: MatTableDataSource<CustomerReport> = new MatTableDataSource<CustomerReport>();
   projects: Project[] = [];
-  projectId = this.formBuilder.control('');
   allReports: CustomerReport[] = [];
 
   REPORT_MESSAGES = Reports;
@@ -63,20 +62,15 @@ export class CustomerReportComponent implements OnInit {
       });
     this.reportService.GetCustomerReport().then(response => {
       this.dataSource = new MatTableDataSource<CustomerReport>(response.data);
+      this.allReports = response.data;
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.isLoading = false;
     });
   }
 
-  filterReports() {
-    if (this.projectId.value.length > 0) {
-      let projectIds: string[] = this.projectId.value;
-      let projectNames: string[] = this.projects.filter(p => projectIds.includes(p.ID)).map(p => p.ProjectName);
-      this.dataSource.data = this.allReports.filter(p => projectNames.includes(p.Project));
-    } else {
-      this.dataSource.data = this.allReports;
-    }
+  onEmitFilter($event: Report[]): void {
+    this.dataSource.data = $event as unknown as Array<CustomerReport>;
   }
 
   public openPDF(): void {

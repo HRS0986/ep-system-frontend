@@ -1,7 +1,7 @@
 <mat-card class="mx-3" style="margin-bottom: 70px; min-width: fit-content">
     <mat-card-content>
         <div class="col-12 d-flex flex-column mb-2">
-            <div class="col-12 d-flex justify-content-between align-items-center">
+            <div class="col-12 d-flex justify-content-between align-items-center mb-3">
                 <a [routerLink]="REPORTS_URL" class="btn-p me-3" color="primary" mat-raised-button style="color: black">
                     <mat-icon style="font-size: 17px; margin-top: 3px">arrow_back_ios</mat-icon>
                     {{REPORT_MESSAGES.BACK_TO_REPORTS}}
@@ -42,47 +42,8 @@
                 </div>
             </div>
             <div>
-                <mat-accordion>
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <b>Filter reports</b>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <div class="p-3 d-flex">
-                            <mat-form-field *ngIf="!isLoading && dataSource.data.length != 0" appearance="fill"
-                                            class="me-3"
-                                            style="width: auto;">
-                                <mat-label>Projects</mat-label>
-                                <mat-select [(ngModel)]="selectedProjects" multiple>
-                                    <mat-option *ngFor="let project of projects"
-                                                [value]="project">{{project.ProjectName}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <button (click)="filterReports()" *ngIf="!isLoading && dataSource.data.length != 0"
-                                    class="btn-p me-3" color="primary"
-                                    mat-raised-button
-                                    style="color: black; height: fit-content;">
-                                <mat-icon>filter_alt</mat-icon>
-                                {{REPORT_MESSAGES.FILTER}}
-                            </button>
-                            <button (click)="clearFilter()" *ngIf="!isLoading && dataSource.data.length != 0"
-                                    class="btn-p me-3" color="primary"
-                                    mat-raised-button
-                                    style="color: black; height: fit-content;">
-                                <mat-icon>filter_alt_off</mat-icon>
-                                {{REPORT_MESSAGES.CLEAR_FILTER}}
-                            </button>
-                            <div class="d-flex">
-                                <mat-chip-list *ngFor="let project of selectedProjects">
-                                    <mat-chip color="accent" class="me-2">
-                                        {{project.ProjectName}}
-                                    </mat-chip>
-                                </mat-chip-list>
-                            </div>
-                        </div>
-                    </mat-expansion-panel>
-                </mat-accordion>
+                <report-filter [allProjects]="projects" [allReports]="allReports"
+                               (filterEvent)="onEmitFilter($event)"></report-filter>
             </div>
         </div>
         <div *ngIf="!isLoading && dataSource.data.length == 0"

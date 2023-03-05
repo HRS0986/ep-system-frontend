@@ -5,7 +5,7 @@ import { ReportService } from "../../../services/report.service";
 import { MatPaginator } from "@angular/material/paginator";
 import { Reports } from "../../../constants";
 import { MatTableDataSource } from "@angular/material/table";
-import { ArrearsReport, Project } from "../../../types";
+import { ArrearsReport, Project, Report } from "../../../types";
 import { ReportRoutes } from "../../../route-data";
 import { FormBuilder } from "@angular/forms";
 import { Store } from "@ngrx/store";
@@ -46,11 +46,9 @@ export class ArrearsReportComponent implements OnInit {
   dataSource: MatTableDataSource<ArrearsReport> = new MatTableDataSource<ArrearsReport>();
   projects: Project[] = [];
   allReports: ArrearsReport[] = [];
-  projectNames: string[] = [];
-  selectedProjects: Project[] = [];
 
   REPORT_MESSAGES = Reports;
-  REPORTS_URL = `/${ReportRoutes.Root}/${ReportRoutes.Arrears}`;
+  REPORTS_URL = `/${ReportRoutes.Root}`;
 
   ngOnInit(): void {
     this.store.dispatch(ProjectActions.get_all())
@@ -76,18 +74,8 @@ export class ArrearsReportComponent implements OnInit {
     });
   }
 
-  filterReports(): void {
-    if (this.selectedProjects.length > 0) {
-      this.projectNames = this.selectedProjects.map(p => p.ProjectName);
-      this.dataSource.data = this.allReports.filter(p => this.projectNames.includes(p.Project));
-    } else {
-      this.dataSource.data = this.allReports;
-    }
-  }
-
-  clearFilter(): void {
-    this.selectedProjects = [];
-    this.dataSource.data = this.allReports;
+  onEmitFilter($event: Report[]): void {
+    this.dataSource.data = $event as unknown as Array<ArrearsReport>;
   }
 
   public openPDF(): void {
