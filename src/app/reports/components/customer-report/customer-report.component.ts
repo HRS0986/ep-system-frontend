@@ -45,6 +45,7 @@ export class CustomerReportComponent implements OnInit {
   dataSource: MatTableDataSource<CustomerReport> = new MatTableDataSource<CustomerReport>();
   projects: Project[] = [];
   projectId = this.formBuilder.control('');
+  allReports: CustomerReport[] = [];
 
   REPORT_MESSAGES = Reports;
   REPORTS_URL = `/${ReportRoutes.Root}`;
@@ -70,8 +71,11 @@ export class CustomerReportComponent implements OnInit {
 
   filterReports() {
     if (this.projectId.value.length > 0) {
-      let projectIds = this.projectId.value;
-      // TODO: Filter Reports
+      let projectIds: string[] = this.projectId.value;
+      let projectNames: string[] = this.projects.filter(p => projectIds.includes(p.ID)).map(p => p.ProjectName);
+      this.dataSource.data = this.allReports.filter(p => projectNames.includes(p.Project));
+    } else {
+      this.dataSource.data = this.allReports;
     }
   }
 

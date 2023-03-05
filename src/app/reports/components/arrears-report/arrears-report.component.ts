@@ -45,7 +45,9 @@ export class ArrearsReportComponent implements OnInit {
 
   dataSource: MatTableDataSource<ArrearsReport> = new MatTableDataSource<ArrearsReport>();
   projects: Project[] = [];
-  projectId = this.formBuilder.control('');
+  allReports: ArrearsReport[] = [];
+  projectNames: string[] = [];
+  selectedProjects: Project[] = [];
 
   REPORT_MESSAGES = Reports;
   REPORTS_URL = `/${ReportRoutes.Root}/${ReportRoutes.Arrears}`;
@@ -53,9 +55,9 @@ export class ArrearsReportComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(ProjectActions.get_all())
     this.store.select(projectsSelector)
-      .subscribe(data => {
-        if (data == undefined) {
-          this.isLoading = true;
+        .subscribe(data => {
+          if (data == undefined) {
+            this.isLoading = true;
         } else {
           debugger;
           this.projects = data;
@@ -66,6 +68,7 @@ export class ArrearsReportComponent implements OnInit {
         this.isLoading = true;
       } else {
         this.dataSource = new MatTableDataSource<ArrearsReport>(response.data);
+        this.allReports = response.data;
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.isLoading = false;
@@ -73,11 +76,18 @@ export class ArrearsReportComponent implements OnInit {
     });
   }
 
-  filterReports() {
-    if (this.projectId.value.length > 0) {
-      let projectIds = this.projectId.value;
-      // TODO: Filter Reports
+  filterReports(): void {
+    if (this.selectedProjects.length > 0) {
+      this.projectNames = this.selectedProjects.map(p => p.ProjectName);
+      this.dataSource.data = this.allReports.filter(p => this.projectNames.includes(p.Project));
+    } else {
+      this.dataSource.data = this.allReports;
     }
+  }
+
+  clearFilter(): void {
+    this.selectedProjects = [];
+    this.dataSource.data = this.allReports;
   }
 
   public openPDF(): void {

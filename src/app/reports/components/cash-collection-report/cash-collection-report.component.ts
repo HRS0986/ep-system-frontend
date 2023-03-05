@@ -37,7 +37,7 @@ export class CashCollectionReportComponent implements OnInit {
   isLoading = false;
   isDateRangeNotSelected = true;
   projects: Project[] = [];
-  projectId = this.formBuilder.control('');
+  selectedProjects: Project[] = [];
 
   displayedColumns: string[] = [
     Reports.DATE,
@@ -53,6 +53,7 @@ export class CashCollectionReportComponent implements OnInit {
 
   dataSource: MatTableDataSource<CashCollectionReport> = new MatTableDataSource<CashCollectionReport>();
   allReports: CashCollectionReport[] = [];
+  projectNames: string[] = [];
 
   REPORTS_URL = `/${ReportRoutes.Root}`;
   REPORT_MESSAGES = Reports;
@@ -83,15 +84,18 @@ export class CashCollectionReportComponent implements OnInit {
     this.onClickViewReports();
   }
 
-  filterReports() {
-    if (this.projectId.value.length > 0) {
-      let projectIds: string[] = this.projectId.value;
-      let projectNames: string[] = this.projects.filter(p => projectIds.includes(p.ID)).map(p => p.ProjectName);
-      this.dataSource.data = this.allReports.filter(p => projectNames.includes(p.Project));
-      // TODO: Filter Reports
+  filterReports(): void {
+    if (this.selectedProjects.length > 0) {
+      this.projectNames = this.selectedProjects.map(p => p.ProjectName);
+      this.dataSource.data = this.allReports.filter(p => this.projectNames.includes(p.Project));
     } else {
       this.dataSource.data = this.allReports;
     }
+  }
+
+  clearFilter(): void {
+    this.selectedProjects = [];
+    this.dataSource.data = this.allReports;
   }
 
   onClickViewReports() {

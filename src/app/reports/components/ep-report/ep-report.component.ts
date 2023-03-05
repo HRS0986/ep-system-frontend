@@ -38,6 +38,7 @@ export class EpReportComponent implements OnInit {
 
   dataSource: MatTableDataSource<EPReport> = new MatTableDataSource<EPReport>();
   projects: Project[] = [];
+  allReports: EPReport[] = [];
   projectId = this.formBuilder.control('');
 
   REPORT_MESSAGES = Reports;
@@ -67,8 +68,11 @@ export class EpReportComponent implements OnInit {
 
   filterReports() {
     if (this.projectId.value.length > 0) {
-      let projectIds = this.projectId.value;
-      // TODO: Filter Reports
+      let projectIds: string[] = this.projectId.value;
+      let projectNames: string[] = this.projects.filter(p => projectIds.includes(p.ID)).map(p => p.ProjectName);
+      this.dataSource.data = this.allReports.filter(p => projectNames.includes(p.Project));
+    } else {
+      this.dataSource.data = this.allReports;
     }
   }
 

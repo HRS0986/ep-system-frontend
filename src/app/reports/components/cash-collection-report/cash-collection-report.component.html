@@ -2,44 +2,27 @@
     <mat-card-content>
         <div class="col-12 d-flex flex-column mb-2">
             <div class="col-12 d-flex justify-content-between align-items-center">
-                <a mat-raised-button color="primary" class="btn-p me-3" style="color: black" [routerLink]="REPORTS_URL">
+                <a [routerLink]="REPORTS_URL" class="btn-p me-3" color="primary" mat-raised-button style="color: black">
                     <mat-icon style="font-size: 17px; margin-top: 3px">arrow_back_ios</mat-icon>
                     {{REPORT_MESSAGES.BACK_TO_REPORTS}}
                 </a>
                 <div>
-                    <mat-form-field appearance="fill" class="me-3" style="width: auto;"
-                                    *ngIf="!isLoading && dataSource.data.length != 0">
-                        <mat-label>Projects</mat-label>
-                        <mat-select [formControl]="projectId" multiple>
-                            <mat-select-trigger>
-                                {{projectId.value || ''}}
-                                <span *ngIf="(projectId.value?.length || 0) > 1">
-                      (+{{(projectId.value?.length || 0) - 1}} {{projectId.value?.length === 2 ? 'other' : 'others'}})
-                    </span>
-                            </mat-select-trigger>
-                            <mat-option *ngFor="let project of projects"
-                                        [value]="project.ID">{{project.ProjectName}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <button mat-raised-button color="primary" class="btn-p me-3" style="color: black"
-                            (click)="filterReports()"
-                            *ngIf="!isLoading && dataSource.data.length != 0">
-                        <mat-icon>filter_alt</mat-icon>
-                        {{REPORT_MESSAGES.FILTER}}
-                    </button>
-                    <button mat-raised-button color="primary" class="btn-p me-3" style="color: black"
-                            (click)="openPDF()"
-                            *ngIf="(!isLoading && !isDateRangeNotSelected && dataSource.data.length != 0)">
+                    <button (click)="openPDF()"
+                            *ngIf="(!isLoading && !isDateRangeNotSelected && dataSource.data.length != 0)"
+                            class="btn-p me-3" color="primary"
+                            mat-raised-button
+                            style="color: black">
                         <mat-icon>picture_as_pdf</mat-icon>
                         {{REPORT_MESSAGES.EXPORT_TO_PDF}}
                     </button>
-                    <button mat-raised-button color="primary" class="btn-p me-3" style="color: black"
-                            (click)="exporter.exportTable('xlsx')" *ngIf="!isLoading && dataSource.data.length != 0">
+                    <button (click)="exporter.exportTable('xlsx')" *ngIf="!isLoading && dataSource.data.length != 0"
+                            class="btn-p me-3" color="primary"
+                            mat-raised-button style="color: black">
                         <mat-icon>table_view</mat-icon>
                         {{REPORT_MESSAGES.EXPORT_TO_EXCEL}}
                     </button>
-                    <button mat-raised-button color="primary" class="btn-p me-3" style="color: black"
-                            (click)="onClickViewReports()">
+                    <button (click)="onClickViewReports()" class="btn-p me-3" color="primary" mat-raised-button
+                            style="color: black">
                         <mat-icon>visibility</mat-icon>
                         {{REPORT_MESSAGES.VIEW_REPORTS}}
                     </button>
@@ -47,10 +30,10 @@
                     <mat-form-field appearance="fill" style="width: fit-content">
                         <mat-label>Enter a date range</mat-label>
                         <mat-date-range-input [formGroup]="dateForm" [rangePicker]="picker">
-                            <input matStartDate formControlName="startDate" placeholder="Start date">
-                            <input matEndDate formControlName="endDate" placeholder="End date">
+                            <input formControlName="startDate" matStartDate placeholder="Start date">
+                            <input formControlName="endDate" matEndDate placeholder="End date">
                         </mat-date-range-input>
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                         <mat-date-range-picker #picker></mat-date-range-picker>
                         <mat-error *ngIf="isDateRangeNotSelected">
                             {{REPORT_MESSAGES.SELECT_DATE_RANGE_TEXT}}
@@ -63,118 +46,150 @@
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                Self aware panel
+                                <b>Filter reports</b>
                             </mat-panel-title>
-                            <mat-panel-description>
-                                Currently I am
-                            </mat-panel-description>
                         </mat-expansion-panel-header>
-                        <p>I'm visible because I am open</p>
+                        <div class="p-3 d-flex">
+                            <mat-form-field *ngIf="!isLoading && dataSource.data.length != 0" appearance="fill"
+                                            class="me-3"
+                                            style="width: auto;">
+                                <mat-label>Projects</mat-label>
+                                <mat-select [(ngModel)]="selectedProjects" multiple>
+                                    <mat-option *ngFor="let project of projects"
+                                                [value]="project">{{project.ProjectName}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <button (click)="filterReports()" *ngIf="!isLoading && dataSource.data.length != 0"
+                                    class="btn-p me-3" color="primary"
+                                    mat-raised-button
+                                    style="color: black; height: fit-content;">
+                                <mat-icon>filter_alt</mat-icon>
+                                {{REPORT_MESSAGES.FILTER}}
+                            </button>
+                            <button (click)="clearFilter()" *ngIf="!isLoading && dataSource.data.length != 0"
+                                    class="btn-p me-3" color="primary"
+                                    mat-raised-button
+                                    style="color: black; height: fit-content;">
+                                <mat-icon>filter_alt_off</mat-icon>
+                                {{REPORT_MESSAGES.CLEAR_FILTER}}
+                            </button>
+                            <div class="d-flex">
+                                <mat-chip-list *ngFor="let project of selectedProjects">
+                                    <mat-chip color="accent" class="me-2">
+                                        {{project.ProjectName}}
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </div>
+                        </div>
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
         </div>
-        <div class="d-flex justify-content-center flex-column align-items-center" *ngIf="!isLoading && dataSource.data.length == 0">
-            <img src="assets/img/no_reports.svg" alt="no_reports" width="400">
-          <span class="mat-headline mt-5">{{REPORT_MESSAGES.NO_REPORTS}}</span>
+        <div *ngIf="!isLoading && dataSource.data.length == 0"
+             class="d-flex justify-content-center flex-column align-items-center">
+            <img alt="no_reports" src="assets/img/no_reports.svg" width="400">
+            <span class="mat-headline mt-5">{{REPORT_MESSAGES.NO_REPORTS}}</span>
         </div>
         <div class="d-flex justify-content-center flex-column align-items-center">
             <mat-spinner *ngIf="isLoading"></mat-spinner>
         </div>
         <div>
-            <div [hidden]="isLoading || (!isDateRangeNotSelected && dataSource.data.length == 0)" class="mat-elevation-z8" id="report-data">
-              <table mat-table [dataSource]="dataSource" matSort matTableExporter #exporter="matTableExporter">
+            <div [hidden]="isLoading || (!isDateRangeNotSelected && dataSource.data.length == 0)"
+                 class="mat-elevation-z8" id="report-data">
+                <table #exporter="matTableExporter" [dataSource]="dataSource" mat-table matSort matTableExporter>
 
-                <ng-container matColumnDef="{{REPORT_MESSAGES.DATE}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.DATE}} </th>
-                  <td mat-cell *matCellDef="let row"> {{row.Date.toDate() | date: 'dd/MM/yyyy' }} </td>
-                </ng-container>
+                    <ng-container matColumnDef="{{REPORT_MESSAGES.DATE}}">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header> {{REPORT_MESSAGES.DATE}} </th>
+                        <td *matCellDef="let row" mat-cell> {{row.Date.toDate() | date: 'dd/MM/yyyy' }} </td>
+                    </ng-container>
 
-                <ng-container matColumnDef="{{REPORT_MESSAGES.BILL_NO}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.BILL_NO}} </th>
-                  <td mat-cell *matCellDef="let row"> {{row.BillNo}} </td>
-                </ng-container>
+                    <ng-container matColumnDef="{{REPORT_MESSAGES.BILL_NO}}">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header> {{REPORT_MESSAGES.BILL_NO}} </th>
+                        <td *matCellDef="let row" mat-cell> {{row.BillNo}} </td>
+                    </ng-container>
 
-                <ng-container matColumnDef="{{REPORT_MESSAGES.LOT_NO}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.LOT_NO}} </th>
-                  <td mat-cell *matCellDef="let row"> {{row.LotNo}} </td>
-                </ng-container>
+                    <ng-container matColumnDef="{{REPORT_MESSAGES.LOT_NO}}">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header> {{REPORT_MESSAGES.LOT_NO}} </th>
+                        <td *matCellDef="let row" mat-cell> {{row.LotNo}} </td>
+                    </ng-container>
 
-                <ng-container matColumnDef="{{REPORT_MESSAGES.PROJECT_LABEL}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.PROJECT_LABEL}} </th>
-                  <td mat-cell *matCellDef="let row">{{row.Project}}</td>
-                </ng-container>
+                    <ng-container matColumnDef="{{REPORT_MESSAGES.PROJECT_LABEL}}">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header> {{REPORT_MESSAGES.PROJECT_LABEL}} </th>
+                        <td *matCellDef="let row" mat-cell>{{row.Project}}</td>
+                    </ng-container>
 
-                <ng-container matColumnDef="{{REPORT_MESSAGES.SALE}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.SALE}} </th>
-                  <td mat-cell *matCellDef="let row">{{row.Sale}}</td>
-                </ng-container>
+                    <ng-container matColumnDef="{{REPORT_MESSAGES.SALE}}">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header> {{REPORT_MESSAGES.SALE}} </th>
+                        <td *matCellDef="let row" mat-cell>{{row.Sale}}</td>
+                    </ng-container>
 
-                <ng-container matColumnDef="{{REPORT_MESSAGES.EP}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.EP}} </th>
-                  <td mat-cell *matCellDef="let row">{{row.EP}}</td>
-                </ng-container>
+                    <ng-container matColumnDef="{{REPORT_MESSAGES.EP}}">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header> {{REPORT_MESSAGES.EP}} </th>
+                        <td *matCellDef="let row" mat-cell>{{row.EP}}</td>
+                    </ng-container>
 
-                <ng-container matColumnDef="{{REPORT_MESSAGES.ADVANCE}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.ADVANCE}} </th>
-                  <td mat-cell *matCellDef="let row">{{row.Advance}}</td>
-                </ng-container>
+                    <ng-container matColumnDef="{{REPORT_MESSAGES.ADVANCE}}">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header> {{REPORT_MESSAGES.ADVANCE}} </th>
+                        <td *matCellDef="let row" mat-cell>{{row.Advance}}</td>
+                    </ng-container>
 
-                <ng-container matColumnDef="{{REPORT_MESSAGES.FULL_PAYMENT}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.FULL_PAYMENT}} </th>
-                  <td mat-cell *matCellDef="let row">{{row.FullPayment}}</td>
-                </ng-container>
+                    <ng-container matColumnDef="{{REPORT_MESSAGES.FULL_PAYMENT}}">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header> {{REPORT_MESSAGES.FULL_PAYMENT}} </th>
+                        <td *matCellDef="let row" mat-cell>{{row.FullPayment}}</td>
+                    </ng-container>
 
-                <ng-container matColumnDef="{{REPORT_MESSAGES.DEED_AND_PLAN}}">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{REPORT_MESSAGES.DEED_AND_PLAN}} </th>
-                  <td mat-cell *matCellDef="let row">{{row.DeedAndPlan}}</td>
-                </ng-container>
+                    <ng-container matColumnDef="{{REPORT_MESSAGES.DEED_AND_PLAN}}">
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header> {{REPORT_MESSAGES.DEED_AND_PLAN}} </th>
+                        <td *matCellDef="let row" mat-cell>{{row.DeedAndPlan}}</td>
+                    </ng-container>
 
-                <ng-container matColumnDef="empty">
-                  <td mat-footer-cell *matFooterCellDef colspan="4" style="text-align: end; margin-left: 250px">
+                    <ng-container matColumnDef="empty">
+                        <td *matFooterCellDef colspan="4" mat-footer-cell style="text-align: end; margin-left: 250px">
 
-                  </td>
-                </ng-container>
+                        </td>
+                    </ng-container>
 
-                <ng-container matColumnDef="saleTotal">
-                        <td mat-footer-cell *matFooterCellDef style="text-align: start; margin-left: 250px; font-weight: bold">
+                    <ng-container matColumnDef="saleTotal">
+                        <td *matFooterCellDef mat-footer-cell
+                            style="text-align: start; margin-left: 250px; font-weight: bold">
                             {{getTotalSale()}}
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="epTotal">
-                        <td mat-footer-cell *matFooterCellDef style="text-align: start; font-weight: bold">
+                        <td *matFooterCellDef mat-footer-cell style="text-align: start; font-weight: bold">
                             {{getTotalEP()}}
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="advanceTotal">
-                        <td mat-footer-cell *matFooterCellDef style="text-align: start; font-weight: bold">
+                        <td *matFooterCellDef mat-footer-cell style="text-align: start; font-weight: bold">
                             {{getTotalAdvance()}}
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="fullPaymentTotal">
-                        <td mat-footer-cell *matFooterCellDef style="text-align: start; font-weight: bold">
+                        <td *matFooterCellDef mat-footer-cell style="text-align: start; font-weight: bold">
                             {{getTotalFullPayment()}}
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="deedAndPlanTotal">
-                        <td mat-footer-cell *matFooterCellDef style="text-align: start; font-weight: bold">
+                        <td *matFooterCellDef mat-footer-cell style="text-align: start; font-weight: bold">
                             {{getTotalDeedAndPlan()}}
                         </td>
                     </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
 
                     <!-- Row shown when there is no matching data. -->
-                    <tr class="mat-row" *matNoDataRow>
-                      <td class="mat-cell" colspan="4">{{REPORT_MESSAGES.NO_DATA}}</td>
+                    <tr *matNoDataRow class="mat-row">
+                        <td class="mat-cell" colspan="4">{{REPORT_MESSAGES.NO_DATA}}</td>
                     </tr>
 
-                    <tr mat-footer-row *matFooterRowDef="['empty', 'saleTotal', 'epTotal', 'advanceTotal', 'fullPaymentTotal', 'deedAndPlanTotal']"></tr>
+                    <tr *matFooterRowDef="['empty', 'saleTotal', 'epTotal', 'advanceTotal', 'fullPaymentTotal', 'deedAndPlanTotal']"
+                        mat-footer-row></tr>
                 </table>
 
                 <mat-paginator [pageSizeOptions]="[25, 5, 10, 100]"></mat-paginator>

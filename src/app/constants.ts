@@ -350,6 +350,7 @@ export class Reports {
   public static readonly NO_REPORTS = "There are no reports"
   public static readonly EXPORT_TO_PDF = "Export To PDF";
   public static readonly FILTER = "Filter";
+  public static readonly CLEAR_FILTER = "Clear Filter";
   public static readonly REPORT_NUMBER = "Report Number";
   public static readonly REPORT_NAME = "Report Name";
   public static readonly EXPORT_TO_EXCEL = "Export To Excel";

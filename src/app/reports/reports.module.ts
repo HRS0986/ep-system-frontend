@@ -15,23 +15,23 @@ import { MatTableExporterModule } from "mat-table-exporter";
 
 
 @NgModule({
-  declarations: [
-    CashCollectionReportComponent,
-    ArrearsReportComponent,
-    CustomerReportComponent,
-    ReportListComponent,
-    EpReportComponent
-  ],
-  imports: [
-    CommonModule,
-    ReportsRoutingModule,
-    MaterialModule,
-    FormsModule,
-    NgxMaskModule.forChild(),
-    HttpClientModule,
-    ReactiveFormsModule,
-    MatTableExporterModule
-  ]
+    declarations: [
+        CashCollectionReportComponent,
+        ArrearsReportComponent,
+        CustomerReportComponent,
+        ReportListComponent,
+        EpReportComponent
+    ],
+    imports: [
+        CommonModule,
+        ReportsRoutingModule,
+        MaterialModule,
+        FormsModule,
+        NgxMaskModule.forChild(),
+        HttpClientModule,
+        ReactiveFormsModule,
+        MatTableExporterModule,
+    ]
 })
 export class ReportsModule {
 }
