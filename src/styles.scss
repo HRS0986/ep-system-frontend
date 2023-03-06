@@ -85,8 +85,21 @@ button[class*="mat-button-disabled"].mat-raised-button {
   color: theme.$primary-button-bg !important;
 }
 
-.mat-calendar-body-selected {
-  background-color: theme.$side-nav-background !important;
+.mat-calendar-body-cell-content {
+
+  &.mat-focus-indicator {
+    &:hover {
+      background-color: #8bbebe !important;
+    }
+  }
+
+  &.mat-calendar-body-selected {
+    background-color: theme.$side-nav-background !important;
+
+    &:hover {
+      background-color: theme.$primary-button-bg !important;
+    }
+  }
 }
 
 .filter-btn {

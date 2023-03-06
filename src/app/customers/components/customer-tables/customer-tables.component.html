@@ -16,7 +16,7 @@
         <ng-container matColumnDef="{{COMMON_MESSAGES.ACTION_COLUMN_TEXT}}">
           <th mat-header-cell *matHeaderCellDef> {{COMMON_MESSAGES.ACTION_COLUMN_TEXT}} </th>
           <td mat-cell *matCellDef="let row">
-            <a mat-raised-button [routerLink]="['..', row.itemUrl]" class="btn-p">
+            <a mat-raised-button [routerLink]="[row.itemUrl]" class="btn-p">
               <mat-icon>visibility</mat-icon>
               {{VIEW}}
             </a>
