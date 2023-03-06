@@ -90,14 +90,15 @@ export class ManageUsersComponent implements OnInit {
       data: {
         title: UserManagementMessages.DELETE_USER_TITLE,
         body: UserManagementMessages.DELETE_USER_MESSAGE,
-        entityName: userName
+        entityName: userName!.FirstName
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.userService.DeleteUser(id).then((result) => {
           if (result.status) {
-            this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.SUCCESS });
+            window.location.reload();
+            this.helperService.openSnackBar({text: result.message, status: SnackBarStatus.SUCCESS});
           } else {
             this.helperService.openSnackBar({ text: result.message, status: SnackBarStatus.FAILED });
           }

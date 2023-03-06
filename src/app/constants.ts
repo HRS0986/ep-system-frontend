@@ -289,7 +289,7 @@ export class ErrorMessages {
   public static readonly PASSWORDS_NOT_MATCHING = `Passwords are not matching`;
   public static readonly INCORRECT_OLD_PASSWORD = `Incorrect old password`;
   public static readonly NUMBERS_ONLY = `Numbers only allowed`;
-  public static readonly STRONG_PASSWORD_MESSAGE_TEXT = 'Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number and one special character.';
+  public static readonly STRONG_PASSWORD_MESSAGE_TEXT = 'Password must be at least 8 characters and contain lowercase and uppercase letters, number and special character.';
 
   public static required(filedName: string) {
     return `${filedName} is required`;
