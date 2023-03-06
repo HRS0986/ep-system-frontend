@@ -1,20 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+@use 'app/theme' as theme;
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 .btn-p {
-  color: black !important;
-  background-color: #28B5B5 !important;
+  color: theme.$primary-button-fg !important;
+  background-color: theme.$primary-button-bg !important;
 }
 
 .btn-s {
-  background-color: #536464 !important;
+  background-color: theme.$secondary-button-bg !important;
 }
 
 .btn-disabled {
-  background-color: #A7C4BC !important;
+  background-color: theme.$disabled-button-bg !important;
 }
 
 .error-snack-bar {
@@ -62,4 +63,37 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 button[class*="mat-button-disabled"].mat-raised-button {
   background-color: #7b9b9b !important;
+}
+
+.mat-focused .mat-form-field-label {
+  color: theme.$primary-button-bg !important;
+}
+
+.mat-form-field-invalid .mat-form-field-ripple {
+  color: #f44336 !important;
+}
+
+.mat-form-field-ripple {
+  background-color: theme.$primary-button-bg !important;
+}
+
+.mat-primary .mat-pseudo-checkbox-checked {
+  background-color: theme.$primary-button-bg !important;
+}
+
+.mat-selected .mat-option-text {
+  color: theme.$primary-button-bg !important;
+}
+
+.mat-calendar-body-selected {
+  background-color: theme.$side-nav-background !important;
+}
+
+.filter-btn {
+  height: 50px !important;
+  min-width: 120px !important;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar {
+  background-color: theme.$primary-button-bg !important;
 }
