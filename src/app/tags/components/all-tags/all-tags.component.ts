@@ -13,11 +13,11 @@ import { AddEditTagComponent } from "../popups/add-edit-tag/add-edit-tag.compone
 import { TagActions } from "../../store/tags.actions";
 
 @Component({
-  selector: 'app-customer-tags',
-  templateUrl: './customer-tags.component.html',
-  styleUrls: ['./customer-tags.component.scss']
+  selector: 'app-all-tags',
+  templateUrl: './all-tags.component.html',
+  styleUrls: ['./all-tags.component.scss']
 })
-export class CustomerTagsComponent implements OnInit {
+export class AllTagsComponent implements OnInit {
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
