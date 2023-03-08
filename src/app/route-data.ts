@@ -20,17 +20,22 @@ export class ReportRoutes {
 
 export class NotificationRoutes {
   public static readonly Root = 'notifications';
-  public static readonly All = { url: 'all', title: 'Notifications' };
+  public static readonly All = {url: 'all', title: 'Notifications'};
 }
 
 export class ProjectRoutes {
   public static readonly Root = 'projects';
-  public static readonly All = { url: 'all', title: 'Projects' };
+  public static readonly All = {url: 'all', title: 'Projects'};
+}
+
+export class DashboardRoutes {
+  public static readonly Root = 'admin-dashboard';
+  public static readonly All = {url: 'all', title: 'Admin Dashboard'};
 }
 
 export class TagRoutes {
   public static readonly Root = 'tags';
-  public static readonly All = { url: 'all', title: 'Tags' };
+  public static readonly All = {url: 'all', title: 'Tags'};
 }
 
 export class AuthRoutes {

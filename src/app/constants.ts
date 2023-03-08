@@ -246,6 +246,7 @@ export class NavigationMenu {
   public static readonly EP_REPORTS = 'EP Reports';
   public static readonly PROJECTS = 'Projects';
   public static readonly TAGS = 'Tags';
+  public static readonly ADMIN_DASHBOARD = 'Admin Dashboard';
 }
 
 export class UserManagementMessages {

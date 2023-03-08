@@ -1,6 +1,6 @@
 import { NavigationMenuItem } from "./types";
 import { NavigationMenu } from "./constants";
-import { AuthRoutes, CustomerRoutes, ProjectRoutes, ReportRoutes, TagRoutes } from "./route-data";
+import { AuthRoutes, CustomerRoutes, DashboardRoutes, ProjectRoutes, ReportRoutes, TagRoutes } from "./route-data";
 
 export const NavigationMenuItems: NavigationMenuItem[] = [
   {
@@ -81,6 +81,12 @@ export const NavigationMenuItems: NavigationMenuItem[] = [
     menuText: NavigationMenu.TAGS,
     iconName: "style",
     navigationLink: `/${TagRoutes.Root}`,
+    subMenuItems: []
+  },
+  {
+    menuText: NavigationMenu.ADMIN_DASHBOARD,
+    iconName: "admin_panel_settings",
+    navigationLink: `/${DashboardRoutes.Root}`,
     subMenuItems: []
   }
 ];
