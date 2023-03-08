@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TagRoutes } from "../route-data";
-import { CustomerTagsComponent } from "./components/customer-tags/customer-tags.component";
+import { AllTagsComponent } from "./components/all-tags/all-tags.component";
 
 const routes: Routes = [
   {
@@ -9,11 +9,11 @@ const routes: Routes = [
     redirectTo: TagRoutes.All.url,
     pathMatch: 'full'
   },
-  {
-    path: TagRoutes.All.url,
-    component: CustomerTagsComponent,
-    data: { title: TagRoutes.All.title }
-  }
+    {
+        path: TagRoutes.All.url,
+        component: AllTagsComponent,
+        data: {title: TagRoutes.All.title}
+    }
 ];
 
 @NgModule({

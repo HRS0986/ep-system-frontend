@@ -333,6 +333,7 @@ export class ViewCustomerComponent implements OnInit, CanComponentDeactivate {
   canDeactivate(): Promise<boolean> | boolean {
     if (this.isFormChanged) {
       return this.helperService.canGoBack().then(result => {
+        debugger;
         return result;
       });
     } else {

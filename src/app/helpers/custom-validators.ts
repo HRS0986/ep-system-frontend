@@ -9,7 +9,7 @@ export class CustomValidators {
         if (firstValue!.value !== secondValue!.value) {
           firstValue?.setErrors({ notMatch: true });
           secondValue?.setErrors({ notMatch: true });
-          return { fieldsNotMatch: true };
+          return {notMatch: true};
         } else {
           firstValue?.markAsUntouched();
           secondValue?.markAsUntouched();

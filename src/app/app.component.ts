@@ -36,11 +36,9 @@ export class AppComponent {
             this.notificationService.IsAlertsAvailable().then(result => {
                 this.hideNotification = result;
             })
-            debugger;
             if (event instanceof NavigationStart) {
                 this.isFirstLogin = event.url === `/${AuthRoutes.Root}/${AuthRoutes.SignUp}`;
                 if (event.url === `/${CustomerRoutes.Root}/${CustomerRoutes.Ep}`) {
-                    debugger;
                     this.isCustomerUrl = true;
                 }
             }

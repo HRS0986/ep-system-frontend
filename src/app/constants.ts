@@ -150,8 +150,8 @@ export class NewCustomer {
 }
 
 export class AllCustomers {
-  public static readonly ADD_CUSTOMER_BUTTON_TEXT = 'Add Customer';
-  public static readonly ID_COLUMN_TEXT = 'ID';
+  public static readonly ADD_CUSTOMER_BUTTON_TEXT = 'Add New Customer';
+    public static readonly ID_COLUMN_TEXT = 'ID';
   public static readonly NAME_COLUMN_TEXT = 'Name';
   public static readonly PROJECT_COLUMN_TEXT = 'Project';
   public static readonly BALANCE_COLUMN_TEXT = 'Balance';
@@ -253,9 +253,9 @@ export class UserManagementMessages {
   public static readonly LASTNAME_LABEL = 'Last Name';
   public static readonly EMAIL_LABEL = 'Email';
   public static readonly CONTACT_NUMBER_LABEL = 'Contact Number';
-  public static readonly IS_DISABLE_LABEL = 'Disable';
-  public static readonly ADD_NEW_USER = 'Add User';
-  public static readonly PASSWORD_LABEL = 'Password';
+    public static readonly IS_DISABLE_LABEL = 'Disable';
+    public static readonly ADD_NEW_USER = 'Add New User';
+    public static readonly PASSWORD_LABEL = 'Password';
   public static readonly DELETE_USER_TITLE = 'Delete User';
   public static readonly DELETE_USER_MESSAGE = 'Are you sure you want to delete this user?';
   public static readonly USER_ADDED_SUCCESSFULLY_MESSAGE_TEXT = 'User added successfully';

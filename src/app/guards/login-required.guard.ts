@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, UrlTree } from '@angular/router';
 import { LoginStatus } from "../constants";
 import { AuthRoutes } from "../route-data";
 import { AuthService } from "../services/auth.service";
@@ -11,11 +11,13 @@ export class LoginRequiredGuard implements CanActivate {
 
   constructor(private auth: AuthService, private router: Router) { }
 
-  canActivate(): boolean {
+  canActivate(): boolean | UrlTree {
     if (this.auth.isLoggedIn == LoginStatus.LOGGED_OUT) {
-      this.router.navigate([`${AuthRoutes.Root}/${AuthRoutes.Login}`]).then();
+      return this.router.createUrlTree([`${AuthRoutes.Root}/${AuthRoutes.Login}`]);
+    } else if (!!JSON.parse(localStorage.getItem('isFirstLogin')!)) {
+      return this.router.createUrlTree([`${AuthRoutes.Root}/${AuthRoutes.SignUp}`]);
     }
-    return this.auth.isLoggedIn == LoginStatus.LOGGED_IN;
+    return true;
   }
 
 }

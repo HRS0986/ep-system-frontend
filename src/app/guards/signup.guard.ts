@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, UrlTree } from '@angular/router';
 import { CustomerRoutes } from "../route-data";
 
 @Injectable({
@@ -9,13 +9,13 @@ export class SignupGuard implements CanActivate {
 
   constructor(private router: Router) { }
 
-  canActivate(): boolean {
+  canActivate(): boolean | UrlTree {
     const isFirstLogin = !!JSON.parse(localStorage.getItem('isFirstLogin')!);
 
     if (!isFirstLogin) {
-      this.router.navigate([`${CustomerRoutes.Root}/${CustomerRoutes.Ep.url}`]).then(() => { });
+      return this.router.createUrlTree([`${CustomerRoutes.Root}/${CustomerRoutes.Ep.url}`]);
     }
-    return isFirstLogin;
+    return true;
   }
 
 }
